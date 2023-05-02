@@ -9,13 +9,13 @@ We use [Notion](https://www.notion.so/Teamspace-Home-fba74a5d54be44d49325709de4e
 
 ## Contributing Code :bowtie:
 
-###Setting up Project 
+### Setting up Project 
 
-###After Project Setup 
+### After Project Setup 
 1. Find feature to work on. 
 2. Create a branch from `main` and name it using the format <username_feature>.
 3. After working on the feature on your branch, make a PR to the `main` branch.
 4. The PR would be reviewed by the project manager and merged into `main`.
 
-###Issues
+### Issues
 All issues should be reported [here](https://www.notion.so/458d2b299eb2414c86b70ac77fa4fb2c?v=cf990cad1e2241c2ac7be53e2aa43834)
