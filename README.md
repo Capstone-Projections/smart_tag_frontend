@@ -10,6 +10,8 @@ We use [Notion](https://www.notion.so/Teamspace-Home-fba74a5d54be44d49325709de4e
 ## Contributing Code :bowtie:
 
 ###  Setting up Project 
+1. Run `npx install-expo-modules@latest` in the terminal to install all Expo dependecies.
+2. Inside the `app` directory, run the command, `npx expo start` or checkout this [link](https://docs.expo.dev/get-started/create-a-project/) to set it up in your liking.:innocent:
 
 ###  After Project Setup 
 1. Find feature to work on. 
@@ -17,5 +19,9 @@ We use [Notion](https://www.notion.so/Teamspace-Home-fba74a5d54be44d49325709de4e
 3. After working on the feature on your branch, make a pull request to the `main` branch.
 4. The pull request would be reviewed by the project manager and merged into `main`.
 
-###  Issues
+### Rules 
+1. Never make changes directly to main.
+2. Commit as much as possible.
+
+###  Issues 🥵
 All issues should be reported [here](https://www.notion.so/458d2b299eb2414c86b70ac77fa4fb2c?v=cf990cad1e2241c2ac7be53e2aa43834)
