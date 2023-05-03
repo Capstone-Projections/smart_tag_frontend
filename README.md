@@ -22,6 +22,7 @@ We use [Notion](https://www.notion.so/Teamspace-Home-fba74a5d54be44d49325709de4e
 ### Rules 
 1. Never make changes directly to main.
 2. Commit as much as possible.
+3. Make all of your commit messages descriptive enough using the rules [here](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ###  Issues 🥵
 All issues should be reported [here](https://www.notion.so/458d2b299eb2414c86b70ac77fa4fb2c?v=cf990cad1e2241c2ac7be53e2aa43834)
