@@ -11,7 +11,7 @@ We use [Notion](https://www.notion.so/Teamspace-Home-fba74a5d54be44d49325709de4e
 
 ###  Setting up Project 
 1. Run `npx install-expo-modules@latest` in the terminal to install all Expo dependecies.
-2. Inside the `app` directory, run the command, `npx expo start` or checkout this [link](https://docs.expo.dev/get-started/create-a-project/) to set it up in your liking.:innocent:
+2. Inside the `root` directory, run the command, `npx expo start` or checkout this [link](https://docs.expo.dev/get-started/create-a-project/) to set it up to your liking.:innocent:
 
 ###  After Project Setup 
 1. Find feature to work on. 
