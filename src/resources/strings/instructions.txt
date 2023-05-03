@@ -1,0 +1,1 @@
+the various hard coded strings that the file is going to use which allows us to support multiple languages 

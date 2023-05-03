@@ -1,0 +1,1 @@
+include all of folders for some specific screens that you would be using and then add the rest of them to the general section 
