@@ -7,4 +7,7 @@
   "include": ["src", "App.tsx"],
   "allowJs": true, 
   "jsx": "react-native",
+  "paths": {
+    "*": ["src/*"]
+  }
 }
