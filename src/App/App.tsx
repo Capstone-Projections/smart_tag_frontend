@@ -12,7 +12,7 @@ export default function App() {
       <Text >
     Hello Heading 1
     </Text>
-    <AppText>Hey What's up</AppText>
+    <AppText.Subtitle>Hey What's up</AppText.Subtitle>
     </View>
     
   );
