@@ -1,6 +1,10 @@
 {
   "dependencies": {
+    "@freakycoder/react-native-custom-text": "^0.1.2",
+    "babel-preset-react-native": "^4.0.1",
     "expo": "^48.0.7",
+    "jss": "^10.10.0",
+    "jss-preset-default": "^10.10.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.3",
