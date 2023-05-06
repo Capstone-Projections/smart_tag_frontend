@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';import {styles} from './App.stylesheet'
-//used to serve the first screen of the application 
+import { AppText } from '../components/general/text/text';
+
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    
+      <AppText text="What is this doing" type="description" color="secondary" weight="bold"/>
+
   );
 }
 
