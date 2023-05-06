@@ -1,13 +1,20 @@
 import React from 'react';
-import { AppText } from '../components/general/Text/text';
-import Text from "@freakycoder/react-native-custom-text";
+import {Text,View} from 'react-native';
+import {styles} from './App.stylesheet';
+import { AppText } from '../components/general/Text';
+
 
 
 export default function App() {
   return (
-    <Text h1 fontFamily="Poppins-Bold">
+
+    <View  style = {styles.container}>
+      <Text >
     Hello Heading 1
     </Text>
+    <AppText>Hey What's up</AppText>
+    </View>
+    
   );
 }
 
