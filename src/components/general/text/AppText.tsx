@@ -1,7 +1,27 @@
 import * as React from 'react';
-import {Text,StyleSheet, TextProps} from 'react-native';
+import {Text} from 'react-native';
 import {AppTextProps} from './AppText.prop'
+import { styles } from './AppText.stylesheet';
 
-export const AppText = (props: AppTextProps) => (
-    <Text {...props}/>
+
+export const AppText = ({margin,style,center,...props}: AppTextProps) => (
+
+    <Text {...props} style = {[styles.text ,margin && styles.margin,center &&styles.center,style]}/>
 )
+
+AppText.Title = ({style,...props}: AppTextProps) =>(
+    <AppText {...props} style = {[styles.title,style]} />
+)
+
+AppText.Subtitle = ({style,...props}: AppTextProps) =>(
+    <AppText {...props} style = {[styles.subtitle,style]}/>
+)
+
+AppText.Body = ({style,...props}: AppTextProps) =>(
+    <AppText {...props} style = {style} />
+)
+
+AppText.Error = ({style,...props}: AppTextProps) =>(
+    <AppText {...props} style = {[styles.error,style]} />
+)
+
