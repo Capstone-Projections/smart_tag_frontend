@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Text} from 'react-native';
 import {AppTextProps} from './AppText.prop'
-import { styles } from './AppText.stylesheet';
+import { styles } from '../../../styles/textStyles/AppText.stylesheet';
 
 
 export const AppText = ({margin,style,center,...props}: AppTextProps) => (
