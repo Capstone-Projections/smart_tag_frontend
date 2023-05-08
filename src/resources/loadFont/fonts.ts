@@ -14,7 +14,7 @@ export function allFonts(){
             'Inter-ExtraLight': require('../../../assets/fonts/Inter-ExtraLight.ttf'),
             'Inter-Light': require('../../../assets/fonts/Inter-Light.ttf'),
             'Inter-Medium': require('../../../assets/fonts/Inter-Medium.ttf'),
-            'Inter-Regular': require('../../../assets/fonts/Inter-Regular.ttf'),
+            'Inter': require('../../../assets/fonts/Inter-Regular.ttf'),
             'Inter-SemiBold': require('../../../assets/fonts/Inter-SemiBold.ttf'),
     }
     )
