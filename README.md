@@ -10,14 +10,15 @@ We use [Notion](https://www.notion.so/Teamspace-Home-fba74a5d54be44d49325709de4e
 ## Contributing Code :bowtie:
 
 ###  Setting up Project 
-1. Run `npx install-expo-modules@latest` in the terminal to install all Expo dependecies.
-2. Inside the `root` directory, run the command, `npx expo start` or checkout this [link](https://docs.expo.dev/get-started/create-a-project/) to set it up to your liking.:innocent:
+Inside the `root` directory, run the command, `npx expo start` or checkout this [link](https://docs.expo.dev/get-started/create-a-project/) to set it up to your liking.:innocent:
+#### NB: WE ARE USING `yarn` AS OUR PACKAGE MANAGER
 
 ###  After Project Setup 
 1. Find feature to work on. 
 2. Create a branch from `main` and name it using the format <username_feature>.
 3. After working on the feature on your branch, make a pull request to the `main` branch.
 4. The pull request would be reviewed by the project manager and merged into `main`.
+5. That branch would then be deleted so as not to keep the number of branches too many.
 
 ### Rules 
 1. Never make changes directly to main.
