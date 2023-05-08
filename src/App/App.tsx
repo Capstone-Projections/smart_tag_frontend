@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <View  style = {styles.container}>
-    <Text weight='bold'>Hey What's up</Text>
+    <Text font='inter' >Hey What's up</Text>
     </View>
     
   );
