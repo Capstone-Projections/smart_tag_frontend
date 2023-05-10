@@ -1,10 +1,10 @@
 import React , { useEffect} from 'react';
 import {View} from 'react-native';
 import {styles} from '../styles/appStyles/App.stylesheet';
-import { Text } from '../components/general/Text';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { allFonts } from '../resources/loadFont/fonts';
+import { Text } from '../components/general/Text/AppText';
 
 
 
@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <View  style = {styles.container}>
-    <Text font='inter' >Hey What's up</Text>
+    <Text weight='bold' color='appblue'>Hey What's up</Text>
     </View>
     
   );

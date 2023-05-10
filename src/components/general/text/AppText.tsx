@@ -1,27 +1,42 @@
-import * as React from 'react';
-import {Text} from 'react-native';
-import {AppTextProps} from './AppText.prop'
-import { styles } from '../../../styles/textStyles/AppText.stylesheet';
+import styled from 'styled-components/native'
+import { AppTextProps } from './AppText.prop'
+import { appblue,coursesdblue,courseslblue,courseslgreen,coursesyellow } from '../../../resources/colors/colors';
 
+//getting colors of the application from the colors file
+const appBlue = appblue.getHex()
+const coursesdBlue = coursesdblue.getHex()
+const coursesdBlue2 = courseslblue.getHex()
+const coursesdGreen = courseslgreen.getHex()
+const coursesdYellow = coursesyellow.getHex()
 
-export const AppText = ({margin,style,center,...props}: AppTextProps) => (
-
-    <Text {...props} style = {[styles.text ,margin && styles.margin,center &&styles.center,style]}/>
-)
-
-AppText.Title = ({style,...props}: AppTextProps) =>(
-    <AppText {...props} style = {[styles.title,style]} />
-)
-
-AppText.Subtitle = ({style,...props}: AppTextProps) =>(
-    <AppText {...props} style = {[styles.subtitle,style]}/>
-)
-
-AppText.Body = ({style,...props}: AppTextProps) =>(
-    <AppText {...props} style = {style} />
-)
-
-AppText.Error = ({style,...props}: AppTextProps) =>(
-    <AppText {...props} style = {[styles.error,style]} />
-)
+export const Text = styled.Text<AppTextProps>`
+    color: ${props => props.color === 'white' ? 'white'
+    :props.color === 'appblue'?
+    appBlue
+    :props.color === 'coursesdblue'? 
+    coursesdBlue
+    :props.color === 'courseslblue'?
+    coursesdBlue2
+    :props.color === 'courseslgreen'?
+    coursesdGreen
+    :props.color === 'coursesyellow'?
+    coursesdYellow
+    :'black'};
+    fontFamily: ${props => props.font === 'inter' ? 
+    'Inter' 
+    :props.weight === 'bold'? 
+    'Poppins-Medium':
+    'Poppins'};
+    fontSize: ${props => props.type === 'linksnheadings' ? 
+    '15px' 
+    :props.type === 'welcome' ?
+    '28px'
+    :props.type === 'pages' ?
+    '10px'
+    :props.type === 'ustudent' ?
+    '21px'
+    :props.type === 'people' ?
+    '16px'
+    :'18px'};
+`;
 
