@@ -10,7 +10,7 @@ We use [Notion](https://www.notion.so/Teamspace-Home-fba74a5d54be44d49325709de4e
 ## Contributing Code :bowtie:
 
 ###  Setting up Project 
-Inside the `root` directory, run the command, `npx expo start` or checkout this [link](https://docs.expo.dev/get-started/create-a-project/) to set it up to your liking.:innocent:
+Inside the `root` directory, run the command,`yarn install` and then `npx expo start` or checkout this [link](https://docs.expo.dev/get-started/create-a-project/) to set it up to your liking.:innocent:
 #### NB: WE ARE USING `yarn` AS OUR PACKAGE MANAGER
 
 ###  After Project Setup 
