@@ -29,3 +29,8 @@ export const coursesyellow =  {
         return this.hex;
 }};
 
+export const appBlue = appblue.getHex()
+export const coursesdBlue = coursesdblue.getHex()
+export const coursesdBlue2 = courseslblue.getHex()
+export const coursesdGreen = courseslgreen.getHex()
+export const coursesdYellow = coursesyellow.getHex()

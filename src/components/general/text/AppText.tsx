@@ -1,13 +1,9 @@
 import styled from 'styled-components/native'
 import { AppTextProps } from './AppText.prop'
-import { appblue,coursesdblue,courseslblue,courseslgreen,coursesyellow } from '../../../resources/colors/colors';
+import { appBlue,coursesdBlue,coursesdBlue2,coursesdGreen,coursesdYellow } from '../../../resources/colors/colors';
 
 //getting colors of the application from the colors file
-const appBlue = appblue.getHex()
-const coursesdBlue = coursesdblue.getHex()
-const coursesdBlue2 = courseslblue.getHex()
-const coursesdGreen = courseslgreen.getHex()
-const coursesdYellow = coursesyellow.getHex()
+
 
 export const Text = styled.Text<AppTextProps>`
     color: ${props => props.color === 'white' ? 'white'
@@ -38,5 +34,8 @@ export const Text = styled.Text<AppTextProps>`
     :props.type === 'people' ?
     '16px'
     :'18px'};
+    textAlign: ${props => props.type === 'pages' ?'center'
+    :props.type === 'ustudent'?
+    'center': 'left'};
 `;
 
