@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { allFonts } from '../resources/loadFont/fonts';
 import { Text } from '../components/general/Text/AppText';
 import { Button } from '../components/general/Button';
+import { AppEntry } from '../components/general/Entry/AppEntry';
 
 
 
@@ -29,8 +30,9 @@ export default function App() {
 
   return (
     <View  style = {styles.container}>
-    <Text weight='bold' color='appblue'>Hey What's up</Text>
-    <Button text='there' textType='pages'type='cancel'></Button>
+  
+    <AppEntry text='Sign Up' textWeight='bold' placeholder='Sign here'></AppEntry>
+
     </View>
     
   );

@@ -1,5 +1,6 @@
 import { TextTypeOptions,TextColorOptions } from "../Text/AppText.prop";
-export interface AppButtonProps {
+import { ButtonProps } from "react-native";
+export interface AppButtonProps{
     text: string;
     disabled?: boolean;
     onClick?: Function;
