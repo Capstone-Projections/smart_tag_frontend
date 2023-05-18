@@ -15,10 +15,8 @@ Inside the `root` directory, run the command,`yarn install` and then `npx expo s
 
 ###  After Project Setup 
 1. Find feature to work on. 
-2. Create a branch from `main` and name it using the format <username_feature>.
-3. After working on the feature on your branch, make a pull request to the `main` branch.
-4. The pull request would be reviewed by the project manager and merged into `main`.
-5. That branch would then be deleted so as not to keep the number of branches too many.
+2. We are practicing Continuous Delivery, hence, move to the `main` branch, clone the project from that branch and then work on it.
+3. Commit your changes with the working feature that was worked on as soon as you have it working with a good enough commit message.
 
 ### Rules 
 1. Never make changes directly to main.
