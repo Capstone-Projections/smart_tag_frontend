@@ -1,13 +1,13 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "noImplicitAny":true, 
-  },
-  "extends": "expo/tsconfig.base",
-  "include": ["src", "App.tsx"],
-  "allowJs": true, 
-  "jsx": "react-native",
-  "paths": {
-    "*": ["src/*"]
-  }
+      "compilerOptions": {
+            "strict": true,
+            "noImplicitAny": true
+      },
+      "extends": "expo/tsconfig.base",
+      "include": ["src", "App.tsx"],
+      "allowJs": true,
+      "jsx": "react-native",
+      "paths": {
+            "*": ["src/*"]
+      }
 }
