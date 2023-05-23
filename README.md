@@ -1,4 +1,4 @@
-# SMART TAG😶‍🌫️
+# SMART TAG`Frontend`😶‍🌫️
 
 Smart Tag is a simple and effective solution to the problem of class attendance.
 
