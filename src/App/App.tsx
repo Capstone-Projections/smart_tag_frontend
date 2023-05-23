@@ -7,33 +7,36 @@ import { allFonts } from '../resources/loadFont/fonts';
 import { Text } from '../components/general/Text/AppText';
 import { Button } from '../components/general/Button';
 import { Entry } from '../components/general/Entry/AppEntry';
+import { registerRootComponent } from 'expo';
 
 export default function App() {
-      const [fontsloaded] = useFonts(allFonts());
+  const [fontsloaded] = useFonts(allFonts());
 
-    useEffect(() => {
-        async function prepare() {
-            await SplashScreen.preventAutoHideAsync();
-        }
-        prepare();
-    }, []);
-
-    if (!fontsloaded) {
-        return null;
-    } else {
-        SplashScreen.hideAsync();
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
     }
+    prepare();
+  }, []);
 
-    return (
-        <View style={styles.container}>
-            <Entry text="Email"></Entry>
-            <Entry text="Password"></Entry>
-            <Button
-                text="Sign Up"
-                textColor="white"
-                size="large"
-                textType="ustudent"
-            ></Button>
-        </View>
-    );
+  if (!fontsloaded) {
+    return null;
+  } else {
+    SplashScreen.hideAsync();
+  }
+
+  return (
+    <View style={styles.container}>
+      <Entry text="Email"></Entry>
+      <Entry text="Password"></Entry>
+      <Button
+        text="Sign Up"
+        textColor="white"
+        size="large"
+        textType="ustudent"
+      ></Button>
+    </View>
+  );
 }
+
+registerRootComponent(App);
