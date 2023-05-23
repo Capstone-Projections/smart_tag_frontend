@@ -25,13 +25,13 @@ export const Text = styled.Text<AppTextProps>`
       : props.color === 'coursesyellow'
       ? coursesdYellow
       : 'black'};
-  fontFamily: ${(props) =>
+  fontfamily: ${(props) =>
     props.font === 'inter'
       ? 'Inter'
       : props.weight === 'bold'
       ? 'Poppins-Medium'
       : 'Poppins'};
-  fontSize: ${(props) =>
+  fontsize: ${(props) =>
     props.type === 'linksnheadings'
       ? '15px'
       : props.type === 'welcome'
@@ -43,7 +43,7 @@ export const Text = styled.Text<AppTextProps>`
       : props.type === 'people'
       ? '16px'
       : '18px'};
-  textAlign: ${(props) =>
+  textalign: ${(props) =>
     props.type === 'pages'
       ? 'center'
       : props.type === 'ustudent'
