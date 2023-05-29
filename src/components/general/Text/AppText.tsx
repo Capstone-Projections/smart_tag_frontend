@@ -49,4 +49,5 @@ export const Text = styled.Text<AppTextProps>`
       : props.type === 'ustudent'
       ? 'center'
       : 'left'};
+      
 `;
