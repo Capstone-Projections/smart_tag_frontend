@@ -10,7 +10,7 @@ import {
 } from '../../../resources/colors/colors';
 
 const AppButton = styled.TouchableOpacity<AppButtonProps>`
-  backgroundcolor: ${(props) =>
+  backgroundColor: ${(props) =>
     props.type === 'cancel'
       ? 'white'
       : props.type === 'add'
@@ -18,7 +18,7 @@ const AppButton = styled.TouchableOpacity<AppButtonProps>`
       : props.type === 'status'
       ? appBlue
       : appBlue};
-  borderradius: ${(props) =>
+  borderRadius: ${(props) =>
     props.type === 'cancel' ? '4px' : props.type === 'add' ? '4px' : '7px'};
   padding: ${(props) =>
     props.type === 'cancel' ? '4px' : props.type === 'add' ? '4px' : '10px'};
@@ -38,7 +38,7 @@ const AppButton = styled.TouchableOpacity<AppButtonProps>`
       : props.type === 'status'
       ? '58px'
       : '48px'};
-  borderwidth: ${(props) =>
+  borderWidth: ${(props) =>
     props.type === 'cancel'
       ? '2px'
       : props.type === 'add'
@@ -46,9 +46,12 @@ const AppButton = styled.TouchableOpacity<AppButtonProps>`
       : props.type === 'status'
       ? '0px'
       : '0px'};
-  bordercolor: ${(props) =>
+  borderColor: ${(props) =>
     props.type === 'cancel' ? appBlue : 'rgba(0,0,0,0.0)'};
+  margin-bottom: 20px;
+  align-items: center;
 `;
+
 
 export const Button = ({
   text,

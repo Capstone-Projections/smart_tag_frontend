@@ -9,6 +9,7 @@ import { Button } from '../components/general/Button';
 import { Entry } from '../components/general/Entry/AppEntry';
 import { registerRootComponent } from 'expo';
 import { OTP } from '../components/general/OTP/AppOTP';
+import { LaunchScreen } from '../screens/launchScreen/launchScreen';
 
 export default function App() {
   const [fontsloaded] = useFonts(allFonts());
@@ -28,15 +29,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Entry text="Email"></Entry>
-      <Entry text="Password" type="otp"></Entry>
-      <Button
-        text="Sign Up"
-        textColor="white"
-        size="large"
-        textType="ustudent"
-      ></Button>
-      <OTP></OTP>
+      <LaunchScreen />
     </View>
   );
 }
