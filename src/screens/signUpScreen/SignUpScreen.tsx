@@ -1,16 +1,17 @@
-import { Button } from '../../../components/general/Button/AppButton';
-import { Entry } from '../../../components/general/Entry/AppEntry';
-import { Text } from '../../../components/general/Text/AppText';
-import { Container, SignInWrapper } from './styles';
+import { Button } from '../../components/general/Button/AppButton';
+import { Entry } from '../../components/general/Entry/AppEntry';
+import { Text } from '../../components/general/Text/AppText';
+import { Container, SignUpWrapper } from './styles';
+import { AppButtonProps } from './../../components/general/Button/AppButton.prop';
 
-export const SignInScreen = () => {
+export const SignUpScreen = () => {
   return (
     <Container>
       <Text style={{ textAlign: 'center' }}>
         Enter your E-mail and password to continue
       </Text>
 
-      <SignInWrapper>
+      <SignUpWrapper>
         <Text type="ustudent" style={{ textAlign: 'left' }}>
           E-mail or Phone Number
         </Text>
@@ -20,10 +21,10 @@ export const SignInScreen = () => {
         </Text>
         <Entry placeholder="Password" />
         <Button text="Continue" type="status" textColor="white" />
-        <Text type="ustudent">Sign In?</Text>
-      </SignInWrapper>
+        <Text type="ustudent">Sign Up?</Text>
+      </SignUpWrapper>
     </Container>
   );
 };
 
-export default SignInScreen;
+export default SignUpScreen;
