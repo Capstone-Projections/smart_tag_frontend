@@ -10,14 +10,14 @@ import {
 } from '../../../resources/colors/colors';
 
 const AppButton = styled.TouchableOpacity<AppButtonProps>`
-  backgroundcolor: ${(props) =>
+  backgroundcolor:${(props) =>
     props.type === 'cancel'
       ? 'white'
       : props.type === 'add'
       ? appBlue
       : props.type === 'status'
       ? appBlue
-      : appBlue};
+      : appBlue}; 
   borderradius: ${(props) =>
     props.type === 'cancel' ? '4px' : props.type === 'add' ? '4px' : '7px'};
   padding: ${(props) =>

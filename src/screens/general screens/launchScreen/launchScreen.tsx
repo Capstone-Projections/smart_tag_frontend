@@ -12,13 +12,11 @@ export const LaunchScreen = () => {
         <Button
           text="Student"
           type="status"
-          textColor="white"
           textType="ustudent"
         />
         <Button
           text="Lecturer"
           type="status"
-          textColor="white"
           textType="ustudent"
         />
       </StudentWrapper>

@@ -11,7 +11,6 @@ import { registerRootComponent } from 'expo';
 import { OTP } from '../components/general/OTP/AppOTP';
 import { LaunchScreen } from '../screens/general screens/launchScreen/launchScreen';
 import { SignInScreen } from '../screens/general screens/signInScreen/signInScreen';
-import { SignUpWrapper } from '../screens/signUpScreen/styles';
 import SignUpScreen from '../screens/signUpScreen/SignUpScreen';
 
 export default function App() {
@@ -32,7 +31,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <SignUpScreen/>
+      <LaunchScreen/>
     </View>
   );
 }

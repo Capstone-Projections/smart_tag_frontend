@@ -19,7 +19,7 @@ export const SignInScreen = () => {
           Password
         </Text>
         <Entry placeholder="Password" />
-        <Button text="Continue" type="status" textColor="white" />
+        <Button text="Continue"/>
         <Text type="ustudent">Sign In?</Text>
       </SignInWrapper>
     </Container>

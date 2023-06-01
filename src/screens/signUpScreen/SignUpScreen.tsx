@@ -19,8 +19,8 @@ export const SignUpScreen = () => {
         <Text type="ustudent" style={{ textAlign: 'left' }}>
           Password
         </Text>
-        <Entry placeholder="Password" />
-        <Button text="Continue" type="status" textColor="white" />
+        <Entry placeholder="Password"/>
+        <Button text="Continue"/>
         <Text type="ustudent">Sign Up?</Text>
       </SignUpWrapper>
     </Container>
