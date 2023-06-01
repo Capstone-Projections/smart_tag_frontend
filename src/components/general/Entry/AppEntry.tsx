@@ -3,7 +3,7 @@ import { AppEntryProps, EntryTypeOptions } from './AppEntry.prop';
 import { Text } from '../Text/AppText';
 
 export const AppEntry = styled.TextInput<AppEntryProps>`
-  fontfamily: Poppins;
+  fontFamily: Poppins;
   font-size: ${(props) =>
     props.type === 'popup' ? '8.05px' : props.type === 'otp' ? '25px' : '18px'};
   color: #000;
