@@ -43,6 +43,7 @@ export const Text = styled.Text<AppTextProps>`
       : props.type === 'people'
       ? '16px'
       : '18px'};
+      
   text-align: ${(props) =>
     props.type === 'pages'
       ? 'center'

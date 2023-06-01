@@ -3,7 +3,7 @@ import { AppEntryProps, EntryTypeOptions } from './AppEntry.prop';
 import { Text } from '../Text/AppText';
 
 export const AppEntry = styled.TextInput<AppEntryProps>`
-  fontFamily: Poppins;
+  fontfamily: Poppins;
   font-size: ${(props) =>
     props.type === 'popup' ? '8.05px' : props.type === 'otp' ? '25px' : '18px'};
   color: #000;
@@ -24,8 +24,10 @@ export const AppEntry = styled.TextInput<AppEntryProps>`
     props.type === 'popup' ? '27.6px' : props.type === 'otp' ? '46px' : '48px'};
   flex: none;
   flex-grow: 0;
+
   marginBottom: ${(props) =>
     props.type === 'popup' ? '8.75px' : props.type === 'otp' ? '53px' : '24px'};
+
   marginTop: ${(props) =>
     props.type === 'popup' ? '1.65px' : props.type === 'otp' ? '53px' : '12px'};
   align-items: center;
