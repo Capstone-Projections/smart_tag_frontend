@@ -25,13 +25,13 @@ export const Text = styled.Text<AppTextProps>`
       : props.color === 'coursesyellow'
       ? coursesdYellow
       : 'black'};
-  fontfamily: ${(props) =>
+  fontFamily: ${(props) =>
     props.font === 'inter'
       ? 'Inter'
       : props.weight === 'bold'
       ? 'Poppins-Medium'
       : 'Poppins'};
-  fontsize: ${(props) =>
+  fontSize: ${(props) =>
     props.type === 'linksnheadings'
       ? '15px'
       : props.type === 'welcome'
