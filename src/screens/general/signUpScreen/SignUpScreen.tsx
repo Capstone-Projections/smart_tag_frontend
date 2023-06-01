@@ -1,8 +1,8 @@
-import { Button } from '../../components/general/Button/AppButton';
-import { Entry } from '../../components/general/Entry/AppEntry';
-import { Text } from '../../components/general/Text/AppText';
+import { Button } from '../../../components/general/Button/AppButton';
+import { Entry } from '../../../components/general/Entry/AppEntry';
+import { Text } from '../../../components/general/Text/AppText';
 import { Container, SignUpWrapper } from './styles';
-import { AppButtonProps } from './../../components/general/Button/AppButton.prop';
+import { AppButtonProps } from '../../../components/general/Button/AppButton.prop';
 
 export const SignUpScreen = () => {
   return (
