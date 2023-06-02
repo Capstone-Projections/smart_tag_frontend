@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { View } from 'react-native';
 import { styles } from '../styles/appStyles/App.stylesheet';
 import { useFonts } from 'expo-font';
@@ -11,7 +12,9 @@ import { registerRootComponent } from 'expo';
 import { OTP } from '../components/general/OTP/AppOTP';
 import { LaunchScreen } from '../screens/general screens/launchScreen/launchScreen';
 import { SignInScreen } from '../screens/general screens/signInScreen/signInScreen';
-import SignUpScreen from '../screens/signUpScreen/SignUpScreen';
+import SignUpScreen from '../screens/general screens/signUpScreen/SignUpScreen';
+import Tabs from '../components/general/NavBar/tab';
+import { ProfileSetupScreen } from './../screens/studentScreens/profileSetup/profileSetupScreen';
 
 export default function App() {
   const [fontsloaded] = useFonts(allFonts());
@@ -30,8 +33,8 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <LaunchScreen/>
+    <View>
+      <ProfileSetupScreen />
     </View>
   );
 }

@@ -1,8 +1,8 @@
-import { Button } from '../../components/general/Button/AppButton';
-import { Entry } from '../../components/general/Entry/AppEntry';
-import { Text } from '../../components/general/Text/AppText';
+import { Button } from '../../../components/general/Button/AppButton';
+import { Entry } from '../../../components/general/Entry/AppEntry';
+import { Text } from '../../../components/general/Text/AppText';
 import { Container, SignUpWrapper } from './styles';
-import { AppButtonProps } from './../../components/general/Button/AppButton.prop';
+import { AppButtonProps } from '../../../components/general/Button/AppButton.prop';
 
 export const SignUpScreen = () => {
   return (
@@ -19,8 +19,8 @@ export const SignUpScreen = () => {
         <Text type="ustudent" style={{ textAlign: 'left' }}>
           Password
         </Text>
-        <Entry placeholder="Password"/>
-        <Button text="Continue"/>
+        <Entry placeholder="Password" />
+        <Button text="Continue" />
         <Text type="ustudent">Sign Up?</Text>
       </SignUpWrapper>
     </Container>
