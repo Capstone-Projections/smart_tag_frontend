@@ -39,10 +39,14 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "prepare": "husky install",
-    "typescriptCheck": "tsc --noEmit"
+    "typescriptCheck": "tsc --noEmit",
+    "test":"jest"
   },
   "version": "1.0.0",
   "private": true,
   "name": "smart_tag",
-  "main": "src/App/App.tsx"
+  "main": "src/App/App.tsx",
+  "jest": {
+    "preset": "react-native"
+  }
 }
