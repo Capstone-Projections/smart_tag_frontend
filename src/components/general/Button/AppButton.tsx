@@ -55,13 +55,13 @@ const AppButton = styled.TouchableOpacity<AppButtonProps>`
 export const Button = ({
   text,
   disabled,
-  onClick,
+  onPress,
   textType,
   textColor,
   type,
   size,
 }: AppButtonProps) => (
-  <AppButton text={text} onClick={onClick} type={type} size={size}>
+  <AppButton text={text} onPress={onPress} type={type} size={size}>
     <Text type={textType} color={textColor}>
       {text}
     </Text>
