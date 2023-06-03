@@ -3,7 +3,7 @@ import { ButtonProps } from 'react-native';
 export interface AppButtonProps {
   text: string;
   disabled?: boolean;
-  onClick?: Function;
+  onClick?: () => void;
   textType?: TextTypeOptions;
   textColor?: TextColorOptions;
   type?: ButtonTypeOptions;
