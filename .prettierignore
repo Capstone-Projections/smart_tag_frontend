@@ -1,3 +1,7 @@
 .husky 
 LICENSE
 README.md
+**/node_modules
+**/.git
+**/.expo
+**/*.tsx
