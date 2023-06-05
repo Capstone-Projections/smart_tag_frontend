@@ -26,12 +26,12 @@ const SignInScreen = () => {
               <Link _text={{
               fontSize: "xs",
               fontWeight: "500",
-              color: "indigo.500"
+              color: "darkBlue.500"
             }} alignSelf="flex-end" mt="1">
                 Forget Password?
               </Link>
             </FormControl>
-            <Button mt="2" colorScheme="indigo">
+            <Button mt="2" colorScheme="darkBlue">
               Sign in
             </Button>
             <HStack mt="6" justifyContent="center">
@@ -41,7 +41,7 @@ const SignInScreen = () => {
                 I'm a new user.{" "}
               </Text>
               <Link _text={{
-              color: "indigo.500",
+              color: "darkBlue.500",
               fontWeight: "medium",
               fontSize: "sm"
             }} href="#">

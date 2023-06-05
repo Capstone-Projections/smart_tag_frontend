@@ -23,10 +23,10 @@ const LaunchScreen = (props:LoginScreenProps) => {
         <Heading size="md" color="coolGray.800" _dark={{ color: 'warmGray.50' }} fontWeight="medium">
           Are you a student or lecturer?
         </Heading>
-        <Button colorScheme="blue" onPress={handleStudentPress}>
+        <Button colorScheme="darkBlue" onPress={handleStudentPress}>
           Student
         </Button>
-        <Button colorScheme="blue" onPress={handleTeacherPress}>
+        <Button colorScheme="darkBlue" onPress={handleTeacherPress}>
           Lecturer
         </Button>
       </VStack>

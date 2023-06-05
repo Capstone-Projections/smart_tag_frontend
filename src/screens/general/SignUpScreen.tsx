@@ -27,7 +27,7 @@ const SignUpScreen = (props: SignUpScreenProps) => {
             <FormControl.Label>Confirm Password</FormControl.Label>
             <Input type="password" />
           </FormControl>
-          <Button mt="2" colorScheme="blue" onPress={handleSignUpPress}>
+          <Button mt="2" colorScheme="darkBlue" onPress={handleSignUpPress}>
             Sign up
           </Button>
         </VStack>
