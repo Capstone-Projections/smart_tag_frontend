@@ -17,7 +17,7 @@ export const AppNavigator = () => {
     <NavigationContainer>
       <Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="SetUp"
+        initialRouteName="Launch"
       >
         <Screen name="Launch" component={LaunchScreen} />
         <Screen name="SignUp" component={SignUpScreen} />

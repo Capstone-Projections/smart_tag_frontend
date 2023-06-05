@@ -1,54 +1,54 @@
 {
-  "dependencies": {
-    "@freakycoder/react-native-custom-text": "^0.1.2",
-    "@react-navigation/bottom-tabs": "^6.5.7",
-    "@react-navigation/native": "^6.1.6",
-    "@react-navigation/native-stack": "^6.9.12",
-    "@react-navigation/stack": "^6.3.16",
-    "babel-preset-react-native": "^4.0.1",
-    "expo": "^48.0.7",
-    "expo-app-loading": "^2.1.1",
-    "expo-font": "~11.1.1",
-    "expo-splash-screen": "~0.18.2",
-    "husky-init": "^8.0.0",
-    "jss": "^10.10.0",
-    "jss-preset-default": "^10.10.0",
-    "native-base": "^3.4.28",
-    "postcss": "^8.4.23",
-    "prettier": "^2.8.8",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-native": "0.71.3",
-    "react-native-gesture-handler": "^2.10.2",
-    "react-native-paper": "^5.8.0",
-    "react-native-safe-area-context": "^4.5.3",
-    "react-native-screens": "~3.20.0",
-    "react-native-svg": "13.4.0",
-    "react-native-web": "~0.18.7",
-    "styled-components": "^6.0.0-rc.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.19.3",
-    "@types/react": "~18.0.24",
-    "@types/react-native": "~0.70.6",
-    "pinst": "^3.0.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
-  },
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "prepare": "husky install",
-    "typescriptCheck": "tsc --noEmit",
-    "test": "jest"
-  },
-  "version": "1.0.0",
-  "private": true,
-  "name": "smart_tag",
-  "main": "src/App/App.tsx",
-  "jest": {
-    "preset": "react-native"
-  }
+    "dependencies": {
+        "@freakycoder/react-native-custom-text": "^0.1.2",
+        "@react-navigation/bottom-tabs": "^6.5.7",
+        "@react-navigation/native": "^6.1.6",
+        "@react-navigation/native-stack": "^6.9.12",
+        "@react-navigation/stack": "^6.3.16",
+        "babel-preset-react-native": "^4.0.1",
+        "expo": "^48.0.7",
+        "expo-app-loading": "^2.1.1",
+        "expo-font": "~11.1.1",
+        "expo-splash-screen": "~0.18.2",
+        "husky-init": "^8.0.0",
+        "jss": "^10.10.0",
+        "jss-preset-default": "^10.10.0",
+        "native-base": "^3.4.28",
+        "postcss": "^8.4.23",
+        "prettier": "^2.8.8",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-native": "0.71.3",
+        "react-native-gesture-handler": "^2.10.2",
+        "react-native-paper": "^5.8.0",
+        "react-native-safe-area-context": "^4.5.3",
+        "react-native-screens": "~3.20.0",
+        "react-native-svg": "13.4.0",
+        "react-native-web": "~0.18.7",
+        "styled-components": "^6.0.0-rc.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.19.3",
+        "@types/react": "~18.0.24",
+        "@types/react-native": "~0.70.6",
+        "pinst": "^3.0.0",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.4"
+    },
+    "scripts": {
+        "start": "expo start",
+        "android": "expo start --android",
+        "ios": "expo start --ios",
+        "web": "expo start --web",
+        "prepare": "husky install",
+        "typescriptCheck": "tsc --noEmit",
+        "test": "jest"
+    },
+    "version": "1.0.0",
+    "private": true,
+    "name": "smart_tag",
+    "main": "src/App/App.tsx",
+    "jest": {
+        "preset": "react-native"
+    }
 }

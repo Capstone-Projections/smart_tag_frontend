@@ -1,8 +1,13 @@
 import React from 'react';
 import { Box, Center, Heading, VStack, FormControl, Input, Button } from 'native-base';
 
+interface SignUpScreenProps{
+  navigation: any
+}
 
-const SignUpScreen = () => {
+const SignUpScreen = (props: SignUpScreenProps) => {
+  const handleSignUpPress=()=>
+  props.navigation.navigate('SignIn')
   return (
     <Center w="100%">
       <Box safeArea p="2" w="90%" maxW="290" py="8">
@@ -22,7 +27,7 @@ const SignUpScreen = () => {
             <FormControl.Label>Confirm Password</FormControl.Label>
             <Input type="password" />
           </FormControl>
-          <Button mt="2" colorScheme="blue">
+          <Button mt="2" colorScheme="blue" onPress={handleSignUpPress}>
             Sign up
           </Button>
         </VStack>
