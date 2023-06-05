@@ -11,7 +11,7 @@ const SignUpScreen = (props: SignUpScreenProps) => {
   return (
     <Center w="100%">
       <Box safeArea p="2" w="90%" maxW="290" py="8">
-       <Heading mt="1" color="coolGray.800" _dark={{ color: "warmGray.200" }} fontWeight="semibold" >
+       <Heading mt="1" color="coolGray.800" _dark={{ color: "warmGray.200" }} fontWeight="semibold" fontFamily={'Poppins-Medium'}>
           Sign up to continue!
         </Heading>
         <VStack space={3} mt="5">

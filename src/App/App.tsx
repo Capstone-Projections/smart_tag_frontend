@@ -16,6 +16,7 @@ import { AppWrapper } from '../styles/AppWrapper';
 import { AppNavigator } from '../components/general/Navigation/AppNavigation';
 import LaunchScreen from '../screens/general/LaunchScreen';
 import SignUpScreen from '../screens/general/SignUpScreen';
+import { customTheme } from '../Theme';
 
 
 
@@ -39,7 +40,7 @@ export default function App() {
 
   return (
     
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={customTheme}>
       <AppNavigator/>
       
       

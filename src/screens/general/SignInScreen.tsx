@@ -4,20 +4,16 @@ import { Box, Center, Heading, VStack, FormControl, Input, Button, Text,Link,HSt
 const SignInScreen = () => {
     return <Center w="100%">
         <Box safeArea p="2" py="8" w="90%" maxW="290">
-          <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{
-          color: "warmGray.50"
-        }}>
-            Welcome
-          </Heading>
+          
           <Heading mt="1" _dark={{
-          color: "warmGray.200"
-        }} color="coolGray.600" fontWeight="medium" size="xs">
+          color: "coolGray.800"
+        }} color="warmGray" fontWeight="semibold" fontFamily={'Poppins-Medium'}>
             Sign in to continue!
           </Heading>
   
           <VStack space={3} mt="5">
             <FormControl>
-              <FormControl.Label>Email ID</FormControl.Label>
+              <FormControl.Label >Email ID</FormControl.Label>
               <Input />
             </FormControl>
             <FormControl>
@@ -31,13 +27,13 @@ const SignInScreen = () => {
                 Forget Password?
               </Link>
             </FormControl>
-            <Button mt="2" colorScheme="darkBlue">
+            <Button mt="2" colorScheme="darkBlue" >
               Sign in
             </Button>
             <HStack mt="6" justifyContent="center">
               <Text fontSize="sm" color="coolGray.600" _dark={{
-              color: "warmGray.200"
-            }}>
+              color: "warmGray.200" 
+            }} fontWeight='bold' fontFamily={'Poppins-Thin'}>
                 I'm a new user.{" "}
               </Text>
               <Link _text={{

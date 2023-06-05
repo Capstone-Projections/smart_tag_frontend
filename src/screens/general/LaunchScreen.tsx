@@ -17,10 +17,12 @@ const LaunchScreen = (props:LoginScreenProps) => {
   return (
     <Center flex={1} bg="white">
       <VStack space={5}>
-        <Heading size="lg" color="coolGray.800" _dark={{ color: 'warmGray.50' }} fontWeight="semibold">
-          Welcome
+        <Center>
+        <Heading size="lg" color="coolGray.800" _dark={{ color: 'warmGray.50' }} fontWeight="semibold" fontFamily={'Poppins-Medium'}>
+          Welcome!
         </Heading>
-        <Heading size="md" color="coolGray.800" _dark={{ color: 'warmGray.50' }} fontWeight="medium">
+        </Center>
+        <Heading size="md" color="coolGray.800" _dark={{ color: 'warmGray.50' }} fontWeight="regular"fontFamily={'Poppins-Regular'}>
           Are you a student or lecturer?
         </Heading>
         <Button colorScheme="darkBlue" onPress={handleStudentPress}>
