@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Center, Heading, VStack, FormControl, Input, Button } from 'native-base';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface SignUpScreenProps{
   navigation: any
@@ -9,10 +10,11 @@ const SignUpScreen = (props: SignUpScreenProps) => {
   const handleSignUpPress=()=>
   props.navigation.navigate('SignIn')
   return (
+    <SafeAreaView style={{padding:60}}>
     <Center w="100%">
       <Box safeArea p="2" w="90%" maxW="290" py="8">
        <Heading mt="1" color="coolGray.800" _dark={{ color: "warmGray.200" }} fontWeight="semibold" fontFamily={'Poppins-Medium'}>
-          Sign up to continue!
+          Sign up now!
         </Heading>
         <VStack space={3} mt="5">
           <FormControl>
@@ -33,6 +35,7 @@ const SignUpScreen = (props: SignUpScreenProps) => {
         </VStack>
       </Box>
     </Center>
+    </SafeAreaView>
   );
 };
 

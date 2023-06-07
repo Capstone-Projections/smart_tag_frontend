@@ -1,16 +1,26 @@
 import React from 'react';
 import { Box, Center, Heading, VStack, FormControl, Input, Button,Select,CheckIcon} from 'native-base';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-const SetUpScreen = () => {
+interface SetUpScreenProps{
+  navigation: any
+}
+
+const SetUpScreen = (props:SetUpScreenProps) => {
+
+  const handleSetUpPress=()=>
+  props.navigation.navigate('TabBar')
+
     const [service, setService] = React.useState("");
     const [service2, setService2] = React.useState("");
     
   return (
+    <SafeAreaView style={{padding:60}}>
     <Center w="100%">
-      <Box safeArea p="2" w="90%" maxW="290" py="8">
-       <Heading mt="1" color="coolGray.800" _dark={{ color: "warmGray.200" }} fontWeight="medium" size={'md'}>
-          Kindly set up to get started with Smart Tag
+      <Box safeArea p="3" w="90%" maxW="290" py="8">
+       <Heading  style={{textAlign:'center'}} mt="1" color="coolGray.800" _dark={{ color: "warmGray.200" }} fontWeight="medium" size={'md'}>
+          Kindly Setup to get started with Smart Tag
         </Heading>
         <VStack space={3} mt="5">
           <FormControl>
@@ -45,12 +55,13 @@ const SetUpScreen = () => {
           
         </Select>
       </Box>
-          <Button mt="2" colorScheme="blue">
+          <Button mt="2" colorScheme="darkBlue" onPress={handleSetUpPress}>
             Continue
           </Button>
         </VStack>
       </Box>
     </Center>
+    </SafeAreaView>
   );
 };
 

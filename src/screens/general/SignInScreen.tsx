@@ -1,14 +1,22 @@
 import React from 'react';
 import { Box, Center, Heading, VStack, FormControl, Input, Button, Text,Link,HStack } from 'native-base';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const SignInScreen = () => {
-    return <Center w="100%">
+interface SignInScreenProps{
+  navigation: any
+}
+
+const SignInScreen = (props: SignInScreenProps) => {
+  const handleSignInPress=()=>
+  props.navigation.navigate('SetUp')
+    return (
+    <SafeAreaView style={{padding:60}}>
+    <Center w="100%">
         <Box safeArea p="2" py="8" w="90%" maxW="290">
-          
-          <Heading mt="1" _dark={{
+          <Heading style={{textAlign:'left'}} mt="1" _dark={{
           color: "coolGray.800"
         }} color="warmGray" fontWeight="semibold" fontFamily={'Poppins-Medium'}>
-            Sign in to continue!
+            Sign in!
           </Heading>
   
           <VStack space={3} mt="5">
@@ -19,33 +27,17 @@ const SignInScreen = () => {
             <FormControl>
               <FormControl.Label>Password</FormControl.Label>
               <Input type="password" />
-              <Link _text={{
-              fontSize: "xs",
-              fontWeight: "500",
-              color: "darkBlue.500"
-            }} alignSelf="flex-end" mt="1">
-                Forget Password?
-              </Link>
-            </FormControl>
-            <Button mt="2" colorScheme="darkBlue" >
+              </FormControl>
+            <Button mt="2" colorScheme="darkBlue" onPress={handleSignInPress}>
               Sign in
             </Button>
             <HStack mt="6" justifyContent="center">
-              <Text fontSize="sm" color="coolGray.600" _dark={{
-              color: "warmGray.200" 
-            }} fontWeight='bold' fontFamily={'Poppins-Thin'}>
-                I'm a new user.{" "}
-              </Text>
-              <Link _text={{
-              color: "darkBlue.500",
-              fontWeight: "medium",
-              fontSize: "sm"
-            }} href="#">
-                Sign Up
-              </Link>
+             
             </HStack>
           </VStack>
         </Box>
-      </Center>;
+      </Center>
+      </SafeAreaView>
+    )
   };
   export default SignInScreen;
