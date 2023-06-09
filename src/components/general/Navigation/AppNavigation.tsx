@@ -11,7 +11,8 @@ import OTPScreen from '../../../screens/general/OTPScreen';
 import TabBar from '../../../screens/general/BottomTabBar';
 import CoursesList from '../Courses/Courses';
 import NFCScreen from '../../../screens/studentScreens/NFCScreen';
-
+import LecturerSetUpScreen from '../../../screens/lecturerScreens/LecturerSetup';
+import LecturerBottomTabBar from '../../../screens/lecturerScreens/LecturerBottomTab';
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -31,6 +32,9 @@ export const AppNavigator = () => {
         <Screen name="TabBar" component={TabBar} />
         <Screen name="Courses" component={CoursesList} />
         <Screen name="NFC" component={NFCScreen} />
+        <Screen name="LecturerSetup" component={LecturerSetUpScreen} />
+        {/* <Screen name="LecturerTabBar" component={LecturerBottomTabBar} /> */}
+
       
         
         

@@ -5,6 +5,11 @@ import CoursesList from '../../components/general/Courses/Courses'
 
 export default function CoursesScreen() {
   return (
+    <View>
+      <Text></Text>
    <CoursesList/>
+   </View>
   )
 }
+
+//create container

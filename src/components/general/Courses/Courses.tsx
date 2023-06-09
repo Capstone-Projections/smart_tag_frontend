@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, StyleSheet,ScrollView } from 'react-native';
+import { View, StyleSheet,ScrollView,Text,Alert } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
 interface Props{
     courseName: any;
     courseCode: any;
     lecturer:any;
+   
 
 }
 
@@ -24,10 +25,11 @@ const getRandomColor = () => {
 const CourseCard:React.FC<Props> = ({ courseName, courseCode, lecturer }) => {
     
 const cardColor= getRandomColor()
-
+const Alertme =()=>Alert.alert("Message", "Card Header Pressed")
     return (
+      
         <View style={{paddingBottom:15}}>
-      <Card style={[styles.card, { backgroundColor: cardColor }] }>
+       <Card style={[styles.card, { backgroundColor: cardColor }]}  onPress={(Alertme)}>
         <Card.Content>
           <Title style={styles.title}>{courseName}</Title>
           <Paragraph style={styles.paragraph}>{lecturer}</Paragraph>
@@ -67,7 +69,7 @@ const cardColor= getRandomColor()
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
-      padding: 30,
+      padding: 20,
       
     },
     card: {

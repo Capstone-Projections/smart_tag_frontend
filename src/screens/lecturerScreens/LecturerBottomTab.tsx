@@ -1,27 +1,26 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, BottomNavigation,List } from 'react-native-paper';
-import { CommonActions } from '@react-navigation/native';
+import { Text, BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SignInScreen from './SignInScreen';
-import CoursesList from '../../components/general/Courses/Courses';
-import NFCScreen from '../studentScreens/NFCScreen';
+import { CommonActions } from '@react-navigation/native';
 
 
 const Tab = createBottomTabNavigator();
 
-export default function TabBar() {
+export default function LecturerBottomTabBar() {
   return (
     <Tab.Navigator
-    
       screenOptions={{
         headerShown: false,
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: 'blue',
       }}
       tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar
           navigationState={state}
           safeAreaInsets={insets}
+         
           onTabPress={({ route, preventDefault }) => {
             const event = navigation.emit({
               type: 'tabPress',
@@ -61,64 +60,52 @@ export default function TabBar() {
       )}
     >
       <Tab.Screen
-        name="Courses"
-        component={CoursesList}
+        name="Home"
+        component={HomeScreen}
         options={{
-          tabBarLabel: 'Courses',
+          tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="school" size={size} color={color} />;
+            return <Icon name="home" size={size} color={color} />;
           },
         }}
       />
       <Tab.Screen
-        name="NFC"
-        component={NFCScreen}
-        options={{
-          tabBarLabel: 'NFC',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="nfc" size={size} color={color} />;
-          },
-        }}
-      />
-      <Tab.Screen
-        name="QRCode"
+        name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarLabel: 'QRCode',
+          tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="qrcode" size={size} color={color} />;
+            return <Icon name="cog" size={size} color={color} />;
           },
         }}
       />
-      
-      
-      
     </Tab.Navigator>
-    
   );
 }
 
-
-
-function SettingsScreen() {
+function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text variant="headlineMedium">Screen 2!</Text>
+      <Text variant="headlineMedium">Home!</Text>
     </View>
   );
 }
 
-
-
-
-
-
+function SettingsScreen() {
+  return (
+    <View style={styles.container}>
+      <Text variant="headlineMedium">Settings!</Text>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
-  
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  tabBar: {
+    backgroundColor: 'white',
   },
 });
