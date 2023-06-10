@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Center, Heading, VStack, Button, Image } from 'native-base';
-import SignUpScreen from './SignUpScreen';
-import { createStackNavigator } from '@react-navigation/stack';
+
 
 interface LoginScreenProps{
   navigation:any;
@@ -11,8 +10,8 @@ interface LoginScreenProps{
 
 const LaunchScreen = (props:LoginScreenProps) => {
   const handleStudentPress=()=>
-    props.navigation.navigate('SignUp')
-  const handleTeacherPress=()=>props.navigation.navigate('SignUp')
+    props.navigation.navigate('GetStarted')
+  const handleTeacherPress=()=>props.navigation.navigate('GetStarted')
   
   return (
     <Center flex={1} bg="white">

@@ -23,7 +23,7 @@ export const AppNavigator = () => {
     <NavigationContainer>
       <Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="GetStarted"
+        initialRouteName="Launch"
       >
         <Screen name="Launch" component={LaunchScreen} />
         <Screen name="SignUp" component={SignUpScreen} />
@@ -35,12 +35,7 @@ export const AppNavigator = () => {
         <Screen name="NFC" component={NFCScreen} />
         <Screen name="LecturerSetup" component={LecturerSetUpScreen} />
         <Screen name="GetStarted" component={GetStarted}/>
-
       
-        
-        
-        
-        
       </Navigator>
     </NavigationContainer>
   );

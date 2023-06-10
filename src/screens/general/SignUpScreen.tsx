@@ -30,7 +30,7 @@ const SignUpScreen = (props: SignUpScreenProps) => {
               <FormControl.Label>Email</FormControl.Label>
               <Input />
             </FormControl>
-            <Button colorScheme="darkBlue" onPress={handleSignUpPress}>
+            <Button colorScheme="darkBlue" >
               Submit for OTP code
             </Button>
           </VStack>

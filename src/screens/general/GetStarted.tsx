@@ -6,7 +6,15 @@ import { styled } from 'styled-components/native';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 
 
-const GetStarted = () => {
+
+interface GetStartedProps{
+    navigation: any
+  }
+
+const GetStarted = (props: GetStartedProps) => {
+    const handleGetStartedPress=()=>
+    props.navigation.navigate('TabBar')
+
   return (
     <KeyboardAvoidingWrapper>
     <SafeAreaView >
@@ -25,10 +33,9 @@ const GetStarted = () => {
               </FormControl.Label>
               <Input style={style.input} _focus={{ borderColor: 'black' }}/>
             </FormControl>
-            <Button colorScheme="darkBlue" style={style.button}>Submit For OTP</Button>
+            <Button colorScheme="darkBlue" style={style.button} onPress={handleGetStartedPress}>Submit For OTP</Button>
             </VStack>
-      
-    </SafeAreaView>
+      </SafeAreaView>
     </KeyboardAvoidingWrapper>
   )
 }
@@ -66,8 +73,8 @@ formControl: {
     fontSize: 16, 
   },
   button:{
-    width: '75%',
-    height:60,
+    width: 300,
+    height:58,
     borderRadius:8,
     fontWeight: ''
   },

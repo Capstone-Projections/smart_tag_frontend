@@ -28,7 +28,7 @@ const SignInScreen = (props: SignInScreenProps) => {
               <FormControl.Label>Password</FormControl.Label>
               <Input type="password" />
               </FormControl>
-            <Button mt="2" colorScheme="darkBlue" onPress={handleSignInPress}>
+            <Button mt="2" colorScheme="darkBlue">
               Sign in
             </Button>
             <HStack mt="6" justifyContent="center">
