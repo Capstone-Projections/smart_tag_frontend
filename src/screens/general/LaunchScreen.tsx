@@ -1,43 +1,70 @@
-import React from 'react';
-import { Box, Center, Heading, VStack, Button, Image } from 'native-base';
+import { View, Text,StyleSheet,Image } from 'react-native'
+import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { Button, VStack } from 'native-base'
 
-
-interface LoginScreenProps{
+interface LaunchScreenProps{
   navigation:any;
 }
 
-
-
-const LaunchScreen = (props:LoginScreenProps) => {
+const LaunchScreen = (props:LaunchScreenProps) => {
   const handleStudentPress=()=>
     props.navigation.navigate('GetStarted')
   const handleTeacherPress=()=>props.navigation.navigate('GetStarted')
-  
   return (
-    <Center flex={1} bg="white">
-      <VStack space={5}>
-        <Center>
-          <Image source={
-      require ("../../../assets/images/scott-graham-5fNmWej4tAA-unsplash.jpg")
-    } alt="Alternate Text" style={{ width:300, height: 350 }} />
-      <Heading size="lg" color="coolGray.800" _dark={{ color: 'warmGray.50' }} fontWeight="semibold" fontFamily={'Poppins-Medium'}>
-          Welcome!
-        </Heading>
-        
-        
-        <Heading size="md" color="coolGray.800" _dark={{ color: 'warmGray.50' }} fontWeight="300">
-          Are you a student or lecturer?
-        </Heading>
-        </Center>
-        <Button colorScheme="darkBlue" onPress={handleStudentPress} >
-          Student
-        </Button>
-        <Button colorScheme="darkBlue" onPress={handleTeacherPress}>
-          Lecturer
-        </Button>
+    <SafeAreaView >
+      <View style={styles.imageContainer}>
+        <Image source={require('../../../assets/images/pexels-tirachard-kumtanom-733857.jpg')} style={styles.image}/>
+      </View>
+      <View style={{padding:10}}>
+        <Text style={styles.textFirst}>Welcome!</Text>
+        <Text style={styles.textSecond}>Are you a student?</Text>
+      </View>
+      <VStack space={5} alignItems="center">
+      <Button colorScheme="darkBlue" style={styles.button} onPress={handleStudentPress}>Student</Button>
+      <Button colorScheme="darkBlue" style={styles.button}  onPress={handleTeacherPress} >Lecturer</Button>
       </VStack>
-    </Center>
-  );
-};
+    </SafeAreaView>
+  )
+}
 
-export default LaunchScreen;
+
+const styles = StyleSheet.create({
+    imageContainer:{
+        marginTop:0,
+        justifyContent:'center',
+        borderRadius: 10,
+        margin:10,
+        alignItems: 'center',    
+    },
+    image:{
+        width:414,
+        height: 450,
+        borderRadius:10,
+        alignItems: 'center',
+        margin:0,
+    },
+    textFirst:{
+        fontSize:28,
+        textAlign: 'center', 
+        fontFamily: 'Poppins'
+    },
+    textSecond:{
+        fontSize:21,
+       fontWeight: '300',
+       textAlign: 'center', 
+       fontFamily: 'Poppins'
+       
+    },
+    button:{
+        width: 300,
+        height:58,
+        borderRadius:8,
+        
+       
+        
+      },
+
+})
+
+export default LaunchScreen

@@ -41,8 +41,6 @@ export default function App() {
     
       <NativeBaseProvider theme={customTheme}> 
       <AppNavigator/>
-     
-      
      </NativeBaseProvider> 
     
   );

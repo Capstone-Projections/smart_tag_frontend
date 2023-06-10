@@ -19,13 +19,12 @@ const GetStarted = (props: GetStartedProps) => {
     <KeyboardAvoidingWrapper>
     <SafeAreaView >
           <View >
-        <View >
+        <View style={style.imageContainer}>
+        <Image source={require('../../../assets/images/pexels-cottonbro-studio-3661193.jpg')} style={style.image} resizeMode='cover'/>
       <Text style={style.title} >Get Started!</Text>
     </View>
       </View>
-        <View style={style.imageContainer}>
-        <Image source={require('../../../assets/images/pexels-cottonbro-studio-3661193.jpg')} style={style.image} resizeMode='cover'/>
-        </View>
+        
         <VStack space={2} alignItems="center">
         <FormControl style={style.formControl}>
               <FormControl.Label>
@@ -33,7 +32,7 @@ const GetStarted = (props: GetStartedProps) => {
               </FormControl.Label>
               <Input style={style.input} _focus={{ borderColor: 'black' }}/>
             </FormControl>
-            <Button colorScheme="darkBlue" style={style.button} onPress={handleGetStartedPress}>Submit For OTP</Button>
+            <Button colorScheme="darkBlue" style={style.button} onPress={handleGetStartedPress}>Submit for OTP</Button>
             </VStack>
       </SafeAreaView>
     </KeyboardAvoidingWrapper>
@@ -42,9 +41,13 @@ const GetStarted = (props: GetStartedProps) => {
 
 const style = StyleSheet.create({ 
     title:{
-fontSize:28,
-fontWeight: 'normal',
-textAlign: 'left',
+    position: 'absolute',
+    top:0,
+    left:0,
+    fontSize:28,
+    fontWeight: 'normal',
+    fontFamily: 'Poppins'
+
 
 },
 imageContainer:{
