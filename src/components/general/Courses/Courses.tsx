@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Text, Alert } from 'react-native';
+import { useNavigation,NavigationProp } from '@react-navigation/native';
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
 
+
 interface Props{
-  courseName: any;
-  courseCode: any;
-  lecturer:any;
+  courseName: string;
+  courseCode: string;
+  lecturer: string;
+  
  
 
 }
@@ -26,10 +29,13 @@ const getRandomColor = () => {
 const CourseCard:React.FC<Props> = ({ courseName, courseCode, lecturer }) => {
   
 const cardColor= getRandomColor()
-const Alertme =()=>Alert.alert("Message", "Card Header Pressed")
+const navigation = useNavigation() as any;
+
+
+
   return (
     <View style={styles.cardContainer}>
-      <Card style={[styles.card, { backgroundColor: cardColor }]} onPress={Alertme}>
+      <Card style={[styles.card, { backgroundColor: cardColor }]}  onPress={() => navigation.navigate('TabBar')} >
         <Card.Content>
           <Title style={styles.title}>{courseName}</Title>
           <Paragraph style={styles.paragraph}>{lecturer}</Paragraph>
@@ -39,6 +45,8 @@ const Alertme =()=>Alert.alert("Message", "Card Header Pressed")
     </View>
   );
 };
+
+
 
 const CoursesList = () => {
   const courses = [
@@ -51,8 +59,7 @@ const CoursesList = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Courses</Text>
-      <ScrollView>
+            <ScrollView>
         {courses.map((course, index) => (
           <CourseCard
             key={index}
@@ -70,6 +77,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:'white',
+    paddingTop:0,
+    paddingBottom:0,
+    marginBottom:0,
   },
   headerText: {
     fontSize: 24,
@@ -86,6 +99,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
+    
   },
   paragraph: {
     color: 'white',

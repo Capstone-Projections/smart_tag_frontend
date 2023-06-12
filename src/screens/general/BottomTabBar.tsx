@@ -4,9 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, BottomNavigation,List } from 'react-native-paper';
 import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SignInScreen from './SignInScreen';
-import CoursesList from '../../components/general/Courses/Courses';
 import NFCScreen from '../studentScreens/NFCScreen';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -55,18 +54,18 @@ export default function TabBar() {
                 ? options.title
                 : route.name;
 
-            return label as string; // Explicitly define the return type as string
+            return label as string; 
           }}
         />
       )}
     >
       <Tab.Screen
-        name="Courses"
-        component={CoursesList}
+        name="Timetable"
+        component={TimetableScreen}
         options={{
-          tabBarLabel: 'Courses',
+          tabBarLabel: 'Timetable',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="school" size={size} color={color} />;
+            return <Icon name="timetable" size={size} color={color} />;
           },
         }}
       />
@@ -91,14 +90,20 @@ export default function TabBar() {
         }}
       />
       
-      
+     
       
     </Tab.Navigator>
     
   );
 }
 
-
+function TimetableScreen() {
+  return (
+    <View style={styles.container}>
+      <Text variant="headlineMedium">Timetable Screen!</Text>
+    </View>
+  );
+}
 
 function SettingsScreen() {
   return (

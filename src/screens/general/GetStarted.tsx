@@ -2,7 +2,6 @@ import { View, Text,StyleSheet,Image } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormControl,Input,Button,Box, VStack } from 'native-base';
-import { styled } from 'styled-components/native';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 
 
@@ -13,14 +12,15 @@ interface GetStartedProps{
 
 const GetStarted = (props: GetStartedProps) => {
     const handleGetStartedPress=()=>
-    props.navigation.navigate('TabBar')
+    props.navigation.navigate('Drawer')
 
   return (
+    <View style={style.container}>
     <KeyboardAvoidingWrapper>
-    <SafeAreaView >
+      <SafeAreaView >
           <View >
         <View style={style.imageContainer}>
-        <Image source={require('../../../assets/images/pexels-cottonbro-studio-3661193.jpg')} style={style.image} resizeMode='cover'/>
+        <Image source={require('../../../assets/images/started.jpg')} style={style.image} resizeMode='cover'/>
       <Text style={style.title} >Get Started!</Text>
     </View>
       </View>
@@ -35,14 +35,20 @@ const GetStarted = (props: GetStartedProps) => {
             <Button colorScheme="darkBlue" style={style.button} onPress={handleGetStartedPress}>Submit for OTP</Button>
             </VStack>
       </SafeAreaView>
+      
     </KeyboardAvoidingWrapper>
+    </View>
   )
 }
 
-const style = StyleSheet.create({ 
+const style = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:'white',
+      }, 
     title:{
     position: 'absolute',
-    top:0,
+    top:15,
     left:0,
     fontSize:28,
     fontWeight: 'normal',
@@ -83,6 +89,7 @@ formControl: {
   },
   labelText: {
     color: 'black', 
+    fontFamily: 'Poppins'
   },
 })
 

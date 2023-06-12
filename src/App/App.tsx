@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { View, SafeAreaView, StyleSheet } from 'react-native';
@@ -8,12 +9,10 @@ import { Text } from '../components/general/Text/AppText';
 import { Button } from '../components/general/Button';
 import { Entry } from '../components/general/Entry/AppEntry';
 import { registerRootComponent } from 'expo';
-
 import { NativeBaseProvider, Box } from 'native-base';
 import { AppWrapper } from '../styles/AppWrapper';
-import { AppNavigator } from '../components/general/Navigation/AppNavigation';
+import { AppNavigator } from '../components/AppNavigation';
 import LaunchScreen from '../screens/general/LaunchScreen';
-import SignUpScreen from '../screens/general/SignUpScreen';
 import { customTheme } from '../Theme';
 
 

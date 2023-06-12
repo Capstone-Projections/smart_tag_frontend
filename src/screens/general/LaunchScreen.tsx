@@ -12,30 +12,37 @@ const LaunchScreen = (props:LaunchScreenProps) => {
     props.navigation.navigate('GetStarted')
   const handleTeacherPress=()=>props.navigation.navigate('GetStarted')
   return (
+    <View style={styles.container}>
     <SafeAreaView >
       <View style={styles.imageContainer}>
-        <Image source={require('../../../assets/images/pexels-tirachard-kumtanom-733857.jpg')} style={styles.image}/>
+        <Image source={require('../../../assets/images/launch.jpg')} style={styles.image}/>
       </View>
       <View style={{padding:10}}>
         <Text style={styles.textFirst}>Welcome!</Text>
-        <Text style={styles.textSecond}>Are you a student?</Text>
+        <Text style={styles.textSecond}>Are you a student or lecturer?</Text>
       </View>
       <VStack space={5} alignItems="center">
       <Button colorScheme="darkBlue" style={styles.button} onPress={handleStudentPress}>Student</Button>
       <Button colorScheme="darkBlue" style={styles.button}  onPress={handleTeacherPress} >Lecturer</Button>
       </VStack>
     </SafeAreaView>
+    </View>
   )
 }
 
 
 const styles = StyleSheet.create({
+  container:{
+flex:1,
+backgroundColor:'white',
+  },
     imageContainer:{
         marginTop:0,
         justifyContent:'center',
         borderRadius: 10,
         margin:10,
-        alignItems: 'center',    
+        alignItems: 'center', 
+         
     },
     image:{
         width:414,
