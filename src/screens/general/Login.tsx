@@ -1,18 +1,21 @@
 import { View, Text,StyleSheet,Image } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FormControl,Input,Button,Box, VStack } from 'native-base';
+import { FormControl,Input,Button,Box, VStack,Link } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 
 
 
-interface GetStartedProps{
+interface LoginProps{
     navigation: any
   }
 
-const GetStarted = (props: GetStartedProps) => {
-    const handleGetStartedPress=()=>
+const Login = (props: LoginProps) => {
+    const handleLoginPress=()=>
     props.navigation.navigate('Drawer')
+
+    const handleLinkPress=()=>
+    props.navigation.navigate('GetStarted')
 
   return (
     <View style={style.container}>
@@ -20,8 +23,8 @@ const GetStarted = (props: GetStartedProps) => {
       <SafeAreaView >
           <View >
         <View style={style.imageContainer}>
-        <Image source={require('../../../assets/images/started.jpg')} style={style.image} resizeMode='cover'/>
-      <Text style={style.title} >Get Started!</Text>
+        <Image source={require('../../../assets/images/login.jpg')} style={style.image} resizeMode='cover'/>
+      <Text style={style.title} >Login!</Text>
     </View>
       </View>
         
@@ -32,8 +35,12 @@ const GetStarted = (props: GetStartedProps) => {
               </FormControl.Label>
               <Input style={style.input} _focus={{ borderColor: 'black' }}/>
             </FormControl>
-            <Button colorScheme="darkBlue" style={style.button} onPress={handleGetStartedPress}>Submit for OTP</Button>
+            <Button colorScheme="darkBlue" style={style.button} onPress={handleLoginPress}>Submit for OTP</Button>
             </VStack>
+            <View style={{padding:10}}>
+                <Link style={style.link} isExternal _text={{
+        color: "blue.400"}} onPress={handleLinkPress}>New User?</Link>
+            </View>
       </SafeAreaView>
       
     </KeyboardAvoidingWrapper>
@@ -53,8 +60,6 @@ const style = StyleSheet.create({
     fontSize:18,
     fontWeight: 'normal',
     fontFamily: 'Poppins'
-
-
 },
 imageContainer:{
     marginTop:0,
@@ -87,12 +92,17 @@ formControl: {
     width: 300,
     height:58,
     borderRadius:8,
-    fontWeight: ''
+    
   },
   labelText: {
     color: 'black', 
     fontFamily: 'Poppins'
   },
+  link:{
+    flex:1,
+    justifyContent:'center',
+    paddingLeft:200,
+  }
 })
 
-export default GetStarted;
+export default Login;

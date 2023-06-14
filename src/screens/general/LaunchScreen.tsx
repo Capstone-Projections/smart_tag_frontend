@@ -9,8 +9,8 @@ interface LaunchScreenProps{
 
 const LaunchScreen = (props:LaunchScreenProps) => {
   const handleStudentPress=()=>
-    props.navigation.navigate('GetStarted')
-  const handleTeacherPress=()=>props.navigation.navigate('GetStarted')
+    props.navigation.navigate('Login')
+  const handleTeacherPress=()=>props.navigation.navigate('Login')
   return (
     <View style={styles.container}>
     <SafeAreaView >

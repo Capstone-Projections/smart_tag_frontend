@@ -11,6 +11,8 @@ import LecturerBottomTabBar from '../screens/lecturerScreens/LecturerBottomTab';
 import GetStarted from '../screens/general/GetStarted';
 import LaunchScreen from '../screens/general/LaunchScreen';
 import DrawerNavigation from './DrawerNavigation';
+import AddCourse from '../screens/studentScreens/AddCourseScreen';
+import Login from '../screens/general/Login';
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -32,7 +34,12 @@ export const AppNavigator = () => {
         <Screen name="Courses" component={CoursesList} />
         <Screen name="NFC" component={NFCScreen} />
         <Screen name="LecturerSetup" component={LecturerSetUpScreen} />
+        <Screen name="LecturerBottomTab" component={LecturerBottomTabBar} />
         <Screen name="Drawer" component={DrawerNavigation} />
+        <Screen name="Login" component={Login} />
+        <Screen name="AddCourse" component={AddCourse} />
+
+
         </Navigator>
     </NavigationContainer>
   );

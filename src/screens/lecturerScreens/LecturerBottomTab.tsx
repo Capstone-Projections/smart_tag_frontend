@@ -54,28 +54,38 @@ export default function LecturerBottomTabBar() {
                 ? options.title
                 : route.name;
 
-            return label as string; // Explicitly define the return type as string
+            return label as string; 
           }}
         />
       )}
     >
       <Tab.Screen
-        name="Home"
+        name="Timetable"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Timetable',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
+            return <Icon name="timetable" size={size} color={color} />;
           },
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name="Quest"
         component={SettingsScreen}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: 'Quest',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
+            return <Icon name="account-question" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="People"
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: 'People',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="account-group" size={size} color={color} />;
           },
         }}
       />
