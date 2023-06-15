@@ -7,7 +7,7 @@ interface Props{
 
 const KeyboardAvoidingWrapper: React.FC<Props>=({children})=>{
     return(
-        <KeyboardAvoidingView style={{flex:1}}>
+        <KeyboardAvoidingView style={{flex:1, backgroundColor:'white'}}>
             <ScrollView>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 {children}

@@ -49,7 +49,7 @@ const navigation = useNavigation() as any;
 
 
 const CoursesList = () => {
-  const courses = [
+  let courses = [
     { courseName: 'Computer Networking', courseCode: 'COE475', lecturer: 'Prof. Emmanuel Akowuah' },
     { courseName: 'Artificial Intelligence', courseCode: 'COE436', lecturer: 'Selorm Klogo' },
     { courseName: 'Introduction to Programming', courseCode: 'COE421', lecturer: 'John Doe' },
@@ -59,7 +59,7 @@ const CoursesList = () => {
 
   return (
     <View style={styles.container}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
         {courses.map((course, index) => (
           <CourseCard
             key={index}

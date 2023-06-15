@@ -7,7 +7,7 @@ interface Props{
   setPinReady: (value: any) => void;
   code: string;
   setCode: (value: string) => void;
-  maxlength: number; // Explicitly specify the type of maxlength
+  maxlength: number; 
 }
 
 const CodeInputField:React.FC<Props> =({ setPinReady,code,setCode,maxlength})=> {

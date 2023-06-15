@@ -12,7 +12,7 @@ interface GetStartedProps{
 
 const GetStarted = (props: GetStartedProps) => {
     const handleGetStartedPress=()=>
-    props.navigation.navigate('Drawer')
+    props.navigation.navigate('OTP')
 
   return (
     <View style={style.container}>
@@ -87,7 +87,7 @@ formControl: {
     width: 300,
     height:58,
     borderRadius:8,
-    fontWeight: ''
+    
   },
   labelText: {
     color: 'black', 

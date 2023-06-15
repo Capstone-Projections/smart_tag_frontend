@@ -12,7 +12,7 @@ interface LoginProps{
 
 const Login = (props: LoginProps) => {
     const handleLoginPress=()=>
-    props.navigation.navigate('Drawer')
+    props.navigation.navigate('OTP')
 
     const handleLinkPress=()=>
     props.navigation.navigate('GetStarted')

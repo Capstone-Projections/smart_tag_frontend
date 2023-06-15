@@ -55,6 +55,7 @@ const data2 = [
     <Button colorScheme="darkBlue" style={style.button} ><Text style={{color:'white', fontSize:18,}}>Add</Text></Button>
    
     <View style={style.buttonSpace} />
+    
       <Button colorScheme="darkBlue" style={style.buttonOutline} variant="outline" ><Text style={style.buttonText}>Cancel</Text></Button>
     </View>
     </View>

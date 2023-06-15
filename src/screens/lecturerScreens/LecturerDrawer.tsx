@@ -1,17 +1,15 @@
 import { View, Text } from 'react-native'
 import { DrawerItemList, createDrawerNavigator } from 
 '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import CoursesScreen from '../screens/general/CoursesScreen';
-import CoursesList from './general/Courses/Courses';
-import AddCourse from '../screens/studentScreens/AddCourseScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Settings from '../screens/general/Settings';
+import AddCourse from '../studentScreens/AddCourseScreen';
+import LecturerCoursesList from './LecturerCoursesList';
+import Settings from '../general/Settings';
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigation = () => {
+const LecturerDrawer = () => {
   return (
     <Drawer.Navigator 
     drawerContent={
@@ -52,7 +50,7 @@ const DrawerNavigation = () => {
      }} initialRouteName='Courses'>
       <Drawer.Screen name="Courses" options={{drawerIcon: ({ color, size }) => {
             return <Icon name="school" size={size} color={color} />;
-          },}} component={CoursesList} />
+          },}} component={LecturerCoursesList} />
       <Drawer.Screen name="Add Course" options={{drawerIcon: ({ color, size }) => {
             return <Icon name="plus-circle" size={size} color={color} />;
           },}} component={AddCourse} />
@@ -63,4 +61,6 @@ const DrawerNavigation = () => {
   )
 }
 
-export default DrawerNavigation;
+
+
+export default LecturerDrawer
