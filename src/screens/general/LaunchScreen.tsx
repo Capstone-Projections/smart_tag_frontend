@@ -1,7 +1,8 @@
 import { View, Text,StyleSheet,Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button, VStack } from 'native-base'
+import * as Animatable from 'react-native-animatable';
 
 interface LaunchScreenProps{
   navigation:any;
@@ -9,22 +10,27 @@ interface LaunchScreenProps{
 
 const LaunchScreen = (props:LaunchScreenProps) => {
   const handleStudentPress=()=>
-    props.navigation.navigate('Login')
-  const handleTeacherPress=()=>props.navigation.navigate('Login')
+    props.navigation.navigate('Login',{ userType: 'student' })
+
+  const handleTeacherPress=()=>
+   props.navigation.navigate('Login',{ userType: 'lecturer' })
+
   return (
     <View style={styles.container}>
     <SafeAreaView >
       <View style={styles.imageContainer}>
-        <Image source={require('../../../assets/images/launch.jpg')} style={styles.image}/>
+        < Animatable.Image animation='fadeInDown' source={require('../../../assets/images/launch.jpg')} style={styles.image}/>
       </View>
-      <View style={{padding:10}}>
+      <Animatable.View animation='fadeInDown' style={{padding:10}}>
         <Text style={styles.textFirst}>Welcome!</Text>
         <Text style={styles.textSecond}>Are you a student or lecturer?</Text>
-      </View>
+      </Animatable.View>
+      <Animatable.View animation='fadeInDown'>
       <VStack space={5} alignItems="center">
       <Button colorScheme="darkBlue" style={styles.button} onPress={handleStudentPress}>Student</Button>
       <Button colorScheme="darkBlue" style={styles.button}  onPress={handleTeacherPress} >Lecturer</Button>
       </VStack>
+      </Animatable.View>
     </SafeAreaView>
     </View>
   )

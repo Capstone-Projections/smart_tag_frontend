@@ -8,10 +8,12 @@ import {Octicons} from '@expo/vector-icons'
 import CodeInputField from "../../components/general/InputField/CodeInputField";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 
 
 interface OTPVerificatioProps{
-    navigation: any
+    navigation: any,
+    route: any
   }
 
 
@@ -19,17 +21,23 @@ const OTPVerificationScreen=(props:OTPVerificatioProps)=>{
 
     const [code,setCode]=useState('');
     const[pinReady,setPinReady]=useState(false)
+    
 
    //verification button
    const [verifying,setVerifying]=useState(false)
 
     const MAX_CODE_LENGTH=4
      
-    const handleOTPPress=()=>
-    props.navigation.navigate('SetUp')
-
-    const submitOTPVerification= async ()=>{}
-
+    const handleOTPPress = () => {
+        const { userType } = props.route.params;
+        if (userType === 'student') {
+          props.navigation.navigate('SetUp');
+        } else if (userType === 'lecturer') {
+          props.navigation.navigate('LecturerSetUp');
+        }
+      };
+    
+      
     return(
         
         <KeyboardAvoidingWrapper >
@@ -43,11 +51,11 @@ const OTPVerificationScreen=(props:OTPVerificatioProps)=>{
             <Text style={style.infoText}>Enter the 4-digit code sent to your email</Text>
 
             <CodeInputField
-     setPinReady={setPinReady}
-     code={code}
-     setCode={setCode}
-     maxlength={MAX_CODE_LENGTH}
-     />     
+            setPinReady={setPinReady}
+            code={code}
+            setCode={setCode}
+            maxlength={MAX_CODE_LENGTH}
+            />     
 
 {!verifying && pinReady && 
 (
@@ -103,9 +111,7 @@ const style=StyleSheet.create({
         width: 250,
         height:58,
         borderRadius:8,
-        
-        
-      },
+        },
 }
     )
 

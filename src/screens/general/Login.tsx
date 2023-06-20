@@ -3,19 +3,44 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormControl,Input,Button,Box, VStack,Link } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
+import axios from 'axios';
+import { useState } from 'react';
+import { Alert } from 'react-native/Libraries/Alert/Alert';
+
 
 
 
 interface LoginProps{
-    navigation: any
+    navigation: any;
+    route:any;
   }
 
 const Login = (props: LoginProps) => {
-    const handleLoginPress=()=>
-    props.navigation.navigate('OTP')
+  const [email, setEmail] = useState('');
+
+    const handleLoginPress=()=>{
+      props.navigation.navigate('OTP',{ userType: props.route.params.userType });
+      axios
+      .post('https://smart-tag.onrender.com/login', {
+        email: email,
+      })
+      .then(function (response) {
+        console.log(response.status);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(() => {
+        setEmail('');
+      });
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+  };
 
     const handleLinkPress=()=>
-    props.navigation.navigate('GetStarted')
+    props.navigation.navigate('GetStarted',{ userType: props.route.params.userType })
 
   return (
     <View style={style.container}>
@@ -33,7 +58,7 @@ const Login = (props: LoginProps) => {
               <FormControl.Label>
               <Text style={style.labelText}>Email</Text>
               </FormControl.Label>
-              <Input style={style.input} _focus={{ borderColor: 'black' }}/>
+              <Input style={style.input} _focus={{ borderColor: 'black' }} onChangeText={handleEmailChange}  value={email}/>
             </FormControl>
             <Button colorScheme="darkBlue" style={style.button} onPress={handleLoginPress}>Submit for OTP</Button>
             </VStack>

@@ -11,7 +11,7 @@ interface LecturerSetUpScreenProps{
 const LecturerSetUpScreen = (props:LecturerSetUpScreenProps) => {
 
     const handleSetUpPress=()=>
-    props.navigation.navigate('Drawer')
+    props.navigation.navigate('LecturerDrawer')
 
     const [service, setService] = React.useState("");
     const [service2, setService2] = React.useState("");

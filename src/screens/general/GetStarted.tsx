@@ -7,12 +7,13 @@ import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 
 
 interface GetStartedProps{
-    navigation: any
+    navigation: any;
+    route:any;
   }
 
 const GetStarted = (props: GetStartedProps) => {
     const handleGetStartedPress=()=>
-    props.navigation.navigate('OTP')
+    props.navigation.navigate('OTP',{ userType: props.route.params.userType })
 
   return (
     <View style={style.container}>
