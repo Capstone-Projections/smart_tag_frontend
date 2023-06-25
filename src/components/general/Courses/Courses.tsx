@@ -47,6 +47,7 @@ const navigation = useNavigation() as any;
 
 
 const CoursesList = () => {
+  //TODO: make sure that the courses that show are as a result of an api call and not what is hard coded over here 
   let courses = [
     { courseName: 'Computer Networking', courseCode: 'COE475', lecturer: 'Prof. Emmanuel Akowuah' },
     { courseName: 'Artificial Intelligence', courseCode: 'COE436', lecturer: 'Selorm Klogo' },

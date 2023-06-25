@@ -25,7 +25,7 @@ import LecturerTimetable from '../screens/lecturerScreens/LecturerTimetable';
 const { Navigator, Screen } = createStackNavigator();
 
 
-
+//TODO: make sure to use some form of protected routes
 export const AppNavigator = () => {
   return (
     <NavigationContainer>

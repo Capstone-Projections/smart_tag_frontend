@@ -22,7 +22,7 @@ const OTPVerificationScreen=(props:OTPVerificatioProps)=>{
     const [code,setCode]=useState('');
     const[pinReady,setPinReady]=useState(false)
     
-
+//TODO: make sure to use the authenticate route for checking if the otp is right
    //verification button
    const [verifying,setVerifying]=useState(false)
 
