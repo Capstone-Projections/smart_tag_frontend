@@ -1,14 +1,10 @@
 import { View, Text,StyleSheet,Image } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FormControl,Input,Button,Box, VStack,Link } from 'native-base';
+import { FormControl,Input,Button,VStack,Link } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 import axios from 'axios';
 import { useState } from 'react';
-import { Alert } from 'react-native/Libraries/Alert/Alert';
-
-
-
 
 interface LoginProps{
     navigation: any;
@@ -17,15 +13,17 @@ interface LoginProps{
 
 const Login = (props: LoginProps) => {
   const [email, setEmail] = useState('');
-
-    const handleLoginPress=()=>{
+    const handleLoginPress= async()=>{
       props.navigation.navigate('OTP',{ userType: props.route.params.userType });
-      axios
+      await axios
       .post('https://smart-tag.onrender.com/login', {
-        email: email,
+        email: email.trim(),
       })
       .then(function (response) {
+        console.log(response.data);
         console.log(response.status);
+const responseData=response.data
+
       })
       .catch(function (error) {
         console.log(error);
@@ -127,6 +125,7 @@ formControl: {
     flex:1,
     justifyContent:'center',
     paddingLeft:200,
+    fontFamily:'Poppins'
   }
 })
 

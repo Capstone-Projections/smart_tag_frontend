@@ -5,7 +5,7 @@ import { Text, BottomNavigation,List } from 'react-native-paper';
 import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NFCScreen from '../studentScreens/NFCScreen';
-
+import Timetable from './TimetableScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -61,7 +61,7 @@ export default function TabBar() {
     >
       <Tab.Screen
         name="Timetable"
-        component={TimetableScreen}
+        component={Timetable}
         options={{
           tabBarLabel: 'Timetable',
           tabBarIcon: ({ color, size }) => {
@@ -97,13 +97,7 @@ export default function TabBar() {
   );
 }
 
-function TimetableScreen() {
-  return (
-    <View style={styles.container}>
-      <Text variant="headlineMedium">Timetable Screen!</Text>
-    </View>
-  );
-}
+
 
 function SettingsScreen() {
   return (

@@ -6,10 +6,6 @@ import { Card, Title, Paragraph } from 'react-native-paper';
 interface Props{
     courseName: string;
     courseCode: string;
-    
-    
-   
-  
   }
   
   const getRandomColor = () => {
@@ -33,7 +29,7 @@ interface Props{
   
     return (
       <View style={styles.cardContainer}>
-        <Card style={[styles.card, { backgroundColor: cardColor }]}  onPress={() => navigation.navigate('TabBar')} >
+        <Card style={[styles.card, { backgroundColor: cardColor }]}  onPress={() => navigation.navigate('LecturerBottomTab')} >
           <Card.Content>
             <Title style={styles.title}>{courseName}</Title>
             <Paragraph style={styles.paragraph}>{courseCode}</Paragraph>

@@ -16,19 +16,19 @@ const LaunchScreen = (props:LaunchScreenProps) => {
    props.navigation.navigate('Login',{ userType: 'lecturer' })
 
   return (
-    <View style={styles.container}>
+    <View style={style.container}>
     <SafeAreaView >
-      <View style={styles.imageContainer}>
-        < Animatable.Image animation='fadeInDown' source={require('../../../assets/images/launch.jpg')} style={styles.image}/>
+      <View style={style.imageContainer}>
+        < Animatable.Image animation='fadeInDown' source={require('../../../assets/images/launch.jpg')} style={style.image}/>
       </View>
       <Animatable.View animation='fadeInDown' style={{padding:10}}>
-        <Text style={styles.textFirst}>Welcome!</Text>
-        <Text style={styles.textSecond}>Are you a student or lecturer?</Text>
+        <Text style={style.textFirst}>Welcome!</Text>
+        <Text style={style.textSecond}>Are you a student or lecturer?</Text>
       </Animatable.View>
       <Animatable.View animation='fadeInDown'>
       <VStack space={5} alignItems="center">
-      <Button colorScheme="darkBlue" style={styles.button} onPress={handleStudentPress}>Student</Button>
-      <Button colorScheme="darkBlue" style={styles.button}  onPress={handleTeacherPress} >Lecturer</Button>
+      <Button colorScheme="darkBlue" style={style.button} onPress={handleStudentPress}>Student</Button>
+      <Button colorScheme="darkBlue" style={style.button}  onPress={handleTeacherPress} >Lecturer</Button>
       </VStack>
       </Animatable.View>
     </SafeAreaView>
@@ -37,7 +37,7 @@ const LaunchScreen = (props:LaunchScreenProps) => {
 }
 
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   container:{
 flex:1,
 backgroundColor:'white',
@@ -73,10 +73,7 @@ backgroundColor:'white',
         width: 300,
         height:58,
         borderRadius:8,
-        
-       
-        
-      },
+    },
 
 })
 

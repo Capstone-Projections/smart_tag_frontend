@@ -31,8 +31,6 @@ const CourseCard:React.FC<Props> = ({ courseName, courseCode, lecturer }) => {
 const cardColor= getRandomColor()
 const navigation = useNavigation() as any;
 
-
-
   return (
     <View style={styles.cardContainer}>
       <Card style={[styles.card, { backgroundColor: cardColor }]}  onPress={() => navigation.navigate('TabBar')} >
