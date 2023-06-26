@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { z } from 'zod';
 
-// Email validation schema using Zod
+
 const emailSchema = z.string().email().max(100);
 
 interface LoginProps {

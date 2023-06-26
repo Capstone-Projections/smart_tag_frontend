@@ -9,6 +9,7 @@ import CodeInputField from "../../components/general/InputField/CodeInputField";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "native-base";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 
 interface OTPVerificatioProps{
@@ -19,6 +20,8 @@ interface OTPVerificatioProps{
 
 const OTPVerificationScreen=(props:OTPVerificatioProps)=>{
 
+    
+
     const [code,setCode]=useState('');
     const[pinReady,setPinReady]=useState(false)
     
@@ -28,13 +31,15 @@ const OTPVerificationScreen=(props:OTPVerificatioProps)=>{
 
     const MAX_CODE_LENGTH=4
      
-    const handleOTPPress = () => {
+    const handleOTPPress =  () => {
         const { userType } = props.route.params;
         if (userType === 'student') {
           props.navigation.navigate('SetUp');
         } else if (userType === 'lecturer') {
           props.navigation.navigate('LecturerSetUp');
         }
+
+      
       };
     
       

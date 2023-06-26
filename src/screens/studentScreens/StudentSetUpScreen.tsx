@@ -18,7 +18,7 @@ const StudentSetUpScreen = (props:StudentSetUpScreenProps) => {
 
   return (
     <View style={style.container} >
-        <KeyboardAvoidingWrapper>
+        
     <SafeAreaView >
     <View style={{paddingRight:50}}>
       <Text style={style.header}>Kindly Setup to get started with Smart Tag</Text>
@@ -60,8 +60,7 @@ const StudentSetUpScreen = (props:StudentSetUpScreenProps) => {
       }} mt={1} onValueChange={itemValue => setService2(itemValue)}>
           <Select.Item label="1st" value="1st" />
           <Select.Item label="2nd" value="2nd" />
-          
-        </Select>
+          </Select>
       </Box>
       <Button style={style.button} colorScheme="darkBlue" onPress={handleSetUpPress}>
             Continue
@@ -69,7 +68,7 @@ const StudentSetUpScreen = (props:StudentSetUpScreenProps) => {
               </VStack>
         
     </SafeAreaView>
-    </KeyboardAvoidingWrapper>
+    
     </View>
   )
 }
