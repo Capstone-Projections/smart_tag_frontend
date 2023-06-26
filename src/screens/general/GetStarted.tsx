@@ -3,8 +3,11 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormControl,Input,Button,Box, VStack } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
+import axios from 'axios';
+import { useState } from 'react';
+import { z } from 'zod';
 
-
+const emailSchema = z.string().email().max(100);
 
 interface GetStartedProps{
     navigation: any;
@@ -12,8 +15,40 @@ interface GetStartedProps{
   }
 
 const GetStarted = (props: GetStartedProps) => {
-    const handleGetStartedPress=()=>
-    props.navigation.navigate('OTP',{ userType: props.route.params.userType })
+const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+    const handleGetStartedPress=async()=>
+    {
+      const validationResult = emailSchema.safeParse(email.trim());
+    if (!validationResult.success) {
+      setEmailError(validationResult.error.issues[0].message);
+      return;
+    }
+      setEmailError(''); 
+
+      props.navigation.navigate('OTP',{ userType: props.route.params.userType })
+      await axios
+      .post('https://smart-tag.onrender.com/login', {
+        email: email.trim(),
+      })
+      .then(function (response) {
+        console.log(response.data);
+        console.log(response.status);
+        const responseData = response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(() => {
+        setEmail('');
+      });
+  }
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    setEmailError(''); 
+  };
 
   return (
     <View style={style.container}>
@@ -31,7 +66,8 @@ const GetStarted = (props: GetStartedProps) => {
               <FormControl.Label>
               <Text style={style.labelText}>Email</Text>
               </FormControl.Label>
-              <Input style={style.input} _focus={{ borderColor: 'black' }}/>
+              <Input style={style.input} _focus={{ borderColor: 'black' }}  onChangeText={handleEmailChange}
+                value={email}/>
             </FormControl>
             <Button colorScheme="darkBlue" style={style.button} onPress={handleGetStartedPress}>Submit for OTP</Button>
             </VStack>
