@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { BottomHalf, IconBg, OTPInputContainer, StyledContainer, TextInputHidden, TopHalf } from "./style";
-import { View,StyleSheet,Text,Image,TouchableOpacity, ActivityIndicator } from "react-native";
+import { View,StyleSheet,Text,Image,ActivityIndicator } from "react-native";
 import KeyboardAvoidingWrapper from './../../components/KeyboardWrapper';
 import { StatusBar } from "native-base";
 import {Octicons} from '@expo/vector-icons'
@@ -26,21 +26,46 @@ const OTPVerificationScreen=(props:OTPVerificatioProps)=>{
     const[pinReady,setPinReady]=useState(false)
     
 //TODO: make sure to use the authenticate route for checking if the otp is right
+
    //verification button
    const [verifying,setVerifying]=useState(false)
 
     const MAX_CODE_LENGTH=4
      
-    const handleOTPPress =  () => {
-        const { userType } = props.route.params;
-        if (userType === 'student') {
-          props.navigation.navigate('SetUp');
-        } else if (userType === 'lecturer') {
-          props.navigation.navigate('LecturerSetUp');
-        }
-
+    const handleOTPPress = async () => {
+        try {
+          setVerifying(true);
       
+          const { userType, email } = props.route.params;
+      
+          // Send the OTP code to the server for verification
+          const response = await axios.post('https://smart-tag.onrender.com/authenticate', { 
+            email:email,
+            emailToken: code,
+            
+        },
+       
+        );
+      
+          // Assuming the response contains a success status
+          if (response.data.success) {
+            if (userType === 'student') {
+              props.navigation.navigate('SetUp');
+            } else if (userType === 'lecturer') {
+              props.navigation.navigate('LecturerSetUp');
+            }
+          } else {
+            // Handle incorrect OTP code scenario
+            // Display an error message or perform other actions
+          }
+        } catch (error) {
+          // Handle the error
+          console.log(error);
+        } finally {
+          setVerifying(false);
+        }
       };
+      
     
       
     return(
@@ -60,6 +85,7 @@ const OTPVerificationScreen=(props:OTPVerificatioProps)=>{
             code={code}
             setCode={setCode}
             maxlength={MAX_CODE_LENGTH}
+            
             />     
 
 {!verifying && pinReady && 
@@ -75,7 +101,7 @@ const OTPVerificationScreen=(props:OTPVerificatioProps)=>{
 
 {verifying  &&
 (
-   <ActivityIndicator color={'white'}/>
+   <ActivityIndicator color={'blue'}/>
 )}
  
      

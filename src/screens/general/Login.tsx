@@ -6,6 +6,8 @@ import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 import axios from 'axios';
 import { useState } from 'react';
 import { z } from 'zod';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 const emailSchema = z.string().email().max(100);
@@ -29,7 +31,7 @@ const Login = (props: LoginProps) => {
 
     setEmailError(''); 
 
-    props.navigation.navigate('OTP', { userType: props.route.params.userType });
+    props.navigation.navigate('OTP', { userType: props.route.params.userType,email: email.trim() });
     await axios
       .post('https://smart-tag.onrender.com/login', {
         email: email.trim(),
