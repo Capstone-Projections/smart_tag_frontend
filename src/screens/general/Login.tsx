@@ -13,7 +13,6 @@ import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 import axios from 'axios';
 import { useState } from 'react';
 import { z } from 'zod';
-import { useNavigation } from '@react-navigation/native';
 
 const emailSchema = z.string().email().max(100);
 
@@ -25,6 +24,7 @@ interface LoginProps {
 const Login = (props: LoginProps) => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [userID, setUserID] = useState('');
 
     const handleLoginPress = async () => {
         const validationResult = emailSchema.safeParse(email.trim());
@@ -38,22 +38,27 @@ const Login = (props: LoginProps) => {
         props.navigation.navigate('OTP', {
             userType: props.route.params.userType,
             email: email.trim().toLowerCase(),
+            userID: userID, // Pass responseData as a prop
         });
-        await axios
-            .post('https://smart-tag.onrender.com/login', {
-                email: email.trim().toLowerCase(),
-            })
-            .then(function (response) {
-                console.log(response.data);
-                console.log(response.status);
-                const responseData = response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .finally(() => {
-                setEmail('');
-            });
+
+        try {
+            const response = await axios.post(
+                'https://smart-tag.onrender.com/login',
+                {
+                    email: email.trim().toLowerCase(),
+                }
+            );
+            // console.log(`this is the real life ${userID}`);
+            console.log(response.data);
+            console.log(response.status);
+            setUserID(response.data); // Store the response data in state
+            console.log('thehei');
+            console.log(userID);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setEmail('');
+        }
     };
 
     const handleEmailChange = (value: string) => {

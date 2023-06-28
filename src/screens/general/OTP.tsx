@@ -47,7 +47,7 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
         try {
             setVerifying(true);
 
-            const { userType, email } = props.route.params;
+            const { userType, email, userID } = props.route.params;
             const response = await axios.post(
                 'https://smart-tag.onrender.com/authenticate',
                 {
@@ -64,9 +64,15 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                 setShowAlert(true);
             } else {
                 if (userType === 'student') {
-                    props.navigation.navigate('SetUp');
+                    props.navigation.navigate('SetUp', {
+                        userType: props.route.params.userType,
+                        userID,
+                    });
                 } else if (userType === 'lecturer') {
-                    props.navigation.navigate('LecturerSetUp');
+                    props.navigation.navigate('LecturerSetUp', {
+                        userType: props.route.params.userType,
+                        userID,
+                    });
                 }
             }
         } catch (error) {

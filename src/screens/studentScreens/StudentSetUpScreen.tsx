@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
     FormControl,
@@ -11,16 +11,45 @@ import {
     Button,
 } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
+import axios from 'axios';
 
 interface StudentSetUpScreenProps {
     navigation: any;
+    route: any;
 }
 
 const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
-    const handleSetUpPress = () => props.navigation.navigate('Drawer');
+    const [firstName, setFirstName] = useState('');
+    const [middleName, setMiddleName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [indexNumber, setIndexNUmber] = useState('');
+    const [referenceNumber, setReferenceNUmber] = useState('');
 
-    const [service, setService] = React.useState('');
-    const [service2, setService2] = React.useState('');
+    const handleSetUpPress = async () => {
+        const { userType, email, userID } = props.route.params;
+        console.log(userID);
+        console.log(userType);
+
+        await axios
+            .put(`https://smart-tag.onrender.com/users/${userID}}`, {
+                email: email,
+                firstName: firstName,
+                middleName: middleName,
+                lastName: lastName,
+                indexNumber: indexNumber,
+                referenceNumber: referenceNumber,
+                role: userType.toUpperCase(),
+            })
+            .then(response => {
+                // handle success
+                console.log(response.data);
+            })
+            .catch(error => {
+                // handle error
+                console.error(error);
+            });
+        props.navigation.navigate('Drawer');
+    };
 
     return (
         <View style={style.container}>
@@ -33,11 +62,35 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
 
                 <VStack space={4} mt="5">
                     <View>
-                        <Text style={style.text}>Name</Text>
+                        <Text style={style.text}>First Name</Text>
                         <FormControl style={style.formControl}>
                             <Input
                                 style={style.input}
                                 _focus={{ borderColor: 'black' }}
+                                value={firstName}
+                                onChangeText={setFirstName}
+                            />
+                        </FormControl>
+                    </View>
+                    <View>
+                        <Text style={style.text}>Middle Name</Text>
+                        <FormControl style={style.formControl}>
+                            <Input
+                                style={style.input}
+                                _focus={{ borderColor: 'black' }}
+                                value={middleName}
+                                onChangeText={setMiddleName}
+                            />
+                        </FormControl>
+                    </View>
+                    <View>
+                        <Text style={style.text}>Last Name</Text>
+                        <FormControl style={style.formControl}>
+                            <Input
+                                style={style.input}
+                                _focus={{ borderColor: 'black' }}
+                                value={lastName}
+                                onChangeText={setLastName}
                             />
                         </FormControl>
                     </View>
@@ -48,49 +101,23 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
                                 style={style.input}
                                 _focus={{ borderColor: 'black' }}
                                 keyboardType="numeric"
+                                value={indexNumber}
+                                onChangeText={setIndexNUmber}
                             />
                         </FormControl>
                     </View>
-                    <Box maxW="300">
-                        <Text style={style.text}>Year</Text>
-                        <Select
-                            selectedValue={service}
-                            minWidth="200"
-                            accessibilityLabel="Year"
-                            placeholder="Select Option"
-                            _selectedItem={{
-                                bg: 'teal.600',
-                                endIcon: <CheckIcon size="5" />,
-                            }}
-                            mt={1}
-                            onValueChange={itemValue => setService(itemValue)}
-                        >
-                            <Select.Item label="1st" value="1st" />
-                            <Select.Item label="2nd" value="2nd" />
-                            <Select.Item label="3rd" value="3rd" />
-                            <Select.Item label="4th" value="4th" />
-                            <Select.Item label="5th" value="5th" />
-                            <Select.Item label="6th" value="6th" />
-                        </Select>
-                    </Box>
-                    <Box maxW="300">
-                        <Text style={style.text}>Semester</Text>
-                        <Select
-                            selectedValue={service2}
-                            minWidth="200"
-                            accessibilityLabel="Semester"
-                            placeholder="Select Option"
-                            _selectedItem={{
-                                bg: 'teal.600',
-                                endIcon: <CheckIcon size="5" />,
-                            }}
-                            mt={1}
-                            onValueChange={itemValue => setService2(itemValue)}
-                        >
-                            <Select.Item label="1st" value="1st" />
-                            <Select.Item label="2nd" value="2nd" />
-                        </Select>
-                    </Box>
+                    <View>
+                        <Text style={style.text}>Reference Number</Text>
+                        <FormControl style={style.formControl}>
+                            <Input
+                                style={style.input}
+                                _focus={{ borderColor: 'black' }}
+                                keyboardType="numeric"
+                                value={referenceNumber}
+                                onChangeText={setReferenceNUmber}
+                            />
+                        </FormControl>
+                    </View>
                     <Button
                         style={style.button}
                         colorScheme="darkBlue"
@@ -110,7 +137,8 @@ const style = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
         paddingTop: 60,
-        paddingLeft: 40,
+        paddingLeft: 50,
+        verticalAlign: 0,
     },
     formControl: {
         borderColor: 'black',
@@ -126,12 +154,12 @@ const style = StyleSheet.create({
     header: {
         fontFamily: 'Poppins',
         fontSize: 20,
-        fontWeight: '400',
+        fontWeight: 'bold',
         textAlign: 'center',
     },
     text: {
         fontFamily: 'Poppins',
-        fontSize: 17,
+        fontSize: 14,
         fontWeight: '400',
     },
     button: {
