@@ -24,6 +24,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { CustomAlert } from '../../components/general/Alert';
 
 interface OTPVerificatioProps {
     navigation: any;
@@ -33,8 +34,12 @@ interface OTPVerificatioProps {
 const OTPVerificationScreen = (props: OTPVerificatioProps) => {
     const [code, setCode] = useState('');
     const [pinReady, setPinReady] = useState(false);
-
     const [verifying, setVerifying] = useState(false);
+    const [showAlert, setShowAlert] = useState(false); // New state for showing/hiding the alert
+    const [alertData, setAlertData] = useState({
+        status: '',
+        title: '',
+    });
 
     const MAX_CODE_LENGTH = 4;
 
@@ -52,7 +57,11 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
             );
 
             if (response.status !== 200) {
-                Alert.alert('Error', 'Invalid OTP'); //this code seems to be obselete
+                setAlertData({
+                    status: 'error',
+                    title: 'The OTP you entered is invalid',
+                });
+                setShowAlert(true);
             } else {
                 if (userType === 'student') {
                     props.navigation.navigate('SetUp');
@@ -61,11 +70,19 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                 }
             }
         } catch (error) {
-            Alert.alert('Error', 'Invalid OTP');
+            setAlertData({
+                status: 'error',
+                title: 'The OTP you entered is invalid',
+            });
+            setShowAlert(true);
             console.log(error);
         } finally {
             setVerifying(false);
         }
+    };
+
+    const handleCloseAlert = () => {
+        setShowAlert(false);
     };
 
     return (
@@ -79,6 +96,12 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                         />
                     </TopHalf>
                     <BottomHalf>
+                        {showAlert && (
+                            <CustomAlert
+                                alert={alertData}
+                                onClose={handleCloseAlert}
+                            />
+                        )}
                         <Text style={style.text}>Account Verification</Text>
                         <Text style={style.infoText}>
                             Enter the 4-digit code sent to your email
