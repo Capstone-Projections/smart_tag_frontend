@@ -51,16 +51,17 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                 }
             );
 
-            if (response.status === 200) {
+            if (response.status !== 200) {
+                Alert.alert('Error', 'Invalid OTP'); //this code seems to be obselete
+            } else {
                 if (userType === 'student') {
                     props.navigation.navigate('SetUp');
                 } else if (userType === 'lecturer') {
                     props.navigation.navigate('LecturerSetUp');
                 }
-            } else {
-                Alert.alert('Error', 'Invalid OTP');
             }
         } catch (error) {
+            Alert.alert('Error', 'Invalid OTP');
             console.log(error);
         } finally {
             setVerifying(false);
