@@ -52,7 +52,8 @@
         "web": "expo start --web",
         "prepare": "husky install",
         "typescriptCheck": "tsc --noEmit",
-        "test": "jest"
+        "test": "jest",
+        "lint": "npx prettier -w ."
     },
     "version": "1.0.0",
     "private": true,

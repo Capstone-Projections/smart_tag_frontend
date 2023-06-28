@@ -19,49 +19,46 @@ import Timetable from '../screens/general/TimetableScreen';
 import ViewAttendance from '../screens/general/ViewAttendance';
 import LecturerTimetable from '../screens/lecturerScreens/LecturerTimetable';
 
-
-
-
 const { Navigator, Screen } = createStackNavigator();
-
 
 //TODO: make sure to use some form of protected routes
 export const AppNavigator = () => {
-  return (
-    <NavigationContainer>
-      <Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName="Launch"
-      >
-        <Screen name="Launch" component={LaunchScreen} />
-        <Screen name="GetStarted" component={GetStarted}/>
-        <Screen name="SetUp" component={StudentSetUpScreen} />
-        <Screen name="TabBar" component={TabBar} />
-        <Screen name="Courses" component={CoursesList} />
-        <Screen name="NFC" component={NFCScreen} />
-        <Screen name="LecturerSetUp" component={LecturerSetUpScreen} />
-        <Screen name="LecturerSetup" component={LecturerSetUpScreen} />
-        <Screen name="LecturerBottomTab" component={LecturerBottomTabBar} />
-        <Screen name="Drawer" component={DrawerNavigation} />
-        <Screen name="Login" component={Login} />
-        <Screen name="AddCourse" component={AddCourse} />
-        <Screen name="LecturerDrawer" component={LecturerDrawer} />
-        <Screen name="LecturerCoursesList" component={LecturerCoursesList} />
-        <Screen name="OTP" component={OTPVerificationScreen} />
-        <Screen name="Time" component={Timetable} />
-        <Screen name="View" component={ViewAttendance} />
-        <Screen name="LecturerTimetable" component={LecturerTimetable} />
-       
-        
-
-        
-
-        
-
-
-        </Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Navigator
+                screenOptions={{ headerShown: false }}
+                initialRouteName="Launch"
+            >
+                <Screen name="Launch" component={LaunchScreen} />
+                <Screen name="GetStarted" component={GetStarted} />
+                <Screen name="SetUp" component={StudentSetUpScreen} />
+                <Screen name="TabBar" component={TabBar} />
+                <Screen name="Courses" component={CoursesList} />
+                <Screen name="NFC" component={NFCScreen} />
+                <Screen name="LecturerSetUp" component={LecturerSetUpScreen} />
+                <Screen name="LecturerSetup" component={LecturerSetUpScreen} />
+                <Screen
+                    name="LecturerBottomTab"
+                    component={LecturerBottomTabBar}
+                />
+                <Screen name="Drawer" component={DrawerNavigation} />
+                <Screen name="Login" component={Login} />
+                <Screen name="AddCourse" component={AddCourse} />
+                <Screen name="LecturerDrawer" component={LecturerDrawer} />
+                <Screen
+                    name="LecturerCoursesList"
+                    component={LecturerCoursesList}
+                />
+                <Screen name="OTP" component={OTPVerificationScreen} />
+                <Screen name="Time" component={Timetable} />
+                <Screen name="View" component={ViewAttendance} />
+                <Screen
+                    name="LecturerTimetable"
+                    component={LecturerTimetable}
+                />
+            </Navigator>
+        </NavigationContainer>
+    );
 };
 
 export default AppNavigator;
