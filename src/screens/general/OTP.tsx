@@ -33,7 +33,8 @@ interface OTPVerificatioProps {
 }
 
 const OTPVerificationScreen = (props: OTPVerificatioProps) => {
-    const { userType, email, setAuthorizationKey } = useContext(AuthContext);
+    const { userType, email, setAuthorizationKey, authorizationKey } =
+        useContext(AuthContext);
     const [code, setCode] = useState('');
     const [pinReady, setPinReady] = useState(false);
     const [verifying, setVerifying] = useState(false);
@@ -55,8 +56,9 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                     emailToken: code,
                 }
             );
-            console.log(response.headers['authorization']);
+            //TODO: remove the console.log from here after testing is done and the authorization key is set
             setAuthorizationKey(response.headers['authorization']);
+            console.log(authorizationKey);
             if (response.status !== 200) {
                 setAlertData({
                     status: 'error',

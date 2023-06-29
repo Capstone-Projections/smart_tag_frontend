@@ -20,7 +20,8 @@ interface StudentSetUpScreenProps {
 }
 
 const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
-    const { userType, email, userID } = useContext(AuthContext);
+    const { userType, email, userID, authorizationKey } =
+        useContext(AuthContext);
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -30,25 +31,31 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
     const handleSetUpPress = async () => {
         console.log(userID);
         console.log(userID);
+        console.log(authorizationKey);
+        const headers = { Authorization: `${authorizationKey}` };
 
         await axios
-            .put(`https://smart-tag.onrender.com/users/${userID}}`, {
-                email: email,
-                firstName: firstName,
-                middleName: middleName,
-                lastName: lastName,
-                indexNumber: indexNumber,
-                referenceNumber: referenceNumber,
-                role: userType.toUpperCase(),
-                iduser: userID,
-            })
+            .put(
+                `https://smart-tag.onrender.com/users/${userID}`,
+                {
+                    email: email,
+                    firstName: firstName,
+                    middleName: middleName,
+                    lastName: lastName,
+                    indexNumber: indexNumber,
+                    referenceNumber: referenceNumber,
+                    role: userType.toUpperCase(),
+                },
+                { headers }
+            )
             .then(response => {
                 console.log(response.data);
+                props.navigation.navigate('Drawer');
             })
             .catch(error => {
+                alert('Error, profile could not be added');
                 console.error(error);
             });
-        props.navigation.navigate('Drawer');
     };
 
     return (
