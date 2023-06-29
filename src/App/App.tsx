@@ -10,6 +10,7 @@ import { AppWrapper } from '../styles/AppWrapper';
 import { AppNavigator } from '../components/AppNavigation';
 import LaunchScreen from '../screens/general/LaunchScreen';
 import { customTheme } from '../Theme';
+import { AuthProvider } from '../components/AuthContext';
 
 export default function App() {
     const [fontsloaded] = useFonts(allFonts());
@@ -28,9 +29,11 @@ export default function App() {
     }
 
     return (
-        <NativeBaseProvider theme={customTheme}>
-            <AppNavigator />
-        </NativeBaseProvider>
+        <AuthProvider>
+            <NativeBaseProvider theme={customTheme}>
+                <AppNavigator />
+            </NativeBaseProvider>
+        </AuthProvider>
     );
 }
 

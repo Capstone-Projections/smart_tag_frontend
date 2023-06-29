@@ -1,20 +1,26 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, VStack } from 'native-base';
 import * as Animatable from 'react-native-animatable';
+import { AuthContext } from '../../components/AuthContext';
 
 interface LaunchScreenProps {
     navigation: any;
 }
 
 const LaunchScreen = (props: LaunchScreenProps) => {
-    const handleStudentPress = () =>
-        props.navigation.navigate('Login', { userType: 'student' });
+    const { setUserType } = useContext(AuthContext);
 
-    const handleTeacherPress = () =>
-        props.navigation.navigate('Login', { userType: 'lecturer' });
+    const handleStudentPress = () => {
+        setUserType('student');
+        props.navigation.navigate('Login');
+    };
 
+    const handleTeacherPress = () => {
+        setUserType('lecturer');
+        props.navigation.navigate('Login');
+    };
     return (
         <View style={style.container}>
             <SafeAreaView>

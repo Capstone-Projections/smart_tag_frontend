@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import {
     BottomHalf,
@@ -25,6 +25,7 @@ import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { CustomAlert } from '../../components/general/Alert';
+import { AuthContext } from '../../components/AuthContext';
 
 interface OTPVerificatioProps {
     navigation: any;
@@ -32,6 +33,7 @@ interface OTPVerificatioProps {
 }
 
 const OTPVerificationScreen = (props: OTPVerificatioProps) => {
+    const { userType, email, setAuthorizationKey } = useContext(AuthContext);
     const [code, setCode] = useState('');
     const [pinReady, setPinReady] = useState(false);
     const [verifying, setVerifying] = useState(false);
@@ -46,8 +48,6 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
     const handleOTPPress = async () => {
         try {
             setVerifying(true);
-
-            const { userType, email, userID } = props.route.params;
             const response = await axios.post(
                 'https://smart-tag.onrender.com/authenticate',
                 {
@@ -55,7 +55,8 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                     emailToken: code,
                 }
             );
-
+            console.log(response.headers['authorization']);
+            setAuthorizationKey(response.headers['authorization']);
             if (response.status !== 200) {
                 setAlertData({
                     status: 'error',
@@ -64,15 +65,9 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                 setShowAlert(true);
             } else {
                 if (userType === 'student') {
-                    props.navigation.navigate('SetUp', {
-                        userType: props.route.params.userType,
-                        userID,
-                    });
+                    props.navigation.navigate('SetUp');
                 } else if (userType === 'lecturer') {
-                    props.navigation.navigate('LecturerSetUp', {
-                        userType: props.route.params.userType,
-                        userID,
-                    });
+                    props.navigation.navigate('LecturerSetUp');
                 }
             }
         } catch (error) {

@@ -1,5 +1,5 @@
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
     FormControl,
@@ -11,8 +11,8 @@ import {
 } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 import axios from 'axios';
-import { useState } from 'react';
 import { z } from 'zod';
+import { AuthContext } from '../../components/AuthContext';
 
 const emailSchema = z.string().email().max(100);
 
@@ -22,9 +22,9 @@ interface LoginProps {
 }
 
 const Login = (props: LoginProps) => {
-    const [email, setEmail] = useState('');
+    const { setEmail, setUserID } = useContext(AuthContext);
+    const [email, setEmailState] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [userID, setUserID] = useState('');
 
     const handleLoginPress = async () => {
         const validationResult = emailSchema.safeParse(email.trim());
@@ -36,9 +36,7 @@ const Login = (props: LoginProps) => {
         setEmailError('');
 
         props.navigation.navigate('OTP', {
-            userType: props.route.params.userType,
             email: email.trim().toLowerCase(),
-            userID: userID, // Pass responseData as a prop
         });
 
         try {
@@ -48,21 +46,22 @@ const Login = (props: LoginProps) => {
                     email: email.trim().toLowerCase(),
                 }
             );
-            // console.log(`this is the real life ${userID}`);
-            console.log(response.data);
+
+            const { data } = response;
+            setUserID(data.userid);
+
             console.log(response.status);
-            setUserID(response.data); // Store the response data in state
-            console.log('thehei');
-            console.log(userID);
+
+            setEmail(email.trim().toLowerCase());
         } catch (error) {
             console.log(error);
         } finally {
-            setEmail('');
+            setEmailState('');
         }
     };
 
     const handleEmailChange = (value: string) => {
-        setEmail(value);
+        setEmailState(value);
         setEmailError('');
     };
 

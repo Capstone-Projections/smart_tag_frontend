@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
     FormControl,
@@ -12,6 +12,7 @@ import {
 } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 import axios from 'axios';
+import { AuthContext } from '../../components/AuthContext';
 
 interface StudentSetUpScreenProps {
     navigation: any;
@@ -19,6 +20,7 @@ interface StudentSetUpScreenProps {
 }
 
 const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
+    const { userType, email, userID } = useContext(AuthContext);
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -26,9 +28,8 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
     const [referenceNumber, setReferenceNUmber] = useState('');
 
     const handleSetUpPress = async () => {
-        const { userType, email, userID } = props.route.params;
         console.log(userID);
-        console.log(userType);
+        console.log(userID);
 
         await axios
             .put(`https://smart-tag.onrender.com/users/${userID}}`, {
@@ -39,13 +40,12 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
                 indexNumber: indexNumber,
                 referenceNumber: referenceNumber,
                 role: userType.toUpperCase(),
+                iduser: userID,
             })
             .then(response => {
-                // handle success
                 console.log(response.data);
             })
             .catch(error => {
-                // handle error
                 console.error(error);
             });
         props.navigation.navigate('Drawer');
