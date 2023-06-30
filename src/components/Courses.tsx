@@ -53,8 +53,7 @@ const CoursesList = () => {
         const fetchCourses = async () => {
             try {
                 const response = await axios.get(
-                    `https://smart-tag.onrender.com/courses/${userID}`,
-                    {}
+                    `https://smart-tag.onrender.com/courses/${userID}`
                 );
                 setCourses(response.data);
             } catch (error) {
