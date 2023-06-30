@@ -29,6 +29,7 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
     const [referenceNumber, setReferenceNUmber] = useState('');
 
     const handleSetUpPress = async () => {
+        //TODO: remove all console logs
         console.log(userID);
         console.log(userID);
         console.log(authorizationKey);

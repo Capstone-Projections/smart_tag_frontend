@@ -17,6 +17,7 @@ interface LecturerSetUpScreenProps {
 }
 
 const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
+    //TODO tie this to the backend
     const handleSetUpPress = () => props.navigation.navigate('LecturerDrawer');
 
     const [service, setService] = React.useState('');
