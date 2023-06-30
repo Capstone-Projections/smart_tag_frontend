@@ -6,7 +6,7 @@ import { AuthContext } from './AuthContext';
 import axios from 'axios';
 
 interface Props {
-    courseName: string;
+    name: string;
     courseCode: string;
     lecturer: string;
 }
@@ -18,13 +18,13 @@ const getRandomColor = () => {
     return colors[randomIndex];
 };
 
-const CourseCard: React.FC<Props> = ({ courseName, courseCode, lecturer }) => {
+const CourseCard: React.FC<Props> = ({ name, courseCode, lecturer }) => {
     const cardColor = getRandomColor();
     const navigation = useNavigation() as any;
     const { setCourseTitle } = useContext(AuthContext);
 
     const handleCardPress = () => {
-        setCourseTitle(courseName);
+        setCourseTitle(name);
         navigation.navigate('Time');
     };
 
@@ -35,7 +35,7 @@ const CourseCard: React.FC<Props> = ({ courseName, courseCode, lecturer }) => {
                 onPress={handleCardPress}
             >
                 <Card.Content>
-                    <Title style={styles.title}>{courseName}</Title>
+                    <Title style={styles.title}>{name}</Title>
                     <Paragraph style={styles.paragraph}>{lecturer}</Paragraph>
                     <Paragraph style={styles.paragraph}>{courseCode}</Paragraph>
                 </Card.Content>
@@ -45,15 +45,18 @@ const CourseCard: React.FC<Props> = ({ courseName, courseCode, lecturer }) => {
 };
 
 const CoursesList = () => {
-    const { userID } = useContext(AuthContext);
+    const { userID, authorizationKey } = useContext(AuthContext);
     const [courses, setCourses] = useState<Props[]>([]);
 
     useEffect(() => {
         // Make an API request to fetch courses based on the userID
         const fetchCourses = async () => {
+            const headers = { Authorization: `${authorizationKey}` };
+
             try {
                 const response = await axios.get(
-                    `https://smart-tag.onrender.com/courses/${userID}`
+                    `https://smart-tag.onrender.com/courses/${userID}`,
+                    { headers }
                 );
                 setCourses(response.data);
             } catch (error) {
@@ -70,7 +73,7 @@ const CoursesList = () => {
                 {courses.map((course, index) => (
                     <CourseCard
                         key={index}
-                        courseName={course.courseName}
+                        name={course.name}
                         courseCode={course.courseCode}
                         lecturer={course.lecturer}
                     />
