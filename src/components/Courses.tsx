@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import { AuthContext } from './AuthContext';
+import axios from 'axios';
 
 interface Props {
     courseName: string;
@@ -44,34 +45,25 @@ const CourseCard: React.FC<Props> = ({ courseName, courseCode, lecturer }) => {
 };
 
 const CoursesList = () => {
-    //TODO: make sure that the courses that show are as a result of an api call and not what is hard coded over here
-    let courses = [
-        {
-            courseName: 'Computer Networking',
-            courseCode: 'COE475',
-            lecturer: 'Prof. Emmanuel Akowuah',
-        },
-        {
-            courseName: 'Artificial Intelligence',
-            courseCode: 'COE436',
-            lecturer: 'Selorm Klogo',
-        },
-        {
-            courseName: 'Secure Networks',
-            courseCode: 'COE421',
-            lecturer: 'John Doe',
-        },
-        {
-            courseName: 'Introduction to Programming',
-            courseCode: 'COE421',
-            lecturer: 'John Doe',
-        },
-        {
-            courseName: 'Software Engineering',
-            courseCode: 'COE421',
-            lecturer: 'John Doe',
-        },
-    ];
+    const { userID } = useContext(AuthContext);
+    const [courses, setCourses] = useState<Props[]>([]);
+
+    useEffect(() => {
+        // Make an API request to fetch courses based on the userID
+        const fetchCourses = async () => {
+            try {
+                const response = await axios.get(
+                    `https://smart-tag.onrender.com/courses/${userID}`,
+                    {}
+                );
+                setCourses(response.data);
+            } catch (error) {
+                console.error('Failed to fetch courses:', error);
+            }
+        };
+
+        fetchCourses();
+    }, [userID]);
 
     return (
         <View style={styles.container}>
