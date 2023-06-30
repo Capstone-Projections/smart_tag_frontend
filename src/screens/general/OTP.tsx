@@ -18,6 +18,8 @@ import axios from 'axios';
 import { AuthContext } from '../../components/AuthContext';
 import { ToastAlert } from '../../components/general/AppToast/AppToast';
 import { ToastDetails } from '../../components/general/AppToast/toastDetails';
+import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
+import { CustomAlert } from '../../components/general/Alert';
 
 interface OTPVerificationProps {
     navigation: any;
@@ -35,7 +37,12 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
     const [code, setCode] = useState('');
     const [pinReady, setPinReady] = useState(false);
     const [verifying, setVerifying] = useState(false);
-    const [showInvalidOTP, setShowInvalidOTP] = useState(false); // State variable for controlling toast display
+    const [showInvalidOTP, setShowInvalidOTP] = useState(false);
+    const [showAlert, setShowAlert] = useState(false); // New state for showing/hiding the alert
+    const [alertData, setAlertData] = useState({
+        status: '',
+        title: '',
+    });
 
     const MAX_CODE_LENGTH = 4;
 
@@ -68,66 +75,71 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
                 }
             }
         } catch (error) {
-            setShowInvalidOTP(true); // Show toast for invalid OTP
+            setAlertData({
+                status: 'error',
+                title: 'The OTP you entered is invalid',
+            });
+            setShowAlert(true);
             console.log(error);
         } finally {
             setVerifying(false);
         }
     };
 
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
+
     return (
-        <StyledContainer>
-            <StatusBar hidden />
-            <TopHalf>
-                <Image
-                    source={require('../../../assets/images/otpImage.jpg')}
-                    style={style.image}
-                />
-            </TopHalf>
-            <BottomHalf>
-                <Text style={style.text}>Account Verification</Text>
-                <Text style={style.infoText}>
-                    Enter the 4-digit code sent to your email
-                </Text>
+        <KeyboardAvoidingWrapper>
+            <SafeAreaView>
+                <StyledContainer style={{ alignItems: 'center' }}>
+                    <TopHalf>
+                        <Image
+                            source={require('../../../assets/images/otpImage.jpg')}
+                            style={style.image}
+                        />
+                    </TopHalf>
+                    <BottomHalf>
+                        {showAlert && (
+                            <CustomAlert
+                                alert={alertData}
+                                onClose={handleCloseAlert}
+                            />
+                        )}
+                        <Text style={style.text}>Account Verification</Text>
+                        <Text style={style.infoText}>
+                            Enter the 4-digit code sent to your email
+                        </Text>
 
-                <CodeInputField
-                    setPinReady={setPinReady}
-                    code={code}
-                    setCode={setCode}
-                    maxlength={MAX_CODE_LENGTH}
-                />
+                        <CodeInputField
+                            setPinReady={setPinReady}
+                            code={code}
+                            setCode={setCode}
+                            maxlength={MAX_CODE_LENGTH}
+                        />
 
-                {!verifying && pinReady && (
-                    <Button
-                        colorScheme="darkBlue"
-                        style={style.button}
-                        onPress={handleOTPPress}
-                    >
-                        Submit
-                    </Button>
-                )}
+                        {!verifying && pinReady && (
+                            <Button
+                                colorScheme="darkBlue"
+                                style={style.button}
+                                onPress={handleOTPPress}
+                            >
+                                Submit
+                            </Button>
+                        )}
 
-                {!verifying && !pinReady && (
-                    <Button size="sm" isDisabled style={style.button}>
-                        Submit
-                    </Button>
-                )}
+                        {!verifying && !pinReady && (
+                            <Button size="sm" isDisabled style={style.button}>
+                                Submit
+                            </Button>
+                        )}
 
-                {verifying && <ActivityIndicator color={'blue'} />}
-
-                {/* Invalid OTP toast */}
-                {showInvalidOTP && (
-                    <ToastAlert
-                        id="invalidOTP"
-                        variant={ToastDetails.invalidOTP.variant}
-                        title={ToastDetails.invalidOTP.title}
-                        description={ToastDetails.invalidOTP.description}
-                        isClosable={true}
-                        onClose={() => setShowInvalidOTP(false)}
-                    />
-                )}
-            </BottomHalf>
-        </StyledContainer>
+                        {verifying && <ActivityIndicator color={'blue'} />}
+                    </BottomHalf>
+                </StyledContainer>
+            </SafeAreaView>
+        </KeyboardAvoidingWrapper>
     );
 };
 
