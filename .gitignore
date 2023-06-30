@@ -63,4 +63,5 @@ buck-out/
 .expo/*
 web-build/
 
+%ProgramData%
 
