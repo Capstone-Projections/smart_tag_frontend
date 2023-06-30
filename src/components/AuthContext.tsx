@@ -9,6 +9,10 @@ interface AuthContextData {
     setUserID: (userID: string) => void;
     authorizationKey: string;
     setAuthorizationKey: (authorizationKey: string) => void;
+    courseTitle: string;
+    setCourseTitle: (courseTitle: string) => void;
+    getStarted: string;
+    setGetStarted: (getStarted: string) => void;
 }
 
 export const AuthContext = createContext<AuthContextData>({
@@ -20,6 +24,10 @@ export const AuthContext = createContext<AuthContextData>({
     setUserID: () => {},
     authorizationKey: '',
     setAuthorizationKey: () => {},
+    courseTitle: '',
+    setCourseTitle: () => {},
+    getStarted: '',
+    setGetStarted: () => {},
 });
 
 interface AuthProviderProps {
@@ -31,6 +39,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [email, setEmail] = useState('');
     const [userID, setUserID] = useState('');
     const [authorizationKey, setAuthorizationKey] = useState('');
+    const [courseTitle, setCourseTitle] = useState('');
+    const [getStarted, setGetStarted] = useState('');
 
     const handleSetUserType = (userType: string) => {
         setUserType(userType);
@@ -48,6 +58,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setAuthorizationKey(authorizationKey);
     };
 
+    const handleSetCourseTitle = (courseTitle: string) => {
+        setCourseTitle(courseTitle);
+    };
+
+    const handleSetGetStarted = (getStarted: string) => {
+        setGetStarted(getStarted);
+    };
+
     const authContextData: AuthContextData = {
         userType,
         setUserType: handleSetUserType,
@@ -57,6 +75,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUserID: handleSetUserID,
         authorizationKey,
         setAuthorizationKey: handleSetAuthorizationKey,
+        courseTitle,
+        setCourseTitle: handleSetCourseTitle,
+        getStarted,
+        setGetStarted: handleSetGetStarted,
     };
 
     return (

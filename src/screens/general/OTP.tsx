@@ -33,8 +33,13 @@ interface OTPVerificatioProps {
 }
 
 const OTPVerificationScreen = (props: OTPVerificatioProps) => {
-    const { userType, email, setAuthorizationKey, authorizationKey } =
-        useContext(AuthContext);
+    const {
+        userType,
+        email,
+        setAuthorizationKey,
+        authorizationKey,
+        getStarted,
+    } = useContext(AuthContext);
     const [code, setCode] = useState('');
     const [pinReady, setPinReady] = useState(false);
     const [verifying, setVerifying] = useState(false);
@@ -66,10 +71,16 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                 });
                 setShowAlert(true);
             } else {
-                if (userType === 'student') {
+                if (userType === 'student' && getStarted === 'getStarted') {
                     props.navigation.navigate('SetUp');
-                } else if (userType === 'lecturer') {
+                }
+                if (userType === 'student') {
+                    props.navigation.navigate('Drawer');
+                }
+                if (userType === 'lecturer' && getStarted === 'getStarted') {
                     props.navigation.navigate('LecturerSetUp');
+                } else if (userType === 'lecturer') {
+                    props.navigation.navigate('LecturerDrawer');
                 }
             }
         } catch (error) {

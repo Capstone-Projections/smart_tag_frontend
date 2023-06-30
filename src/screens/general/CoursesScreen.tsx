@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import CoursesList from '../../components/general/Courses/Courses';
+import CoursesList from '../../components/Courses';
 
 export default function CoursesScreen() {
     return (

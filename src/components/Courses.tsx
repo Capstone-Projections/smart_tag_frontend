@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
+import { AuthContext } from './AuthContext';
 
 interface Props {
     courseName: string;
@@ -19,12 +20,18 @@ const getRandomColor = () => {
 const CourseCard: React.FC<Props> = ({ courseName, courseCode, lecturer }) => {
     const cardColor = getRandomColor();
     const navigation = useNavigation() as any;
+    const { setCourseTitle } = useContext(AuthContext);
+
+    const handleCardPress = () => {
+        setCourseTitle(courseName);
+        navigation.navigate('Time');
+    };
 
     return (
         <View style={styles.cardContainer}>
             <Card
                 style={[styles.card, { backgroundColor: cardColor }]}
-                onPress={() => navigation.navigate('TabBar')}
+                onPress={handleCardPress}
             >
                 <Card.Content>
                     <Title style={styles.title}>{courseName}</Title>
@@ -50,7 +57,7 @@ const CoursesList = () => {
             lecturer: 'Selorm Klogo',
         },
         {
-            courseName: 'Introduction to Programming',
+            courseName: 'Secure Networks',
             courseCode: 'COE421',
             lecturer: 'John Doe',
         },
@@ -60,7 +67,7 @@ const CoursesList = () => {
             lecturer: 'John Doe',
         },
         {
-            courseName: 'Introduction to Programming',
+            courseName: 'Software Engineering',
             courseCode: 'COE421',
             lecturer: 'John Doe',
         },

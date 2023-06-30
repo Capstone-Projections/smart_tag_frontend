@@ -1,13 +1,16 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'native-base';
+import { AuthContext } from '../../components/AuthContext';
 
 interface TimetableProps {
     navigation: any;
 }
 
 const Timetable = (props: TimetableProps) => {
+    const { courseTitle } = useContext(AuthContext);
+
     const daysOfWeek = ['Mon:', 'Tue:', 'Wed:', 'Thur:', 'Fri:'];
     const times = [
         '10:30-12:30',
@@ -23,7 +26,7 @@ const Timetable = (props: TimetableProps) => {
         <View style={style.container}>
             <SafeAreaView>
                 <View style={{ paddingTop: 20, paddingBottom: 10 }}>
-                    <Text style={style.headerText}>Computer Networking</Text>
+                    <Text style={style.headerText}>{courseTitle}</Text>
                 </View>
                 <View style={{ paddingBottom: 30 }}>
                     <Text style={style.subText}>

@@ -22,7 +22,8 @@ interface LoginProps {
 }
 
 const Login = (props: LoginProps) => {
-    const { setEmail, setUserID } = useContext(AuthContext);
+    const { setEmail, setUserID, userType, setGetStarted } =
+        useContext(AuthContext);
     const [email, setEmailState] = useState('');
     const [emailError, setEmailError] = useState('');
 
@@ -65,10 +66,10 @@ const Login = (props: LoginProps) => {
         setEmailError('');
     };
 
-    const handleLinkPress = () =>
-        props.navigation.navigate('GetStarted', {
-            userType: props.route.params.userType,
-        });
+    const handleLinkPress = () => {
+        setGetStarted('getStarted');
+        props.navigation.navigate('GetStarted');
+    };
 
     return (
         <View style={style.container}>

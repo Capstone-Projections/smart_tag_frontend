@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import CoursesScreen from '../screens/general/CoursesScreen';
-import CoursesList from './general/Courses/Courses';
+import CoursesList from './Courses';
 import AddCourse from '../screens/studentScreens/AddCourseScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';

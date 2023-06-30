@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormControl, Input, Button, Box, VStack } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 import axios from 'axios';
 import { useState } from 'react';
 import { z } from 'zod';
+import { AuthContext } from '../../components/AuthContext';
 
 const emailSchema = z.string().email().max(100);
 
@@ -15,7 +16,8 @@ interface GetStartedProps {
 }
 
 const GetStarted = (props: GetStartedProps) => {
-    const [email, setEmail] = useState('');
+    const { setEmail, setUserID } = useContext(AuthContext);
+    const [email, setEmailState] = useState('');
     const [emailError, setEmailError] = useState('');
 
     const handleGetStartedPress = async () => {
@@ -27,27 +29,31 @@ const GetStarted = (props: GetStartedProps) => {
         setEmailError('');
 
         props.navigation.navigate('OTP', {
-            userType: props.route.params.userType,
+            email: email.trim().toLowerCase(),
         });
-        await axios
-            .post('https://smart-tag.onrender.com/login', {
-                email: email.trim(),
-            })
-            .then(function (response) {
-                console.log(response.data);
-                console.log(response.status);
-                const responseData = response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .finally(() => {
-                setEmail('');
-            });
+        try {
+            const response = await axios.post(
+                'https://smart-tag.onrender.com/login',
+                {
+                    email: email.trim().toLowerCase(),
+                }
+            );
+
+            const { data } = response;
+            setUserID(data.userid);
+
+            console.log(response.status);
+
+            setEmail(email.trim().toLowerCase());
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setEmailState('');
+        }
     };
 
     const handleEmailChange = (value: string) => {
-        setEmail(value);
+        setEmailState(value);
         setEmailError('');
     };
 
