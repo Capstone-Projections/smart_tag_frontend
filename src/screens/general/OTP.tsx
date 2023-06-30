@@ -53,16 +53,18 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
             if (response.status !== 200) {
                 setShowInvalidOTP(true); // Show toast for invalid OTP
             } else {
-                if (userType === 'student' && getStarted === 'getStarted') {
-                    props.navigation.navigate('SetUp');
-                }
                 if (userType === 'student') {
-                    props.navigation.navigate('Drawer');
-                }
-                if (userType === 'lecturer' && getStarted === 'getStarted') {
-                    props.navigation.navigate('LecturerSetUp');
+                    if (getStarted === 'getStarted') {
+                        props.navigation.navigate('SetUp');
+                    } else {
+                        props.navigation.navigate('Drawer');
+                    }
                 } else if (userType === 'lecturer') {
-                    props.navigation.navigate('LecturerDrawer');
+                    if (getStarted === 'getStarted') {
+                        props.navigation.navigate('LecturerSetUp');
+                    } else {
+                        props.navigation.navigate('LecturerDrawer');
+                    }
                 }
             }
         } catch (error) {
