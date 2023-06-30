@@ -27,12 +27,12 @@ import axios from 'axios';
 import { CustomAlert } from '../../components/general/Alert';
 import { AuthContext } from '../../components/AuthContext';
 
-interface OTPVerificatioProps {
+interface OTPVerificationProps {
     navigation: any;
     route: any;
 }
 
-const OTPVerificationScreen = (props: OTPVerificatioProps) => {
+const OTPVerificationScreen = (props: OTPVerificationProps) => {
     const {
         userType,
         email,
@@ -71,16 +71,18 @@ const OTPVerificationScreen = (props: OTPVerificatioProps) => {
                 });
                 setShowAlert(true);
             } else {
-                if (userType === 'student' && getStarted === 'getStarted') {
-                    props.navigation.navigate('SetUp');
-                }
                 if (userType === 'student') {
-                    props.navigation.navigate('Drawer');
-                }
-                if (userType === 'lecturer' && getStarted === 'getStarted') {
-                    props.navigation.navigate('LecturerSetUp');
+                    if (getStarted === 'getStarted') {
+                        props.navigation.navigate('SetUp');
+                    } else {
+                        props.navigation.navigate('Drawer');
+                    }
                 } else if (userType === 'lecturer') {
-                    props.navigation.navigate('LecturerDrawer');
+                    if (getStarted === 'getStarted') {
+                        props.navigation.navigate('LecturerSetUp');
+                    } else {
+                        props.navigation.navigate('LecturerDrawer');
+                    }
                 }
             }
         } catch (error) {
