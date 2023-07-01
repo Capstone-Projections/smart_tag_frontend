@@ -6,7 +6,7 @@ import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NFCScreen from '../studentScreens/NFCScreen';
 import Timetable from './TimetableScreen';
-import { SettingsScreen } from '../studentScreens/QRCodeScreen/QrCodeScreen';
+import { QRCodeScreen } from '../studentScreens/QRCodeScreen/QrCodeScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -89,7 +89,7 @@ export default function TabBar() {
             />
             <Tab.Screen
                 name="QRCode"
-                component={SettingsScreen}
+                component={QRCodeScreen}
                 options={{
                     tabBarLabel: 'QRCode',
                     tabBarIcon: ({ color, size }) => {
