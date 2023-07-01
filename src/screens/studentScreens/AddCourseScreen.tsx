@@ -76,6 +76,7 @@ const style = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
         paddingLeft: 10,
+        paddingTop: 10,
     },
     text: {
         fontFamily: 'Poppins',

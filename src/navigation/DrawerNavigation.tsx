@@ -47,6 +47,10 @@ const DrawerNavigation = () => {
                 headerTitleAlign: 'center',
                 swipeEnabled: true,
                 headerTitleStyle: { fontFamily: 'Poppins' },
+                headerStyle: {
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: 'grey',
+                },
                 drawerActiveTintColor: '#196B9A',
                 drawerLabelStyle: {
                     color: 'black',

@@ -7,22 +7,21 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingTop: 0,
+        paddingTop: 10,
         paddingBottom: 0,
         marginBottom: 0,
     },
     headerText: {
         fontSize: 24,
-        // fontWeight: 'bold',
         marginBottom: 16,
         textAlign: 'center',
     },
     cardContainer: {
-        marginBottom: 16,
+        marginBottom: 8,
     },
     card: {
-        width: 344,
-        height: 146,
+        width: 380,
+        height: 130,
     },
     title: {
         color: 'white',
