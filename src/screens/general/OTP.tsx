@@ -73,13 +73,22 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
                         props.navigation.navigate('LecturerDrawer');
                     }
                 }
+            } //TODO: remove the any from the type of error and then try and get the correct type for it
+        } catch (error: any) {
+            if (error.AxiosError === 'Network Error') {
+                setAlertData({
+                    status: 'error',
+                    title: 'Network Error',
+                });
+                setShowAlert(true);
+            } else {
+                setAlertData({
+                    status: 'error',
+                    title: 'The OTP you entered is invalid',
+                });
+                setShowAlert(true);
             }
-        } catch (error) {
-            setAlertData({
-                status: 'error',
-                title: 'The OTP you entered is invalid',
-            });
-            setShowAlert(true);
+
             console.log(error);
         } finally {
             setVerifying(false);

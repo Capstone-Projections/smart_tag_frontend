@@ -6,6 +6,7 @@ import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NFCScreen from '../studentScreens/NFCScreen';
 import Timetable from './TimetableScreen';
+import { SettingsScreen } from '../studentScreens/QRCodeScreen/QrCodeScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -99,19 +100,3 @@ export default function TabBar() {
         </Tab.Navigator>
     );
 }
-
-function SettingsScreen() {
-    return (
-        <View style={styles.container}>
-            <Text variant="headlineMedium">Screen 2!</Text>
-        </View>
-    );
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});

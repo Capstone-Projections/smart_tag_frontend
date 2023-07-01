@@ -65,6 +65,7 @@ const CoursesList = () => {
         };
 
         fetchCourses();
+        //TODO: don't make the fetching of courses dependent on the change of userID because that isn't likely at all to happen
     }, [userID]);
 
     return (
