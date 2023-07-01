@@ -18,11 +18,17 @@ const getRandomColor = () => {
 const CourseCard: React.FC<CardProps> = ({ name, courseCode }) => {
     const [cardColor, setCardColor] = useState(getRandomColor());
     const navigation = useNavigation() as any;
-    const { setCourseTitle } = useContext(AuthContext);
+    const { setCourseTitle, userType } = useContext(AuthContext);
 
     const handleCardPress = () => {
         setCourseTitle(name);
-        navigation.navigate('TabBar');
+        if (userType === 'student') {
+            navigation.navigate('TabBar');
+        } else {
+            {
+                navigation.navigate('LecturerBottomTab');
+            }
+        }
     };
 
     return (

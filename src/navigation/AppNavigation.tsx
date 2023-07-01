@@ -12,8 +12,6 @@ import DrawerNavigation from './DrawerNavigation';
 import AddCourse from '../screens/studentScreens/AddCourseScreen';
 import Login from '../screens/general/Login/Login';
 import StudentSetUpScreen from '../screens/studentScreens/StudentSetUpScreen';
-import LecturerDrawer from '../screens/Lecturer/LecturerDrawer';
-import LecturerCoursesList from '../screens/Lecturer/LecturerCoursesList';
 import OTPVerificationScreen from '../screens/general/OTP/OTP';
 import Timetable from '../screens/general/Timetable/TimetableScreen';
 import ViewAttendance from '../screens/general/Attendance/ViewAttendance';
@@ -44,11 +42,7 @@ export const AppNavigator = () => {
                 <Screen name="Drawer" component={DrawerNavigation} />
                 <Screen name="Login" component={Login} />
                 <Screen name="AddCourse" component={AddCourse} />
-                <Screen name="LecturerDrawer" component={LecturerDrawer} />
-                <Screen
-                    name="LecturerCoursesList"
-                    component={LecturerCoursesList}
-                />
+
                 <Screen name="OTP" component={OTPVerificationScreen} />
                 <Screen name="Time" component={Timetable} />
                 <Screen name="View" component={ViewAttendance} />

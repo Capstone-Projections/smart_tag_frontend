@@ -6,8 +6,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AddCourse from '../studentScreens/AddCourseScreen';
-import LecturerCoursesList from './LecturerCoursesList';
 import Settings from '../general/Settings/Settings';
+import CoursesList from '../../components/general/Courses/Courses';
 
 const Drawer = createDrawerNavigator();
 
@@ -47,6 +47,10 @@ const LecturerDrawer = () => {
                 headerTitleAlign: 'center',
                 swipeEnabled: true,
                 headerTitleStyle: { fontFamily: 'Poppins' },
+                headerStyle: {
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: 'grey',
+                },
                 drawerActiveTintColor: '#196B9A',
                 drawerLabelStyle: {
                     color: 'black',
@@ -62,7 +66,7 @@ const LecturerDrawer = () => {
                         return <Icon name="school" size={size} color={color} />;
                     },
                 }}
-                component={LecturerCoursesList}
+                component={CoursesList}
             />
             <Drawer.Screen
                 name="Add Course"
