@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { styles } from './styles';
 import { Text } from 'react-native-paper';
-import BarcodeScanner from '../../../components/BarCodeScanner/BarCodeScanner';
+import BarcodeScanner from '../../../components/Student/BarCodeScanner/BarCodeScanner';
 
 export function QRCodeScreen() {
     return (

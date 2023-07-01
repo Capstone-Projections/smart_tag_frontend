@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native';
 import React, { useRef, useEffect, useState } from 'react';
 import {
     OTPInputContainer,
@@ -7,17 +6,11 @@ import {
     CodeInput,
     CodeInputText,
     CodeInputFocused,
-} from '../../../screens/general/style';
+} from '../../../screens/general/OTP/styles';
 import { TextInput } from 'react-native-gesture-handler';
+import { InputFieldProps } from './props';
 
-interface Props {
-    setPinReady: (value: any) => void;
-    code: string;
-    setCode: (value: string) => void;
-    maxlength: number;
-}
-
-const CodeInputField: React.FC<Props> = ({
+const CodeInputField: React.FC<InputFieldProps> = ({
     setPinReady,
     code,
     setCode,

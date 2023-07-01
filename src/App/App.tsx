@@ -1,16 +1,12 @@
 import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { View, SafeAreaView, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { allFonts } from '../resources/loadFont/fonts';
 import { registerRootComponent } from 'expo';
 import { NativeBaseProvider, Box } from 'native-base';
-import { AppWrapper } from '../styles/AppWrapper';
-import { AppNavigator } from '../components/AppNavigation';
-import LaunchScreen from '../screens/general/LaunchScreen';
+import { AppNavigator } from '../navigation/AppNavigation';
 import { customTheme } from '../Theme';
-import { AuthProvider } from '../components/AuthContext';
+import { AuthProvider } from '../context/AuthContext';
 
 export default function App() {
     const [fontsloaded] = useFonts(allFonts());

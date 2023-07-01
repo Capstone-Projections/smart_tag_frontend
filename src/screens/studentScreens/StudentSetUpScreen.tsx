@@ -10,9 +10,9 @@ import {
     CheckIcon,
     Button,
 } from 'native-base';
-import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
+import KeyboardAvoidingWrapper from '../../components/general/KeyboardWrapper/KeyboardWrapper';
 import axios from 'axios';
-import { AuthContext } from '../../components/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 interface StudentSetUpScreenProps {
     navigation: any;

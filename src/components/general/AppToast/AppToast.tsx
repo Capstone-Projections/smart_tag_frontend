@@ -8,7 +8,7 @@ import {
     Alert,
     useToast, // Move the useToast hook import here
 } from 'native-base';
-import { ToastAlertProps } from './AppToast.props';
+import { ToastAlertProps } from './props';
 
 export const ToastAlert: React.FC<ToastAlertProps> = ({
     id,
