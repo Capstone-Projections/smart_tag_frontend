@@ -89,7 +89,7 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
                 <StyledContainer style={{ alignItems: 'center' }}>
                     <TopHalf>
                         <Image
-                            source={require('../../../assets/images/otpImage.jpg')}
+                            source={require('../../../../assets/images/otpImage.jpg')}
                             style={style.image}
                         />
                     </TopHalf>

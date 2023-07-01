@@ -61,7 +61,7 @@ const GetStarted = (props: GetStartedProps) => {
                     <View>
                         <View style={style.imageContainer}>
                             <Image
-                                source={require('../../../assets/images/started.jpg')}
+                                source={require('../../../../assets/images/started.jpg')}
                                 style={style.image}
                                 resizeMode="cover"
                             />

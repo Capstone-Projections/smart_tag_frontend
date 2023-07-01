@@ -25,7 +25,7 @@ const LaunchScreen = (props: LaunchScreenProps) => {
                 <View style={style.imageContainer}>
                     <Animatable.Image
                         animation="fadeInDown"
-                        source={require('../../../assets/images/launch.jpg')}
+                        source={require('../../../../assets/images/launch.jpg')}
                         style={style.image}
                     />
                 </View>

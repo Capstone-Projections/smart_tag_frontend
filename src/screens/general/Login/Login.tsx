@@ -68,7 +68,7 @@ const Login = (props: LoginProps) => {
                     <View>
                         <View style={style.imageContainer}>
                             <Image
-                                source={require('../../../assets/images/login.jpg')}
+                                source={require('../../../../assets/images/login.jpg')}
                                 style={style.image}
                                 resizeMode="cover"
                             />
