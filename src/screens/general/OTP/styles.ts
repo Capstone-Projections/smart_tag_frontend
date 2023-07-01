@@ -29,10 +29,16 @@ export const style = StyleSheet.create({
         height: 58,
         borderRadius: 8,
     },
+    textContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: 10,
+    },
 });
 
 const StatusBarHeight = Constants.statusBarHeight;
-//TODO: replace the styled component here with the stylesheets
+
 export const Colors = {
     primary: '#196B9A',
     secondary: '#ffffff',

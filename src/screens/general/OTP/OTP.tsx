@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { BottomHalf, StyledContainer, TopHalf, style } from './styles';
-import { StyleSheet, Text, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, Image, ActivityIndicator, View } from 'react-native';
 import CodeInputField from '../../../components/general/InputField/CodeInputField';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button } from 'native-base';
+import { Button, Link } from 'native-base';
 import axios from 'axios';
 import { AuthContext } from '../../../context/AuthContext';
 import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
@@ -83,6 +83,22 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
         setShowAlert(false);
     };
 
+    const handleLinkPress = async () => {
+        try {
+            const response = await axios.post(
+                'https://smart-tag.onrender.com/login',
+                {
+                    email: email,
+                }
+            );
+
+            console.log(response.status);
+        } catch (error) {
+            console.log(error);
+        } finally {
+        }
+    };
+
     return (
         <KeyboardAvoidingWrapper>
             <SafeAreaView>
@@ -128,7 +144,21 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
                             </Button>
                         )}
 
-                        {verifying && <ActivityIndicator color={'blue'} />}
+                        {verifying && (
+                            <ActivityIndicator size="large" color={'blue'} />
+                        )}
+                        <View style={style.textContainer}>
+                            <Text>Didn't receive the email?</Text>
+                            <Link
+                                isExternal
+                                _text={{
+                                    color: 'blue.400',
+                                }}
+                                onPress={handleLinkPress}
+                            >
+                                Resend
+                            </Link>
+                        </View>
                     </BottomHalf>
                 </StyledContainer>
             </SafeAreaView>
