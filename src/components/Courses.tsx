@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import { AuthContext } from './AuthContext';
 import axios from 'axios';
@@ -8,7 +8,6 @@ import axios from 'axios';
 interface Props {
     name: string;
     courseCode: string;
-    lecturer: string;
 }
 
 const getRandomColor = () => {
@@ -18,9 +17,9 @@ const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
 };
-//TODO: put this into its own module
-const CourseCard: React.FC<Props> = ({ name, courseCode, lecturer }) => {
-    const cardColor = getRandomColor();
+
+const CourseCard: React.FC<Props> = ({ name, courseCode }) => {
+    const [cardColor, setCardColor] = useState(getRandomColor());
     const navigation = useNavigation() as any;
     const { setCourseTitle } = useContext(AuthContext);
 
@@ -37,7 +36,6 @@ const CourseCard: React.FC<Props> = ({ name, courseCode, lecturer }) => {
             >
                 <Card.Content>
                     <Title style={styles.title}>{name}</Title>
-                    <Paragraph style={styles.paragraph}>{lecturer}</Paragraph>
                     <Paragraph style={styles.paragraph}>{courseCode}</Paragraph>
                 </Card.Content>
             </Card>
@@ -48,9 +46,9 @@ const CourseCard: React.FC<Props> = ({ name, courseCode, lecturer }) => {
 const CoursesList = () => {
     const { userID, authorizationKey } = useContext(AuthContext);
     const [courses, setCourses] = useState<Props[]>([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        // Make an API request to fetch courses based on the userID
         const fetchCourses = async () => {
             const headers = { Authorization: `${authorizationKey}` };
 
@@ -69,15 +67,36 @@ const CoursesList = () => {
         //TODO: don't make the fetching of courses dependent on the change of userID because that isn't likely at all to happen
     }, [userID]);
 
+    const onRefresh = async () => {
+        setRefreshing(true);
+        try {
+            const response = await axios.get(
+                `https://smart-tag.onrender.com/courses/${userID}`,
+                { headers: { Authorization: `${authorizationKey}` } }
+            );
+            setCourses(response.data);
+        } catch (error) {
+            console.error('Failed to fetch courses:', error);
+        }
+        setRefreshing(false);
+    };
+
     return (
         <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 {courses.map((course, index) => (
                     <CourseCard
                         key={index}
                         name={course.name}
                         courseCode={course.courseCode}
-                        lecturer={course.lecturer}
                     />
                 ))}
             </ScrollView>
