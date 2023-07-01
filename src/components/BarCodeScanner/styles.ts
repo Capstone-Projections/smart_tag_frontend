@@ -9,8 +9,8 @@ export const styles = StyleSheet.create({
     },
     scannerContainer: {
         height: '50%',
-        width: '80%',
-        borderWidth: 2,
+        width: '90%',
+        borderWidth: 5,
         borderColor: `${Colors.primary}`,
         borderRadius: 5,
         overflow: 'hidden',

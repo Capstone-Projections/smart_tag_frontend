@@ -6,4 +6,9 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    text: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 15,
+    },
 });

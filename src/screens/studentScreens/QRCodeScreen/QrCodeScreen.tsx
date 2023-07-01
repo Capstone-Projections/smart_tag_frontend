@@ -10,10 +10,13 @@ export function QRCodeScreen() {
                 boxSize={200}
                 boxPosition={{
                     top: '35%',
-                    left: '-27%',
+                    left: '-32%',
                     transform: [{ translateX: -50 }, { translateY: -50 }],
                 }}
             />
+            <Text style={styles.text}>
+                Scan QR Code to take your Attendance
+            </Text>
         </View>
     );
 }
