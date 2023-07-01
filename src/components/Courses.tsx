@@ -12,12 +12,13 @@ interface Props {
 }
 
 const getRandomColor = () => {
+    // TODO:use colors that have already been defined inside of the Theme context of the app
     const colors = ['#157B80', '#32AC71', '#1D6CA7', '#ECA235'];
 
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
 };
-
+//TODO: put this into its own module
 const CourseCard: React.FC<Props> = ({ name, courseCode, lecturer }) => {
     const cardColor = getRandomColor();
     const navigation = useNavigation() as any;
@@ -25,7 +26,7 @@ const CourseCard: React.FC<Props> = ({ name, courseCode, lecturer }) => {
 
     const handleCardPress = () => {
         setCourseTitle(name);
-        navigation.navigate('Time');
+        navigation.navigate('TabBar');
     };
 
     return (
