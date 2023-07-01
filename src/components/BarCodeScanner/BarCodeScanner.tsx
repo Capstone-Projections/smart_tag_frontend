@@ -31,7 +31,7 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         null
     );
     const [scanned, setScanned] = useState(false);
-
+    //get the permission status
     useEffect(() => {
         const getBarCodeScannerPermissions = async () => {
             const { status } = await requestPermissionsAsync();
