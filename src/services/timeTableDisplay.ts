@@ -3,7 +3,15 @@
 import { ReturnProps } from '../screens/general/Timetable/props';
 
 export const transformLessonData = (lessons: ReturnProps[]) => {
-    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    const daysOfWeek = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ];
 
     const days: string[] = [];
     const timeRanges: string[] = [];

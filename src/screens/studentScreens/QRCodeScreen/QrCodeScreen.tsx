@@ -8,27 +8,48 @@ import React, { useContext } from 'react';
 import getCurrentDay from '../../../services/currentDay';
 import { AuthContext } from '../../../context/AuthContext';
 import { LessonRoomContext } from '../../../context/LectureRoomContext';
+import axios from 'axios';
 
 export function QRCodeScreen() {
     const { days } = useContext(TimetableDaysContext);
     const { idlesson } = useContext(LessonContext);
-    const { userID } = useContext(AuthContext);
+    const { userID, authorizationKey } = useContext(AuthContext);
     const { lessonRoomId } = useContext(LessonRoomContext);
     const today = getCurrentDay();
 
-    // console.log(lessonRoomId)
     //TODO: make this look nice later on and add toasting and whatever
-    const handleQRCodeScanned = (data: string) => {
+    const handleQRCodeScanned = async (data: string) => {
         if (data === lessonRoomId) {
-            console.log('scanned');
-            console.log(userID);
-            console.log(lessonRoomId);
             if (days.includes(today)) {
+                const payload = {
+                    status: true,
+                    lesson_idlesson: idlesson,
+                    user_iduser: userID,
+                };
+                const headers = { Authorization: authorizationKey };
+                try {
+                    const response = await axios.post(
+                        'https://smart-tag.onrender.com/attendance',
+                        payload,
+                        { headers }
+                    );
+
+                    // Alert success message with the user's name
+                    alert(
+                        `Attendance taken for ${response.data.user.firstName}`
+                    );
+                } catch (error) {
+                    console.error('Failed to take attendance:', error);
+                    // Alert error message
+                    alert('Failed to take attendance');
+                }
             } else {
-                console.log('there is not class today');
+                //TODO: let this be a pop up that says that there is no class today
+                alert('there is not class today');
             }
         } else {
-            alert('Wrong QR Code');
+            //TODO: make this also better with the pop up that you're going to do in the future
+            alert('Wrong QR Code for this class');
         }
     };
 
