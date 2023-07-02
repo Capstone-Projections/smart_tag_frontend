@@ -1,15 +1,43 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'native-base';
 import { AuthContext } from '../../../context/AuthContext';
 import { style } from './styles';
-import { TimetableProps } from './props';
+import { ReturnProps, TimetableProps } from './props';
+import { CourseContext } from '../../../context/CourseContext';
+import axios from 'axios';
 
 const Timetable = (props: TimetableProps) => {
-    const { courseTitle } = useContext(AuthContext);
+    //TODO: this should be in the course context instead of the AuthContext so move it
+    const { courseTitle, authorizationKey } = useContext(AuthContext);
+    const { IDcourse } = useContext(CourseContext);
+    const [lessons, setLessons] = useState<ReturnProps[]>([]);
+
+    useEffect(() => {
+        const fetchLessonsForCourse = async () => {
+            const headers = { Authorization: `${authorizationKey}` };
+
+            try {
+                const response = await axios.get(
+                    `https://smart-tag.onrender.com/lessons/course/${IDcourse}`,
+                    { headers }
+                );
+                console.log(response.data);
+            } catch (error) {
+                console.error(
+                    'Failed to fetch lessons for this course:',
+                    error
+                );
+            }
+        };
+
+        fetchLessonsForCourse();
+        //TODO: change when the fetch is done
+    }, [IDcourse]);
 
     const daysOfWeek = ['Mon:', 'Tue:', 'Wed:', 'Thur:', 'Fri:'];
+
     const times = [
         '10:30-12:30',
         'No Class',

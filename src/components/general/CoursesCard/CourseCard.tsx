@@ -21,7 +21,7 @@ export const CourseCard: React.FC<CardProps> = ({
     const handleCardPress = () => {
         setCourseTitle(name);
         if (idcourse) {
-            setIdCourse(IDcourse);
+            setIdCourse(idcourse);
         }
         if (userType === 'student') {
             navigation.navigate('TabBar');

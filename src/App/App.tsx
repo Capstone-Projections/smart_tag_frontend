@@ -24,7 +24,7 @@ export default function App() {
     } else {
         SplashScreen.hideAsync();
     }
-
+    //TODO: might have to change the scope of this context so experiment later(CourseContext )
     return (
         <AuthProvider>
             <CourseProvider>
