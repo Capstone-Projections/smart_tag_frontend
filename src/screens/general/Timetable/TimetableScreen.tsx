@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'native-base';
@@ -8,13 +8,20 @@ import { ReturnProps, TimetableProps } from './props';
 import { CourseContext } from '../../../context/CourseContext';
 import axios from 'axios';
 import { transformLessonData } from '../../../services/timeTableDisplay';
+import { TimetableDaysContext } from '../../../context/TimeTableContext';
+import { LessonRoomContext } from '../../../context/LectureRoomContext';
+import { getLectureRoomUidByDay } from '../../../services/getLectureRoomUidByDay';
 
 const Timetable = (props: TimetableProps) => {
     //TODO: this should be in the course context instead of the AuthContext so move it
+
     const { courseTitle, authorizationKey } = useContext(AuthContext);
     const { IDcourse } = useContext(CourseContext);
+    const { setDays } = useContext(TimetableDaysContext);
+    const { setLessonRoomId } = useContext(LessonRoomContext);
     const [lessons, setLessons] = useState<ReturnProps[]>([]);
-
+    const [isDaysSet, setIsDaysSet] = useState(false);
+    //TODO: can use the useQuery here so that the caching is taken care of and the query doesn't have to be run all the time when the card is cliked on and also remove the unessary useEffects inside of this file also
     useEffect(() => {
         const fetchLessonsForCourse = async () => {
             const headers = { Authorization: `${authorizationKey}` };
@@ -24,11 +31,7 @@ const Timetable = (props: TimetableProps) => {
                     `https://smart-tag.onrender.com/lessons/course/${IDcourse}`,
                     { headers }
                 );
-                // console.log(response.data);
                 setLessons(response.data);
-
-                console.log(days); // Array of days
-                console.log(timeRanges); // Array of time ranges
             } catch (error) {
                 console.error(
                     'Failed to fetch lessons for this course:',
@@ -40,7 +43,23 @@ const Timetable = (props: TimetableProps) => {
         fetchLessonsForCourse();
         //TODO: as it currently working it runs any time the card is clicked on which is a bad thing.. make it such that it runs only once when the card is clicked on
     }, [IDcourse]);
+
     const { days, timeRanges } = transformLessonData(lessons);
+    // setDays(days);
+    // if(lessons) setDays(days);
+    useEffect(() => {
+        if (lessons.length > 0 && !isDaysSet) {
+            const { days } = transformLessonData(lessons);
+            setDays(days);
+            setIsDaysSet(true);
+        }
+    }, [lessons, isDaysSet, setDays]);
+
+    // console.log(lessons)
+    useEffect(() => {
+        const uid = getLectureRoomUidByDay(lessons);
+        if (uid) setLessonRoomId(uid);
+    }, [lessons, setLessonRoomId]);
 
     const handleLinkPress = () => props.navigation.navigate('View');
 

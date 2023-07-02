@@ -18,6 +18,7 @@ import { BarcodeScannerProps } from './props';
 const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     boxSize,
     boxPosition,
+    onQRCodeScanned,
 }) => {
     const [hasPermission, setHasPermission] = useState<PermissionStatus | null>(
         null
@@ -40,7 +41,9 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
         type: string;
         data: string;
     }) => {
+        // console.log(data)
         setScanned(true);
+        onQRCodeScanned(data);
         alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     };
 
