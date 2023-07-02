@@ -5,6 +5,7 @@ import axios from 'axios';
 import { styles } from './styles';
 import { CardProps } from '../CoursesCard/props';
 import { CourseCard } from '../CoursesCard/CourseCard';
+import { CourseContext, CourseProvider } from '../../../context/CourseContext';
 
 const CoursesList = () => {
     const { userID, authorizationKey } = useContext(AuthContext);
@@ -54,13 +55,16 @@ const CoursesList = () => {
                     />
                 }
             >
-                {courses.map((course, index) => (
-                    <CourseCard
-                        key={index}
-                        name={course.name}
-                        courseCode={course.courseCode}
-                    />
-                ))}
+                {courses.map((course, index) => {
+                    return (
+                        <CourseCard
+                            key={index}
+                            name={course.name}
+                            courseCode={course.courseCode}
+                            idcourse={course.idcourse}
+                        />
+                    );
+                })}
             </ScrollView>
         </View>
     );

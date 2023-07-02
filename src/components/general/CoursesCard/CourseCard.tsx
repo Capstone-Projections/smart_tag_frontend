@@ -6,15 +6,23 @@ import { AuthContext } from '../../../context/AuthContext';
 import { styles } from './styles';
 import { CardProps } from './props';
 import { getRandomColor } from '../../../services/getRandomColor';
-import { CourseProvider } from '../../../context/CourseContext';
+import { CourseContext } from '../../../context/CourseContext';
 
-export const CourseCard: React.FC<CardProps> = ({ name, courseCode }) => {
+export const CourseCard: React.FC<CardProps> = ({
+    name,
+    courseCode,
+    idcourse,
+}) => {
     const [cardColor, setCardColor] = useState(getRandomColor());
     const navigation = useNavigation() as any;
     const { setCourseTitle, userType } = useContext(AuthContext);
+    const { setIdCourse, IDcourse } = useContext(CourseContext);
 
     const handleCardPress = () => {
         setCourseTitle(name);
+        if (idcourse) {
+            setIdCourse(IDcourse);
+        }
         if (userType === 'student') {
             navigation.navigate('TabBar');
         } else {
@@ -25,20 +33,16 @@ export const CourseCard: React.FC<CardProps> = ({ name, courseCode }) => {
     };
 
     return (
-        <CourseProvider>
-            <View style={styles.cardContainer}>
-                <Card
-                    style={[styles.card, { backgroundColor: cardColor }]}
-                    onPress={handleCardPress}
-                >
-                    <Card.Content>
-                        <Title style={styles.title}>{name}</Title>
-                        <Paragraph style={styles.paragraph}>
-                            {courseCode}
-                        </Paragraph>
-                    </Card.Content>
-                </Card>
-            </View>
-        </CourseProvider>
+        <View style={styles.cardContainer}>
+            <Card
+                style={[styles.card, { backgroundColor: cardColor }]}
+                onPress={handleCardPress}
+            >
+                <Card.Content>
+                    <Title style={styles.title}>{name}</Title>
+                    <Paragraph style={styles.paragraph}>{courseCode}</Paragraph>
+                </Card.Content>
+            </Card>
+        </View>
     );
 };

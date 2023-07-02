@@ -7,6 +7,7 @@ import { NativeBaseProvider, Box } from 'native-base';
 import { AppNavigator } from '../navigation/AppNavigation';
 import { customTheme } from '../Theme';
 import { AuthProvider } from '../context/AuthContext';
+import { CourseProvider } from '../context/CourseContext';
 
 export default function App() {
     const [fontsloaded] = useFonts(allFonts());
@@ -26,9 +27,11 @@ export default function App() {
 
     return (
         <AuthProvider>
-            <NativeBaseProvider theme={customTheme}>
-                <AppNavigator />
-            </NativeBaseProvider>
+            <CourseProvider>
+                <NativeBaseProvider theme={customTheme}>
+                    <AppNavigator />
+                </NativeBaseProvider>
+            </CourseProvider>
         </AuthProvider>
     );
 }

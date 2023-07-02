@@ -1,12 +1,12 @@
 import React, { createContext, useState } from 'react';
 
 interface CourseContextData {
-    idcourse: string;
-    setIdCourse: (idcourse: string) => void;
+    IDcourse: string;
+    setIdCourse: (IDcourse: string) => void;
 }
 
 export const CourseContext = createContext<CourseContextData>({
-    idcourse: '',
+    IDcourse: '',
     setIdCourse: () => {},
 });
 
@@ -15,16 +15,16 @@ interface CourseProviderProps {
 }
 
 export const CourseProvider: React.FC<CourseProviderProps> = ({ children }) => {
-    const [idcourse, setIdCourse] = useState('');
+    const [IDcourse, setIdCourse] = useState('');
 
-    const handleSetIdCourse = (idcourse: string) => {
-        setIdCourse(idcourse);
+    const handleSetIdCourse = (IDcourse: string) => {
+        setIdCourse(IDcourse);
     };
 
     return (
         <CourseContext.Provider
             value={{
-                idcourse,
+                IDcourse,
                 setIdCourse: handleSetIdCourse,
             }}
         >
