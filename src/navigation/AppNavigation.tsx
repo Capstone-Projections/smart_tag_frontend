@@ -16,6 +16,7 @@ import OTPVerificationScreen from '../screens/general/OTP/OTP';
 import Timetable from '../screens/general/Timetable/TimetableScreen';
 import ViewAttendance from '../screens/general/Attendance/ViewAttendance';
 import LecturerTimetable from '../screens/Lecturer/LecturerTimetable';
+import PeopleScreen from '../screens/Lecturer/PeopleScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -50,6 +51,7 @@ export const AppNavigator = () => {
                     name="LecturerTimetable"
                     component={LecturerTimetable}
                 />
+                <Screen name="People" component={PeopleScreen} />
             </Navigator>
         </NavigationContainer>
     );

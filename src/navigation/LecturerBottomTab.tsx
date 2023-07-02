@@ -5,6 +5,7 @@ import { Text, BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CommonActions } from '@react-navigation/native';
 import LecturerTimetable from '../screens/Lecturer/LecturerTimetable';
+import PeopleScreen from '../screens/Lecturer/PeopleScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -95,7 +96,7 @@ export default function LecturerBottomTabBar() {
             />
             <Tab.Screen
                 name="People"
-                component={SettingsScreen}
+                component={PeopleScreen}
                 options={{
                     tabBarLabel: 'People',
                     tabBarIcon: ({ color, size }) => {
