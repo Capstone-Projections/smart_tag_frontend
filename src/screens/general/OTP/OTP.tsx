@@ -59,7 +59,8 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
                 }
             } //TODO: remove the any from the type of error and then try and get the correct type for it
         } catch (error: any) {
-            if (error.AxiosError === 'Network Error') {
+            console.log(error[0]);
+            if (error[0] === 'Network Error') {
                 setAlertData({
                     status: 'error',
                     title: 'Network Error',
