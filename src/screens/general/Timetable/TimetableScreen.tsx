@@ -7,6 +7,7 @@ import { style } from './styles';
 import { ReturnProps, TimetableProps } from './props';
 import { CourseContext } from '../../../context/CourseContext';
 import axios from 'axios';
+import { transformLessonData } from '../../../services/timeTableDisplay';
 
 const Timetable = (props: TimetableProps) => {
     //TODO: this should be in the course context instead of the AuthContext so move it
@@ -23,7 +24,11 @@ const Timetable = (props: TimetableProps) => {
                     `https://smart-tag.onrender.com/lessons/course/${IDcourse}`,
                     { headers }
                 );
-                console.log(response.data);
+                // console.log(response.data);
+                setLessons(response.data);
+
+                console.log(days); // Array of days
+                console.log(timeRanges); // Array of time ranges
             } catch (error) {
                 console.error(
                     'Failed to fetch lessons for this course:',
@@ -33,18 +38,9 @@ const Timetable = (props: TimetableProps) => {
         };
 
         fetchLessonsForCourse();
-        //TODO: change when the fetch is done
+        //TODO: as it currently working it runs any time the card is clicked on which is a bad thing.. make it such that it runs only once when the card is clicked on
     }, [IDcourse]);
-
-    const daysOfWeek = ['Mon:', 'Tue:', 'Wed:', 'Thur:', 'Fri:'];
-
-    const times = [
-        '10:30-12:30',
-        'No Class',
-        '1:00-3:00',
-        'No Class',
-        'No Class',
-    ];
+    const { days, timeRanges } = transformLessonData(lessons);
 
     const handleLinkPress = () => props.navigation.navigate('View');
 
@@ -61,16 +57,16 @@ const Timetable = (props: TimetableProps) => {
                 </View>
                 <View style={style.direction}>
                     <View style={style.dayColumn}>
-                        {daysOfWeek.map((day, index) => (
+                        {days.map((day, index) => (
                             <View key={index} style={style.card}>
                                 <Text style={style.dayText}>{day}</Text>
                             </View>
                         ))}
                     </View>
                     <View style={style.timeColumn}>
-                        {times.map((time, index) => (
+                        {timeRanges.map((times, index) => (
                             <View key={index} style={style.card}>
-                                <Text style={style.timeText}>{time}</Text>
+                                <Text style={style.timeText}>{timeRanges}</Text>
                             </View>
                         ))}
                     </View>

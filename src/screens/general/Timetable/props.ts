@@ -3,7 +3,7 @@ export interface TimetableProps {
 }
 
 export interface ReturnProps {
-    idlesson: number;
+    idlesson: string;
     startTime: string;
     endTime: string;
     day: string;
@@ -12,7 +12,7 @@ export interface ReturnProps {
 }
 
 interface LectureRoom {
-    idLectureRoom: number;
+    idLectureRoom: string;
     name: string;
     roomLocation: string;
     uid: string;
