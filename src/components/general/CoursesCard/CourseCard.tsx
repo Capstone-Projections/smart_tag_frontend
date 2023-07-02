@@ -6,14 +6,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import axios from 'axios';
 import { styles } from './styles';
 import { CardProps } from './props';
-
-const getRandomColor = () => {
-    // TODO:use colors that have already been defined inside of the Theme context of the app
-    const colors = ['#157B80', '#32AC71', '#1D6CA7', '#ECA235'];
-
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
-};
+import { getRandomColor } from '../../../services/getRandomColor';
 
 export const CourseCard: React.FC<CardProps> = ({ name, courseCode }) => {
     const [cardColor, setCardColor] = useState(getRandomColor());
