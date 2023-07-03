@@ -16,7 +16,6 @@ export function getLessonIdByDayAndTime(
         const lessonEndTime = lesson.endTime;
 
         if (isTimeBetween(currentTime, lessonStartTime, lessonEndTime)) {
-            console.log(lesson.idlesson);
             return lesson.idlesson;
         }
     }

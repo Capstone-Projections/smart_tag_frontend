@@ -45,7 +45,7 @@ const Timetable = (props: TimetableProps) => {
 
         fetchLessonsForCourse();
         //TODO: as it currently working it runs any time the card is clicked on which is a bad thing.. make it such that it runs only once when the card is clicked on
-    }, [IDcourse]);
+    }, []);
 
     const { days, timeRanges } = transformLessonData(lessons);
 
