@@ -7,5 +7,6 @@ export interface BarcodeScannerProps {
         left: string;
         transform: StyleProp<ViewStyle>[];
     };
+
     onQRCodeScanned: (data: string) => void;
 }

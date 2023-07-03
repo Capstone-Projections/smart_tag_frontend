@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     scannerContainer: {
-        height: '50%',
+        height: '80%',
         width: '90%',
         borderWidth: 5,
         borderColor: `${Colors.primary}`,

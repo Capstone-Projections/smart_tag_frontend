@@ -7,13 +7,27 @@ import { styles } from './styles';
 import { CardProps } from './props';
 import { getRandomColor } from '../../../services/getRandomColor';
 import { CourseContext } from '../../../context/CourseContext';
+import {
+    appBlue,
+    coursesdBlue,
+    coursesdBlue2,
+    coursesdGreen,
+    coursesdYellow,
+} from '../../../resources/colors/colors';
 
 export const CourseCard: React.FC<CardProps> = ({
     name,
     courseCode,
     idcourse,
 }) => {
-    const [cardColor, setCardColor] = useState(getRandomColor());
+    const colors = [
+        appBlue,
+        coursesdBlue,
+        coursesdBlue2,
+        coursesdGreen,
+        coursesdYellow,
+    ];
+    const [cardColor, setCardColor] = useState(getRandomColor(colors));
     const navigation = useNavigation() as any;
     const { setCourseTitle, userType } = useContext(AuthContext);
     const { setIdCourse, IDcourse } = useContext(CourseContext);

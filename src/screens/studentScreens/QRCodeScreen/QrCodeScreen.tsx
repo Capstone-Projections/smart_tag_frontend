@@ -1,6 +1,6 @@
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { styles } from './styles';
-import { Text } from 'react-native-paper';
+
 import BarcodeScanner from '../../../components/Student/BarCodeScanner/BarCodeScanner';
 import { LessonContext } from '../../../context/LessonContext';
 import { TimetableDaysContext } from '../../../context/TimeTableContext';
@@ -58,7 +58,7 @@ export function QRCodeScreen() {
             <BarcodeScanner
                 boxSize={200}
                 boxPosition={{
-                    top: '35%',
+                    top: '20%',
                     left: '-32%',
                     transform: [{ translateX: -50 }, { translateY: -50 }],
                 }}

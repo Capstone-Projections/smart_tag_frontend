@@ -8,11 +8,13 @@ import {
     coursesdGreen,
     coursesdYellow,
 } from '../../resources/colors/colors';
+import { getRandomColor } from '../../services/getRandomColor';
 
 interface Props {
     name: string;
 }
-const getRandomColor = () => {
+
+const UserItem: React.FC<Props> = ({ name }) => {
     const colors = [
         appBlue,
         coursesdBlue,
@@ -21,13 +23,8 @@ const getRandomColor = () => {
         coursesdYellow,
     ];
 
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
-};
-
-const UserItem: React.FC<Props> = ({ name }) => {
     const initials = getInitials(name);
-    const [cardColor, setCardColor] = useState(getRandomColor());
+    const [cardColor, setCardColor] = useState(getRandomColor(colors));
 
     return (
         <View>

@@ -7,8 +7,10 @@ import { Button, Link } from 'native-base';
 import axios from 'axios';
 import { AuthContext } from '../../../context/AuthContext';
 import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
-import { CustomAlert } from '../../../components/general/Alert/Alert';
 import { OTPVerificationProps } from './props';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
 
 const OTPVerificationScreen = (props: OTPVerificationProps) => {
     const {
@@ -21,12 +23,18 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
     const [code, setCode] = useState('');
     const [pinReady, setPinReady] = useState(false);
     const [verifying, setVerifying] = useState(false);
-    const [showInvalidOTP, setShowInvalidOTP] = useState(false);
-    const [showAlert, setShowAlert] = useState(false); // New state for showing/hiding the alert
-    const [alertData, setAlertData] = useState({
-        status: '',
-        title: '',
-    });
+
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceedSuccess = () => {
+        hideModal();
+        props.navigation.navigate('Drawer');
+    };
+
+    const handleProceedFail = () => {
+        hideModal();
+    };
 
     const MAX_CODE_LENGTH = 4;
 
@@ -42,7 +50,12 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
             );
             setAuthorizationKey(response.headers['authorization']);
             if (response.status !== 200) {
-                setShowInvalidOTP(true); // Show toast for invalid OTP
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Invalid OTP',
+                    'The OTP you entered is invalid',
+                    handleProceedFail
+                );
             } else {
                 if (userType === 'student') {
                     if (getStarted === 'getStarted') {
@@ -61,27 +74,25 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
         } catch (error: any) {
             console.log(error[0]);
             if (error[0] === 'Network Error') {
-                setAlertData({
-                    status: 'error',
-                    title: 'Network Error',
-                });
-                setShowAlert(true);
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Network Error',
+                    'An error occurred. Please check your network connection and try again.',
+                    handleProceedFail
+                );
             } else {
-                setAlertData({
-                    status: 'error',
-                    title: 'The OTP you entered is invalid',
-                });
-                setShowAlert(true);
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Invalid OTP',
+                    'The OTP you entered is invalid',
+                    handleProceedFail
+                );
             }
 
             console.log(error);
         } finally {
             setVerifying(false);
         }
-    };
-
-    const handleCloseAlert = () => {
-        setShowAlert(false);
     };
 
     const handleLinkPress = async () => {
@@ -91,6 +102,13 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
                 {
                     email: email,
                 }
+            );
+
+            showMessageModal(
+                MessageTypes.INFO,
+                'Email Sent',
+                'A new OTP code has been sent to your email address',
+                handleProceedFail
             );
 
             console.log(response.status);
@@ -111,12 +129,6 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
                         />
                     </TopHalf>
                     <BottomHalf>
-                        {showAlert && (
-                            <CustomAlert
-                                alert={alertData}
-                                onClose={handleCloseAlert}
-                            />
-                        )}
                         <Text style={style.text}>Account Verification</Text>
                         <Text style={style.infoText}>
                             Enter the 4-digit code sent to your email
@@ -162,6 +174,14 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
                         </View>
                     </BottomHalf>
                 </StyledContainer>
+                <MessageModal
+                    messageModalVisible={messageModalState.messageModalVisible}
+                    messageType={messageModalState.messageType}
+                    headerText={messageModalState.headerText}
+                    messageText={messageModalState.messageText}
+                    onDismiss={hideModal}
+                    onProceed={messageModalState.onProceed}
+                />
             </SafeAreaView>
         </KeyboardAvoidingWrapper>
     );
