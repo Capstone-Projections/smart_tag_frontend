@@ -24,7 +24,7 @@ const Timetable = (props: TimetableProps) => {
     const [lessons, setLessons] = useState<ReturnProps[]>([]);
     const [isDaysSet, setIsDaysSet] = useState(false);
     const { setIdLesson } = useContext(LessonContext);
-    //TODO: can use the useQuery here so that the caching is taken care of and the query doesn't have to be run all the time when the card is cliked on and also remove the unessary useEffects inside of this file also
+
     useEffect(() => {
         const fetchLessonsForCourse = async () => {
             const headers = { Authorization: `${authorizationKey}` };
