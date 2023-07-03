@@ -1,6 +1,5 @@
 import { View, Text } from 'react-native';
 import { styles } from './styles';
-
 import BarcodeScanner from '../../../components/Student/BarCodeScanner/BarCodeScanner';
 import { LessonContext } from '../../../context/LessonContext';
 import { TimetableDaysContext } from '../../../context/TimeTableContext';
@@ -9,6 +8,9 @@ import getCurrentDay from '../../../services/currentDay';
 import { AuthContext } from '../../../context/AuthContext';
 import { LessonRoomContext } from '../../../context/LectureRoomContext';
 import axios from 'axios';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
 
 export function QRCodeScreen() {
     const { days } = useContext(TimetableDaysContext);
@@ -16,8 +18,13 @@ export function QRCodeScreen() {
     const { userID, authorizationKey } = useContext(AuthContext);
     const { lessonRoomId } = useContext(LessonRoomContext);
     const today = getCurrentDay();
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
 
-    //TODO: make this look nice later on and add toasting and whatever(also this requires more testing so do that Blay)
+    const handleProceed = () => {
+        hideModal();
+    };
+
     const handleQRCodeScanned = async (data: string) => {
         if (data === lessonRoomId) {
             if (days.includes(today)) {
@@ -35,21 +42,39 @@ export function QRCodeScreen() {
                     );
 
                     // Alert success message with the user's name
-                    alert(
-                        `Attendance taken for ${response.data.user.firstName}`
+
+                    showMessageModal(
+                        MessageTypes.SUCCESS,
+                        'Attendance',
+                        `Attendance taken for ${response.data.user.firstName}`,
+                        handleProceed
                     );
                 } catch (error) {
                     console.error('Failed to take attendance:', error);
                     // Alert error message
-                    alert('Failed to take attendance');
+
+                    showMessageModal(
+                        MessageTypes.FAIL,
+                        'Attendance',
+                        'Failed to take attendance',
+                        handleProceed
+                    );
                 }
             } else {
-                //TODO: let this be a pop up that says that there is no class today
-                alert('You have no class at this time');
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Attendance',
+                    'You have no class at this time',
+                    handleProceed
+                );
             }
         } else {
-            //TODO: make this also better with the pop up that you're going to do in the future
-            alert("You're at the wrong class");
+            showMessageModal(
+                MessageTypes.FAIL,
+                'Attendance',
+                "You're at the wrong class",
+                handleProceed
+            );
         }
     };
 
@@ -67,6 +92,14 @@ export function QRCodeScreen() {
             <Text style={styles.text}>
                 Scan QR Code to take your Attendance
             </Text>
+            <MessageModal
+                messageModalVisible={messageModalState.messageModalVisible}
+                messageType={messageModalState.messageType}
+                headerText={messageModalState.headerText}
+                messageText={messageModalState.messageText}
+                onDismiss={hideModal}
+                onProceed={messageModalState.onProceed}
+            />
         </View>
     );
 }
