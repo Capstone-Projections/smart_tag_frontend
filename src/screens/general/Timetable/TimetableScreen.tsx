@@ -10,8 +10,8 @@ import axios from 'axios';
 import { transformLessonData } from '../../../services/timeTableDisplay';
 import { TimetableDaysContext } from '../../../context/TimeTableContext';
 import { LessonRoomContext } from '../../../context/LectureRoomContext';
-import { getLectureRoomUidByDay } from '../../../services/getLectureRoomUidByDay';
-import { getLessonIdByDay } from '../../../services/getLessonIdByDay';
+import { getLectureRoomUidByDayAndTime } from '../../../services/getLectureRoomUidByDay';
+import { getLessonIdByDayAndTime } from '../../../services/getLessonIdByDay';
 import { LessonContext } from '../../../context/LessonContext';
 
 const Timetable = (props: TimetableProps) => {
@@ -24,7 +24,7 @@ const Timetable = (props: TimetableProps) => {
     const [lessons, setLessons] = useState<ReturnProps[]>([]);
     const [isDaysSet, setIsDaysSet] = useState(false);
     const { setIdLesson } = useContext(LessonContext);
-    //TODO: can use the useQuery here so that the caching is taken care of and the query doesn't have to be run all the time when the card is cliked on and also remove the unessary useEffects inside of this file also
+
     useEffect(() => {
         const fetchLessonsForCourse = async () => {
             const headers = { Authorization: `${authorizationKey}` };
@@ -45,7 +45,7 @@ const Timetable = (props: TimetableProps) => {
 
         fetchLessonsForCourse();
         //TODO: as it currently working it runs any time the card is clicked on which is a bad thing.. make it such that it runs only once when the card is clicked on
-    }, [IDcourse]);
+    }, []);
 
     const { days, timeRanges } = transformLessonData(lessons);
 
@@ -58,8 +58,8 @@ const Timetable = (props: TimetableProps) => {
     }, [lessons, isDaysSet, setDays]);
 
     useEffect(() => {
-        const uid = getLectureRoomUidByDay(lessons);
-        const lessonid = getLessonIdByDay(lessons);
+        const uid = getLectureRoomUidByDayAndTime(lessons);
+        const lessonid = getLessonIdByDayAndTime(lessons);
         if (uid) setLessonRoomId(uid);
         if (lessonid) setIdLesson(lessonid);
     }, [lessons, setLessonRoomId]);

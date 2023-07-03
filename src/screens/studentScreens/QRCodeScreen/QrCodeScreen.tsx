@@ -17,7 +17,7 @@ export function QRCodeScreen() {
     const { lessonRoomId } = useContext(LessonRoomContext);
     const today = getCurrentDay();
 
-    //TODO: make this look nice later on and add toasting and whatever
+    //TODO: make this look nice later on and add toasting and whatever(also this requires more testing so do that Blay)
     const handleQRCodeScanned = async (data: string) => {
         if (data === lessonRoomId) {
             if (days.includes(today)) {
@@ -45,11 +45,11 @@ export function QRCodeScreen() {
                 }
             } else {
                 //TODO: let this be a pop up that says that there is no class today
-                alert('there is not class today');
+                alert('You have no class at this time');
             }
         } else {
             //TODO: make this also better with the pop up that you're going to do in the future
-            alert('Wrong QR Code for this class');
+            alert("You're at the wrong class");
         }
     };
 
