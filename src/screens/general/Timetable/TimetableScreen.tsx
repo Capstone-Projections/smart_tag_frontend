@@ -10,8 +10,8 @@ import axios from 'axios';
 import { transformLessonData } from '../../../services/timeTableDisplay';
 import { TimetableDaysContext } from '../../../context/TimeTableContext';
 import { LessonRoomContext } from '../../../context/LectureRoomContext';
-import { getLectureRoomUidByDay } from '../../../services/getLectureRoomUidByDay';
-import { getLessonIdByDay } from '../../../services/getLessonIdByDay';
+import { getLectureRoomUidByDayAndTime } from '../../../services/getLectureRoomUidByDay';
+import { getLessonIdByDayAndTime } from '../../../services/getLessonIdByDay';
 import { LessonContext } from '../../../context/LessonContext';
 
 const Timetable = (props: TimetableProps) => {
@@ -58,8 +58,8 @@ const Timetable = (props: TimetableProps) => {
     }, [lessons, isDaysSet, setDays]);
 
     useEffect(() => {
-        const uid = getLectureRoomUidByDay(lessons);
-        const lessonid = getLessonIdByDay(lessons);
+        const uid = getLectureRoomUidByDayAndTime(lessons);
+        const lessonid = getLessonIdByDayAndTime(lessons);
         if (uid) setLessonRoomId(uid);
         if (lessonid) setIdLesson(lessonid);
     }, [lessons, setLessonRoomId]);
