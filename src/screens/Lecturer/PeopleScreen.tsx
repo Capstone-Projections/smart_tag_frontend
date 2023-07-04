@@ -1,12 +1,22 @@
 import React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import {
+    View,
+    FlatList,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+} from 'react-native';
 import UserItem from '../../components/lecturer/PeopleCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AuthContext } from '../../context/AuthContext';
 import { ScrollView } from 'react-native-gesture-handler';
 import { CourseContext } from '../../context/CourseContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const PeopleScreen = () => {
+interface PeopleProps {
+    navigation: any;
+}
+
+const PeopleScreen = (props: PeopleProps) => {
     const { courseTitle } = React.useContext(CourseContext);
     const users = [
         {
@@ -54,13 +64,24 @@ const PeopleScreen = () => {
             name: 'Dzifa Kwame',
         },
     ];
+
+    const handlePress = () => {
+        props.navigation.navigate('Manual');
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
             <View style={styles.container}>
                 <View style={{ paddingTop: 10, paddingBottom: 10 }}>
                     <Text style={styles.headerText}>{courseTitle} </Text>
                 </View>
-                <Text style={styles.subText}>Enrolled Students:</Text>
+                <View style={styles.subTextContainer}>
+                    <Text style={styles.subText}>Students:</Text>
+
+                    <TouchableOpacity onPress={handlePress}>
+                        <MaterialCommunityIcons name="plus-circle" size={30} />
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.line}></View>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -78,6 +99,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 4,
+    },
+    subTextContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingRight: 10,
+        paddingLeft: 5,
     },
     headerText: {
         textAlign: 'center',

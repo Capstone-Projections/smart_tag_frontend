@@ -17,6 +17,7 @@ import Timetable from '../screens/general/Timetable/TimetableScreen';
 import ViewAttendance from '../screens/general/Attendance/ViewAttendance';
 import LecturerTimetable from '../screens/Lecturer/LecturerTimetable';
 import PeopleScreen from '../screens/Lecturer/PeopleScreen';
+import ManualScreen from '../screens/Lecturer/ManualScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -52,6 +53,7 @@ export const AppNavigator = () => {
                     component={LecturerTimetable}
                 />
                 <Screen name="People" component={PeopleScreen} />
+                <Screen name="Manual" component={ManualScreen} />
             </Navigator>
         </NavigationContainer>
     );
