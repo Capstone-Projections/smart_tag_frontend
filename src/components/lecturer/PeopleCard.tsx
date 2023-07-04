@@ -1,82 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Card, Title } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons'; // Import MaterialIcons from expo/vector-icons
 import {
     appBlue,
     coursesdBlue,
     coursesdBlue2,
-    coursesdGreen,
     coursesdYellow,
 } from '../../resources/colors/colors';
-import { getRandomColor } from '../../services/getRandomColor';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
     name: string;
 }
 
 const UserItem: React.FC<Props> = ({ name }) => {
-    const colors = [
-        appBlue,
-        coursesdBlue,
-        coursesdBlue2,
-        coursesdGreen,
-        coursesdYellow,
-    ];
-
-    const initials = getInitials(name);
-    const [cardColor, setCardColor] = useState(getRandomColor(colors));
-
     return (
-        <View>
-            <Card
-                style={[styles.card, { backgroundColor: cardColor }]}
-                elevation={4}
-            >
-                <Card.Content style={styles.cardContent}>
-                    <View style={styles.avatar}>
-                        <Text style={styles.initials}>{initials}</Text>
-                    </View>
-                    <Title style={styles.title}>{name}</Title>
-                </Card.Content>
-            </Card>
-        </View>
+        <TouchableOpacity onPress={() => {}} activeOpacity={0.7}>
+            <View style={styles.container}>
+                <View style={styles.avatar}>
+                    <MaterialIcons name="people" size={30} color="black" />
+                </View>
+                <Text style={styles.name}>{name}</Text>
+            </View>
+        </TouchableOpacity>
     );
 };
 
-const getInitials = (name: string) => {
-    const names = name.split(' ');
-    const firstInitial = names[0] ? names[0][0] : '';
-    const lastInitial = names[1] ? names[1][0] : '';
-    return `${firstInitial}${lastInitial}`.toUpperCase();
-};
-
 const styles = StyleSheet.create({
-    card: {
-        marginBottom: 15,
-
-        width: '100%', // backgroundColor: '#CBF1E1',
-    },
-    cardContent: {
+    container: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10, // justifyContent: 'center',
+        marginBottom: 15,
     },
     avatar: {
         width: 50,
         height: 50,
         borderRadius: 25,
-        backgroundColor: 'white',
+        backgroundColor: coursesdBlue2,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 10,
     },
-    initials: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    title: {
+    name: {
         fontSize: 16,
+        fontFamily: 'Poppins',
+        color: 'black',
     },
 });
 

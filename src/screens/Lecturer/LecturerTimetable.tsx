@@ -2,12 +2,15 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, Button } from 'native-base';
+import { AuthContext } from '../../context/AuthContext';
 
 interface LecturerTimetableProps {
     navigation: any;
 }
 //TODO: This file also shouldn't exist because the timetable page from the student section should be reused
 const LecturerTimetable = (props: LecturerTimetableProps) => {
+    const { courseTitle } = React.useContext(AuthContext);
+
     const daysOfWeek = ['Mon:', 'Tue:', 'Wed:', 'Thur:', 'Fri:'];
     const times = [
         '10:30-12:30',
@@ -23,7 +26,7 @@ const LecturerTimetable = (props: LecturerTimetableProps) => {
         <View style={style.container}>
             <SafeAreaView>
                 <View style={{ paddingTop: 20, paddingBottom: 10 }}>
-                    <Text style={style.headerText}>Computer Networking</Text>
+                    <Text style={style.headerText}>{courseTitle}</Text>
                 </View>
                 <View style={{ paddingBottom: 30 }}>
                     <Text style={style.normalText}>
@@ -46,18 +49,7 @@ const LecturerTimetable = (props: LecturerTimetableProps) => {
                         ))}
                     </View>
                 </View>
-                <View
-                    style={{
-                        padding: 20,
-                        alignItems: 'center',
-                        marginTop: 20,
-                        marginBottom: 10,
-                    }}
-                >
-                    <Button colorScheme="darkBlue" style={style.button}>
-                        Edit Button
-                    </Button>
-                </View>
+
                 <View style={{ padding: 10 }}>
                     <Link
                         style={style.link}
@@ -127,11 +119,6 @@ const style = StyleSheet.create({
     link: {
         justifyContent: 'center',
         fontFamily: 'Poppins',
-    },
-    button: {
-        width: 160,
-        height: 40,
-        borderRadius: 8,
     },
 });
 

@@ -14,9 +14,7 @@ import {
 } from 'expo-barcode-scanner';
 import { styles } from './styles';
 import { BarcodeScannerProps } from './props';
-import { BackHandler } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import DrawerNavigation from '../../../navigation/DrawerNavigation';
+
 const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     boxSize,
     boxPosition,
