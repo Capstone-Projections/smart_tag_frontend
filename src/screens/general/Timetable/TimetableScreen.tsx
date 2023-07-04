@@ -53,16 +53,6 @@ const Timetable = (props: TimetableProps) => {
         );
     }
 
-    if (isError) {
-        return (
-            <View style={style.container}>
-                <SafeAreaView>
-                    <Text>Error: {(error as Error).message}</Text>
-                </SafeAreaView>
-            </View>
-        );
-    }
-
     const { days, timeRanges } = transformLessonData(lessons);
 
     useEffect(() => {
