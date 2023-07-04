@@ -15,10 +15,10 @@ interface Props {
 
 const UserItem: React.FC<Props> = ({ name }) => {
     return (
-        <TouchableOpacity onPress={() => {}} activeOpacity={0.7}>
+        <TouchableOpacity onPress={() => {}} activeOpacity={0.5}>
             <View style={styles.container}>
                 <View style={styles.avatar}>
-                    <MaterialIcons name="people" size={30} color="black" />
+                    <MaterialIcons name="person" size={40} color="#005DB4" />
                 </View>
                 <Text style={styles.name}>{name}</Text>
             </View>
@@ -36,10 +36,12 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
-        backgroundColor: coursesdBlue2,
+        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 10,
+        borderEndWidth: 2,
+        borderLeftWidth: 2,
     },
     name: {
         fontSize: 16,

@@ -2,14 +2,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, Button } from 'native-base';
-import { AuthContext } from '../../context/AuthContext';
+import { CourseContext } from '../../context/CourseContext';
 
 interface LecturerTimetableProps {
     navigation: any;
 }
 //TODO: This file also shouldn't exist because the timetable page from the student section should be reused
 const LecturerTimetable = (props: LecturerTimetableProps) => {
-    const { courseTitle } = React.useContext(AuthContext);
+    const { courseTitle } = React.useContext(CourseContext);
 
     const daysOfWeek = ['Mon:', 'Tue:', 'Wed:', 'Thur:', 'Fri:'];
     const times = [
@@ -91,8 +91,7 @@ const style = StyleSheet.create({
     },
     card: {
         backgroundColor: '#1D6CA7',
-        borderRadius: 3,
-
+        borderRadius: 5,
         marginBottom: 10,
         padding: 10,
     },

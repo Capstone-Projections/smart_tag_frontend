@@ -29,8 +29,8 @@ export const CourseCard: React.FC<CardProps> = ({
     ];
     const [cardColor, setCardColor] = useState(getRandomColor(colors));
     const navigation = useNavigation() as any;
-    const { setCourseTitle, userType } = useContext(AuthContext);
-    const { setIdCourse, IDcourse } = useContext(CourseContext);
+    const { userType } = useContext(AuthContext);
+    const { setIdCourse, IDcourse, setCourseTitle } = useContext(CourseContext);
 
     const handleCardPress = () => {
         setCourseTitle(name);

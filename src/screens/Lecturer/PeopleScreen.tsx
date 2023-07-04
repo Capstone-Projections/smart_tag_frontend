@@ -4,9 +4,10 @@ import UserItem from '../../components/lecturer/PeopleCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../../context/AuthContext';
 import { ScrollView } from 'react-native-gesture-handler';
+import { CourseContext } from '../../context/CourseContext';
 
 const PeopleScreen = () => {
-    const { courseTitle } = React.useContext(AuthContext);
+    const { courseTitle } = React.useContext(CourseContext);
     const users = [
         {
             id: 1,
@@ -34,7 +35,7 @@ const PeopleScreen = () => {
         },
         {
             id: 7,
-            name: 'Lord John',
+            name: 'Vincent John',
         },
         {
             id: 8,
@@ -50,7 +51,7 @@ const PeopleScreen = () => {
         },
         {
             id: 11,
-            name: 'Nana',
+            name: 'Dzifa Kwame',
         },
     ];
     return (

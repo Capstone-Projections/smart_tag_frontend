@@ -15,10 +15,8 @@ import { getLessonIdByDayAndTime } from '../../../services/getLessonIdByDay';
 import { LessonContext } from '../../../context/LessonContext';
 
 const Timetable = (props: TimetableProps) => {
-    //TODO: this should be in the course context instead of the AuthContext so move it
-
-    const { courseTitle, authorizationKey } = useContext(AuthContext);
-    const { IDcourse } = useContext(CourseContext);
+    const { authorizationKey } = useContext(AuthContext);
+    const { IDcourse, courseTitle } = useContext(CourseContext);
     const { setDays } = useContext(TimetableDaysContext);
     const { setLessonRoomId } = useContext(LessonRoomContext);
     const [lessons, setLessons] = useState<ReturnProps[]>([]);
@@ -43,9 +41,10 @@ const Timetable = (props: TimetableProps) => {
             }
         };
 
-        fetchLessonsForCourse();
-        //TODO: as it currently working it runs any time the card is clicked on which is a bad thing.. make it such that it runs only once when the card is clicked on
-    }, []);
+        if (props.navigation.isFocused()) {
+            fetchLessonsForCourse();
+        }
+    }, [props.navigation, authorizationKey, IDcourse]);
 
     const { days, timeRanges } = transformLessonData(lessons);
 
