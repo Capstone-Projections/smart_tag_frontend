@@ -3,6 +3,7 @@ import React from 'react';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { Button } from 'native-base';
 import { styled } from 'styled-components/native';
+import { appBlue } from '../../resources/colors/colors';
 
 const AddCourse = () => {
     const [selected, setSelected] = React.useState('');
@@ -96,13 +97,13 @@ const style = StyleSheet.create({
         width: 140,
         height: 50,
         borderRadius: 8,
-        borderColor: '#196B9A',
+        borderColor: appBlue,
     },
     buttonSpace: {
         width: 15,
     },
     buttonText: {
-        color: '#196B9A',
+        color: appBlue,
         fontSize: 18,
     },
 });

@@ -8,6 +8,10 @@ import { z } from 'zod';
 import { AuthContext } from '../../../context/AuthContext';
 import { LoginProps } from './props';
 import { style } from './styles';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
+import { ActivityIndicator } from 'react-native-paper';
 
 const emailSchema = z.string().email().max(100);
 
@@ -16,6 +20,18 @@ const Login = (props: LoginProps) => {
         useContext(AuthContext);
     const [email, setEmailState] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [verifying, setVerifying] = useState(false);
+
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
+
+    const handleProceedSuccess = () => {
+        // hideModal();
+    };
 
     const handleLoginPress = async () => {
         const validationResult = emailSchema.safeParse(email.trim());
@@ -26,11 +42,8 @@ const Login = (props: LoginProps) => {
 
         setEmailError('');
 
-        props.navigation.navigate('OTP', {
-            email: email.trim().toLowerCase(),
-        });
-
         try {
+            setVerifying(true);
             const response = await axios.post(
                 'https://smart-tag.onrender.com/login',
                 {
@@ -43,12 +56,23 @@ const Login = (props: LoginProps) => {
 
             console.log(response.status);
 
+            if (response.status !== 200) {
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Network Error',
+                    'Check your network and try again',
+                    handleProceed
+                );
+            }
+
             setEmail(email.trim().toLowerCase());
         } catch (error) {
             console.log(error);
         } finally {
             setEmailState('');
+            setVerifying(false);
         }
+        props.navigation.navigate('OTP');
     };
 
     const handleEmailChange = (value: string) => {
@@ -93,6 +117,9 @@ const Login = (props: LoginProps) => {
                                 </Text>
                             )}
                         </FormControl>
+                        {verifying && (
+                            <ActivityIndicator size="small" color={'blue'} />
+                        )}
                         <Button
                             colorScheme="darkBlue"
                             style={style.button}
@@ -114,6 +141,16 @@ const Login = (props: LoginProps) => {
                             New User?
                         </Link>
                     </View>
+                    <MessageModal
+                        messageModalVisible={
+                            messageModalState.messageModalVisible
+                        }
+                        messageType={messageModalState.messageType}
+                        headerText={messageModalState.headerText}
+                        messageText={messageModalState.messageText}
+                        onDismiss={hideModal}
+                        onProceed={messageModalState.onProceed}
+                    />
                 </SafeAreaView>
             </KeyboardAvoidingWrapper>
         </View>

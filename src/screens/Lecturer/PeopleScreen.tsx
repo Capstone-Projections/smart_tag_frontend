@@ -8,9 +8,13 @@ import {
 } from 'react-native';
 import UserItem from '../../components/lecturer/PeopleCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native-gesture-handler';
 import { CourseContext } from '../../context/CourseContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+interface User {
+    id: number;
+    name: string;
+}
 
 interface PeopleProps {
     navigation: any;
@@ -18,52 +22,7 @@ interface PeopleProps {
 
 const PeopleScreen = (props: PeopleProps) => {
     const { courseTitle } = React.useContext(CourseContext);
-    const users = [
-        {
-            id: 1,
-            name: 'Blay Albert',
-        },
-        {
-            id: 2,
-            name: 'Kelvin Nem',
-        },
-        {
-            id: 3,
-            name: 'Jane Smith',
-        },
-        {
-            id: 4,
-            name: 'Jane Smith',
-        },
-        {
-            id: 5,
-            name: 'Jane Smith',
-        },
-        {
-            id: 6,
-            name: 'Jane Smith',
-        },
-        {
-            id: 7,
-            name: 'Vincent John',
-        },
-        {
-            id: 8,
-            name: 'Kwame Safo',
-        },
-        {
-            id: 9,
-            name: 'Blay Albert Kangah',
-        },
-        {
-            id: 10,
-            name: 'Safa',
-        },
-        {
-            id: 11,
-            name: 'Dzifa Kwame',
-        },
-    ];
+    const users: User[] = [];
 
     const handlePress = () => {
         props.navigation.navigate('Manual');
@@ -72,7 +31,7 @@ const PeopleScreen = (props: PeopleProps) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
             <View style={styles.container}>
-                <View style={{ paddingTop: 10, paddingBottom: 10 }}>
+                <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>{courseTitle} </Text>
                 </View>
                 <View style={styles.subTextContainer}>
@@ -83,13 +42,21 @@ const PeopleScreen = (props: PeopleProps) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.line}></View>
-                <FlatList
-                    showsVerticalScrollIndicator={false}
-                    style={{ paddingTop: 2 }}
-                    data={users}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <UserItem name={item.name} />}
-                />
+                {users.length > 0 ? (
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        style={{ paddingTop: 2 }}
+                        data={users}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({ item }) => <UserItem name={item.name} />}
+                    />
+                ) : (
+                    <View style={styles.emptyContainer}>
+                        <Text style={styles.emptyText}>
+                            No students' attendance recorded yet.
+                        </Text>
+                    </View>
+                )}
             </View>
         </SafeAreaView>
     );
@@ -99,6 +66,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 4,
+    },
+    headerTextContainer: {
+        paddingTop: 10,
+        paddingBottom: 10,
     },
     subTextContainer: {
         flexDirection: 'row',
@@ -122,6 +93,16 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: 'lightgray',
         marginVertical: 0,
+    },
+    emptyContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    emptyText: {
+        fontSize: 12,
+        color: 'gray',
+        fontFamily: 'Poppins',
     },
 });
 

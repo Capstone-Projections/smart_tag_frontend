@@ -13,38 +13,55 @@ import { LessonRoomContext } from '../../../context/LectureRoomContext';
 import { getLectureRoomUidByDayAndTime } from '../../../services/getLectureRoomUidByDay';
 import { getLessonIdByDayAndTime } from '../../../services/getLessonIdByDay';
 import { LessonContext } from '../../../context/LessonContext';
+import { useQuery } from 'react-query';
 
 const Timetable = (props: TimetableProps) => {
     const { authorizationKey } = useContext(AuthContext);
     const { IDcourse, courseTitle } = useContext(CourseContext);
     const { setDays } = useContext(TimetableDaysContext);
     const { setLessonRoomId } = useContext(LessonRoomContext);
-    const [lessons, setLessons] = useState<ReturnProps[]>([]);
     const [isDaysSet, setIsDaysSet] = useState(false);
     const { setIdLesson } = useContext(LessonContext);
 
-    useEffect(() => {
-        const fetchLessonsForCourse = async () => {
+    const fetchLessonsForCourse = async () => {
+        try {
             const headers = { Authorization: `${authorizationKey}` };
-
-            try {
-                const response = await axios.get(
-                    `https://smart-tag.onrender.com/lessons/course/${IDcourse}`,
-                    { headers }
-                );
-                setLessons(response.data);
-            } catch (error) {
-                console.error(
-                    'Failed to fetch lessons for this course:',
-                    error
-                );
-            }
-        };
-
-        if (props.navigation.isFocused()) {
-            fetchLessonsForCourse();
+            const response = await axios.get(
+                `https://smart-tag.onrender.com/lessons/course/${IDcourse}`,
+                { headers }
+            );
+            return response.data;
+        } catch (error) {
+            throw new Error('Failed to fetch timetable for this course');
         }
-    }, [props.navigation, authorizationKey, IDcourse]);
+    };
+
+    const {
+        data: lessons = [],
+        isLoading,
+        isError,
+        error,
+    } = useQuery<ReturnProps[]>('lessons', fetchLessonsForCourse);
+
+    if (isLoading) {
+        return (
+            <View style={style.container}>
+                <SafeAreaView>
+                    <Text>Loading...</Text>
+                </SafeAreaView>
+            </View>
+        );
+    }
+
+    if (isError) {
+        return (
+            <View style={style.container}>
+                <SafeAreaView>
+                    <Text>Error: {(error as Error).message}</Text>
+                </SafeAreaView>
+            </View>
+        );
+    }
 
     const { days, timeRanges } = transformLessonData(lessons);
 

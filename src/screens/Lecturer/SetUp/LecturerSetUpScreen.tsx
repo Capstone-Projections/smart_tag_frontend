@@ -12,7 +12,7 @@ import {
 } from 'native-base';
 import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
 import { LecturerSetUpScreenProps } from './props';
-import { style } from './styles';
+import { styles } from './styles';
 
 const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
     //TODO tie this to the backend
@@ -22,37 +22,37 @@ const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
     const [service2, setService2] = React.useState('');
 
     return (
-        <View style={style.container}>
+        <View style={styles.container}>
             <KeyboardAvoidingWrapper>
                 <SafeAreaView>
                     <View style={{ paddingRight: 50 }}>
-                        <Text style={style.header}>
+                        <Text style={styles.header}>
                             Kindly Setup to get started with Smart Tag
                         </Text>
                     </View>
 
                     <VStack space={4} mt="5">
                         <View>
-                            <Text style={style.text}>Name</Text>
-                            <FormControl style={style.formControl}>
+                            <Text style={styles.text}>Name</Text>
+                            <FormControl style={styles.formControl}>
                                 <Input
-                                    style={style.input}
+                                    style={styles.input}
                                     _focus={{ borderColor: 'black' }}
                                 />
                             </FormControl>
                         </View>
                         <View>
-                            <Text style={style.text}>Staff Number</Text>
-                            <FormControl style={style.formControl}>
+                            <Text style={styles.text}>Staff Number</Text>
+                            <FormControl style={styles.formControl}>
                                 <Input
-                                    style={style.input}
+                                    style={styles.input}
                                     _focus={{ borderColor: 'black' }}
                                     keyboardType="numeric"
                                 />
                             </FormControl>
                         </View>
                         <Box maxW="300">
-                            <Text style={style.text}>Teaching Courses</Text>
+                            <Text style={styles.text}>Teaching Courses</Text>
                             <Select
                                 selectedValue={service}
                                 minWidth="200"
@@ -76,7 +76,7 @@ const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
                             </Select>
                         </Box>
                         <Box maxW="300">
-                            <Text style={style.text}>Course Code</Text>
+                            <Text style={styles.text}>Course Code</Text>
                             <Select
                                 selectedValue={service2}
                                 minWidth="200"
@@ -96,7 +96,7 @@ const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
                             </Select>
                         </Box>
                         <Button
-                            style={style.button}
+                            style={styles.button}
                             colorScheme="darkBlue"
                             onPress={handleSetUpPress}
                         >

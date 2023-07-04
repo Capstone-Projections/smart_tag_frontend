@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const style = StyleSheet.create({
+export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
@@ -34,6 +34,5 @@ export const style = StyleSheet.create({
         width: 300,
         height: 58,
         borderRadius: 8,
-        fontWeight: '',
     },
 });

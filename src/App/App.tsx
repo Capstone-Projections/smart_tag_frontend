@@ -8,6 +8,10 @@ import { AppNavigator } from '../navigation/AppNavigation';
 import { customTheme } from '../Theme';
 import { AuthProvider } from '../context/AuthContext';
 import { CourseProvider } from '../context/CourseContext';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+//Create a client
+const queryClient = new QueryClient();
 
 export default function App() {
     const [fontsloaded] = useFonts(allFonts());
@@ -26,13 +30,15 @@ export default function App() {
     }
     //TODO: might have to change the scope of this context so experiment later(CourseContext )
     return (
-        <AuthProvider>
-            <CourseProvider>
-                <NativeBaseProvider theme={customTheme}>
-                    <AppNavigator />
-                </NativeBaseProvider>
-            </CourseProvider>
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+                <CourseProvider>
+                    <NativeBaseProvider theme={customTheme}>
+                        <AppNavigator />
+                    </NativeBaseProvider>
+                </CourseProvider>
+            </AuthProvider>
+        </QueryClientProvider>
     );
 }
 

@@ -97,6 +97,7 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
 
     const handleLinkPress = async () => {
         try {
+            setCode('');
             const response = await axios.post(
                 'https://smart-tag.onrender.com/login',
                 {

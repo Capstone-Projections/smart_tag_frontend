@@ -5,43 +5,40 @@ import axios from 'axios';
 import { styles } from './styles';
 import { CardProps } from '../CoursesCard/props';
 import { CourseCard } from '../CoursesCard/CourseCard';
-import { CourseContext, CourseProvider } from '../../../context/CourseContext';
+import { useQuery } from 'react-query';
 
 const CoursesList = () => {
     const { userID, authorizationKey } = useContext(AuthContext);
-    const [courses, setCourses] = useState<CardProps[]>([]);
-    const [refreshing, setRefreshing] = useState(false);
+
+    const fetchCourses = async () => {
+        const headers = { Authorization: `${authorizationKey}` };
+        const response = await axios.get(
+            `https://smart-tag.onrender.com/courses/${userID}`,
+            { headers }
+        );
+        return response.data;
+    };
+
+    const {
+        data: courses = [],
+        isLoading,
+        isError,
+        error,
+        refetch,
+    } = useQuery<CardProps[]>('courses', fetchCourses);
 
     useEffect(() => {
-        const fetchCourses = async () => {
-            const headers = { Authorization: `${authorizationKey}` };
-
-            try {
-                const response = await axios.get(
-                    `https://smart-tag.onrender.com/courses/${userID}`,
-                    { headers }
-                );
-                setCourses(response.data);
-            } catch (error) {
-                console.error('Failed to fetch courses:', error);
-            }
-        };
-
-        fetchCourses();
-    }, [userID]);
+        if (isError) {
+            console.error('Failed to fetch courses:', error);
+        }
+    }, [isError, error]);
 
     const onRefresh = async () => {
-        setRefreshing(true);
         try {
-            const response = await axios.get(
-                `https://smart-tag.onrender.com/courses/${userID}`,
-                { headers: { Authorization: `${authorizationKey}` } }
-            );
-            setCourses(response.data);
+            await refetch();
         } catch (error) {
             console.error('Failed to fetch courses:', error);
         }
-        setRefreshing(false);
     };
 
     return (
@@ -50,7 +47,7 @@ const CoursesList = () => {
                 showsVerticalScrollIndicator={false}
                 refreshControl={
                     <RefreshControl
-                        refreshing={refreshing}
+                        refreshing={isLoading}
                         onRefresh={onRefresh}
                     />
                 }
