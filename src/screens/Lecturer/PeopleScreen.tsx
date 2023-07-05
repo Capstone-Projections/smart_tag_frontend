@@ -5,6 +5,7 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
+    Image,
 } from 'react-native';
 import UserItem from '../../components/lecturer/PeopleCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -52,6 +53,10 @@ const PeopleScreen = (props: PeopleProps) => {
                     />
                 ) : (
                     <View style={styles.emptyContainer}>
+                        <Image
+                            style={styles.image}
+                            source={require('../../../assets/images/people.jpg')}
+                        />
                         <Text style={styles.emptyText}>
                             No students' attendance recorded yet.
                         </Text>
@@ -103,6 +108,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'gray',
         fontFamily: 'Poppins',
+    },
+    image: {
+        width: 150,
+        height: 150,
+        borderWidth: 0,
     },
 });
 
