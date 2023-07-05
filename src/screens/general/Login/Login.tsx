@@ -120,13 +120,15 @@ const Login = (props: LoginProps) => {
                         {verifying && (
                             <ActivityIndicator size="small" color={'blue'} />
                         )}
-                        <Button
-                            colorScheme="darkBlue"
-                            style={style.button}
-                            onPress={handleLoginPress}
-                        >
-                            Submit for OTP
-                        </Button>
+                        {!verifying && (
+                            <Button
+                                colorScheme="darkBlue"
+                                style={style.button}
+                                onPress={handleLoginPress}
+                            >
+                                Submit for OTP
+                            </Button>
+                        )}
                     </VStack>
 
                     <View style={{ padding: 10 }}>
