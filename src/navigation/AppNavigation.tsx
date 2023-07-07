@@ -15,8 +15,7 @@ import StudentSetUpScreen from '../screens/studentScreens/StudentSetUpScreen';
 import OTPVerificationScreen from '../screens/general/OTP/OTP';
 import Timetable from '../screens/general/Timetable/TimetableScreen';
 import ViewAttendance from '../screens/general/Attendance/ViewAttendance';
-import LecturerTimetable from '../screens/Lecturer/LecturerTimetable';
-import PeopleScreen from '../screens/Lecturer/PeopleScreen';
+import PeopleScreen from '../screens/Lecturer/People/PeopleScreen';
 import ManualScreen from '../screens/Lecturer/ManualScreen';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -48,10 +47,6 @@ export const AppNavigator = () => {
                 <Screen name="OTP" component={OTPVerificationScreen} />
                 <Screen name="Time" component={Timetable} />
                 <Screen name="View" component={ViewAttendance} />
-                <Screen
-                    name="LecturerTimetable"
-                    component={LecturerTimetable}
-                />
                 <Screen name="People" component={PeopleScreen} />
                 <Screen name="Manual" component={ManualScreen} />
             </Navigator>

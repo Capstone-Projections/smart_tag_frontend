@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, ScrollView, RefreshControl } from 'react-native';
+import { View, ScrollView, RefreshControl, Text } from 'react-native';
 import { AuthContext } from '../../../context/AuthContext';
 import axios from 'axios';
 import { styles } from './styles';
 import { CardProps } from '../CoursesCard/props';
 import { CourseCard } from '../CoursesCard/CourseCard';
 import { useQuery } from 'react-query';
+import { Image } from 'react-native';
 
 const CoursesList = () => {
     const { userID, authorizationKey } = useContext(AuthContext);
@@ -40,6 +41,18 @@ const CoursesList = () => {
             console.error('Failed to fetch courses:', error);
         }
     };
+
+    if (courses.length === 0) {
+        return (
+            <View style={styles.emptyContainer}>
+                <Image
+                    style={styles.image}
+                    source={require('../../../../assets/images/people.jpg')}
+                />
+                <Text style={styles.emptyText}>No courses to display.</Text>
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>

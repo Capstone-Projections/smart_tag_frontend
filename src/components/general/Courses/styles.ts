@@ -29,4 +29,19 @@ export const styles = StyleSheet.create({
     paragraph: {
         color: 'white',
     },
+    emptyContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    emptyText: {
+        fontSize: 12,
+        color: 'gray',
+        fontFamily: 'Poppins',
+    },
+    image: {
+        width: 150,
+        height: 150,
+        borderWidth: 0,
+    },
 });

@@ -14,6 +14,7 @@ import { getLectureRoomUidByDayAndTime } from '../../../services/getLectureRoomU
 import { getLessonIdByDayAndTime } from '../../../services/getLessonIdByDay';
 import { LessonContext } from '../../../context/LessonContext';
 import { useQuery } from 'react-query';
+import { Image } from 'react-native';
 
 const Timetable = (props: TimetableProps) => {
     const { authorizationKey } = useContext(AuthContext);
@@ -41,17 +42,7 @@ const Timetable = (props: TimetableProps) => {
         isLoading,
         isError,
         error,
-    } = useQuery<ReturnProps[]>('lessons', fetchLessonsForCourse);
-
-    if (isLoading) {
-        return (
-            <View style={style.container}>
-                <SafeAreaView>
-                    <Text>Loading...</Text>
-                </SafeAreaView>
-            </View>
-        );
-    }
+    } = useQuery<ReturnProps[]>(['lessons', IDcourse], fetchLessonsForCourse);
 
     const { days, timeRanges } = transformLessonData(lessons);
 
@@ -73,32 +64,45 @@ const Timetable = (props: TimetableProps) => {
     const handleLinkPress = () => props.navigation.navigate('View');
 
     return (
-        <View style={style.container}>
-            <SafeAreaView>
-                <View style={{ paddingTop: 20, paddingBottom: 10 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
+            <View style={style.container}>
+                <View style={style.headerTextContainer}>
                     <Text style={style.headerText}>{courseTitle}</Text>
                 </View>
-                <View style={{ paddingBottom: 30 }}>
+                <View>
                     <Text style={style.subText}>
                         Class Agendas for the Week
                     </Text>
                 </View>
-                <View style={style.direction}>
-                    <View style={style.dayColumn}>
-                        {days.map((day, index) => (
-                            <View key={index} style={style.card}>
-                                <Text style={style.dayText}>{day}</Text>
-                            </View>
-                        ))}
+                <View style={style.line}></View>
+                {lessons.length === 0 ? (
+                    <View style={style.emptyContainer}>
+                        <Image
+                            style={style.image}
+                            source={require('../../../../assets/images/people.jpg')}
+                        />
+                        <Text style={style.emptyText}>
+                            No timetable available.
+                        </Text>
                     </View>
-                    <View style={style.timeColumn}>
-                        {timeRanges.map((times, index) => (
-                            <View key={index} style={style.card}>
-                                <Text style={style.timeText}>{timeRanges}</Text>
-                            </View>
-                        ))}
+                ) : (
+                    <View style={style.direction}>
+                        <View style={style.dayColumn}>
+                            {days.map((day, index) => (
+                                <View key={index} style={style.card}>
+                                    <Text style={style.dayText}>{day}</Text>
+                                </View>
+                            ))}
+                        </View>
+                        <View style={style.timeColumn}>
+                            {timeRanges.map((times, index) => (
+                                <View key={index} style={style.card}>
+                                    <Text style={style.timeText}>{times}</Text>
+                                </View>
+                            ))}
+                        </View>
                     </View>
-                </View>
+                )}
                 <View style={{ padding: 10 }}>
                     <Link
                         style={style.link}
@@ -111,8 +115,8 @@ const Timetable = (props: TimetableProps) => {
                         View Attendance
                     </Link>
                 </View>
-            </SafeAreaView>
-        </View>
+            </View>
+        </SafeAreaView>
     );
 };
 

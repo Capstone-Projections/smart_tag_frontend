@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CommonActions } from '@react-navigation/native';
-import LecturerTimetable from '../screens/Lecturer/LecturerTimetable';
-import PeopleScreen from '../screens/Lecturer/PeopleScreen';
+import PeopleScreen from '../screens/Lecturer/People/PeopleScreen';
+import Timetable from '../screens/general/Timetable/TimetableScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -68,7 +68,7 @@ export default function LecturerBottomTabBar() {
         >
             <Tab.Screen
                 name="Timetable"
-                component={LecturerTimetable}
+                component={Timetable}
                 options={{
                     tabBarLabel: 'Timetable',
                     tabBarIcon: ({ color, size }) => {

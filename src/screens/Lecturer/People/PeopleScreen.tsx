@@ -7,19 +7,12 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
-import UserItem from '../../components/lecturer/PeopleCard';
+import UserItem from '../../../components/lecturer/PeopleCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CourseContext } from '../../context/CourseContext';
+import { CourseContext } from '../../../context/CourseContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-interface User {
-    id: number;
-    name: string;
-}
-
-interface PeopleProps {
-    navigation: any;
-}
+import { styles } from './styles';
+import { User, PeopleProps } from './props';
 
 const PeopleScreen = (props: PeopleProps) => {
     const { courseTitle } = React.useContext(CourseContext);
@@ -55,7 +48,7 @@ const PeopleScreen = (props: PeopleProps) => {
                     <View style={styles.emptyContainer}>
                         <Image
                             style={styles.image}
-                            source={require('../../../assets/images/people.jpg')}
+                            source={require('../../../../assets/images/people.jpg')}
                         />
                         <Text style={styles.emptyText}>
                             No students' attendance recorded yet.
@@ -66,54 +59,5 @@ const PeopleScreen = (props: PeopleProps) => {
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 4,
-    },
-    headerTextContainer: {
-        paddingTop: 10,
-        paddingBottom: 10,
-    },
-    subTextContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingRight: 10,
-        paddingLeft: 5,
-    },
-    headerText: {
-        textAlign: 'center',
-        fontFamily: 'Poppins',
-        fontWeight: '600',
-        fontSize: 20,
-    },
-    subText: {
-        textAlign: 'left',
-        fontFamily: 'Poppins',
-        fontWeight: '600',
-        fontSize: 16,
-    },
-    line: {
-        borderBottomWidth: 1,
-        borderBottomColor: 'lightgray',
-        marginVertical: 0,
-    },
-    emptyContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    emptyText: {
-        fontSize: 12,
-        color: 'gray',
-        fontFamily: 'Poppins',
-    },
-    image: {
-        width: 150,
-        height: 150,
-        borderWidth: 0,
-    },
-});
 
 export default PeopleScreen;

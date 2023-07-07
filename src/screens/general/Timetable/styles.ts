@@ -1,10 +1,14 @@
 import { StyleSheet } from 'react-native';
+import { appBlue } from '../../../resources/colors/colors';
 
 export const style = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        paddingHorizontal: 10,
+        paddingTop: 4,
+    },
+    headerTextContainer: {
+        paddingTop: 10,
+        paddingBottom: 10,
     },
     headerText: {
         textAlign: 'center',
@@ -23,7 +27,7 @@ export const style = StyleSheet.create({
         flexDirection: 'row',
     },
     card: {
-        backgroundColor: '#1D6CA7',
+        backgroundColor: appBlue,
         borderRadius: 5,
         marginBottom: 10,
         padding: 10,
@@ -51,5 +55,26 @@ export const style = StyleSheet.create({
     link: {
         justifyContent: 'center',
         fontFamily: 'Poppins',
+    },
+    emptyContainer: {
+        paddingTop: 60,
+        paddingBottom: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    emptyText: {
+        fontSize: 12,
+        color: 'gray',
+        fontFamily: 'Poppins',
+    },
+    image: {
+        width: 150,
+        height: 150,
+        borderWidth: 0,
+    },
+    line: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgray',
+        marginVertical: 5,
     },
 });
