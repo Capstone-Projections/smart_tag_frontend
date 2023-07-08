@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'native-base';
@@ -39,7 +39,7 @@ const Timetable = (props: TimetableProps) => {
 
     const {
         data: lessons = [],
-        isLoading,
+        isLoading: isFetchingLessons,
         isError,
         error,
     } = useQuery<ReturnProps[]>(['lessons', IDcourse], fetchLessonsForCourse);
@@ -75,7 +75,11 @@ const Timetable = (props: TimetableProps) => {
                     </Text>
                 </View>
                 <View style={style.line}></View>
-                {lessons.length === 0 ? (
+                {isFetchingLessons ? (
+                    <View>
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    </View>
+                ) : lessons.length === 0 ? (
                     <View style={style.emptyContainer}>
                         <Image
                             style={style.image}

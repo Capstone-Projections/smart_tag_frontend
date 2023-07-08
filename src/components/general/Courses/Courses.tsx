@@ -42,18 +42,6 @@ const CoursesList = () => {
         }
     };
 
-    if (courses.length === 0) {
-        return (
-            <View style={styles.emptyContainer}>
-                <Image
-                    style={styles.image}
-                    source={require('../../../../assets/images/people.jpg')}
-                />
-                <Text style={styles.emptyText}>No courses to display.</Text>
-            </View>
-        );
-    }
-
     return (
         <View style={styles.container}>
             <ScrollView

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BottomHalf, StyledContainer, TopHalf, style } from './styles';
 import { StyleSheet, Text, Image, ActivityIndicator, View } from 'react-native';
 import CodeInputField from '../../../components/general/InputField/CodeInputField';
@@ -91,6 +91,7 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
 
             console.log(error);
         } finally {
+            setCode('');
             setVerifying(false);
         }
     };
