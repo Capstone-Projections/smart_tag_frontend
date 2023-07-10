@@ -11,6 +11,17 @@
                     "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
                 }
             ]
-        ]
+        ],
+        "splash": {
+            "image": "./assets/images/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            }
+        }
     }
 }

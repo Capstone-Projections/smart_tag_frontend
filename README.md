@@ -24,10 +24,8 @@ Inside the `root` directory, run the command,`yarn install` and then `npx expo s
 3. Commit your changes with the working feature that was worked on as soon as you have it working with a good enough commit message.
 
 ### Rules
-
-1. Never make changes directly to main.
-2. Commit as much as possible.
-3. Make all of your commit messages descriptive enough using the rules [here](https://commit.style/). Visit [this](https://ohshitgit.com/) if you need help commiting from the terminal.
+1. Commit as much as possible.
+2. Make all of your commit messages descriptive enough using the rules [here](https://commit.style/). Visit [this](https://ohshitgit.com/) if you need help commiting from the terminal.
 
 ### Issues 🥵
 

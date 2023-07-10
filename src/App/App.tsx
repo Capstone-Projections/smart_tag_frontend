@@ -10,25 +10,26 @@ import { AuthProvider } from '../context/AuthContext';
 import { CourseProvider } from '../context/CourseContext';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-//Create a client
+// Create a client
 const queryClient = new QueryClient();
 
 export default function App() {
-    const [fontsloaded] = useFonts(allFonts());
+    const [fontsLoaded] = useFonts(allFonts());
 
     useEffect(() => {
         async function prepare() {
             await SplashScreen.preventAutoHideAsync();
+            setTimeout(async () => {
+                await SplashScreen.hideAsync();
+            }, 1500); // Delay of 1500 milliseconds (2 seconds)
         }
         prepare();
     }, []);
 
-    if (!fontsloaded) {
+    if (!fontsLoaded) {
         return null;
-    } else {
-        SplashScreen.hideAsync();
     }
-    //TODO: might have to change the scope of this context so experiment later(CourseContext )
+
     return (
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
