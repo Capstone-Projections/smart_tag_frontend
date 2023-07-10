@@ -8,6 +8,7 @@ import AddCourse from '../screens/studentScreens/AddCourseScreen';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Settings from '../screens/general/Settings/Settings';
+import ProfileScreen from '../screens/general/Profile/ProfileScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -82,6 +83,21 @@ const DrawerNavigation = () => {
                     },
                 }}
                 component={AddCourse}
+            />
+            <Drawer.Screen
+                name="Profile"
+                options={{
+                    drawerIcon: ({ color, size }) => {
+                        return (
+                            <Icon
+                                name="plus-circle"
+                                size={size}
+                                color={color}
+                            />
+                        );
+                    },
+                }}
+                component={ProfileScreen}
             />
             <Drawer.Screen
                 name="Settings"

@@ -7,8 +7,8 @@ export const style = StyleSheet.create({
         paddingTop: 4,
     },
     headerTextContainer: {
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 4,
+        paddingBottom: 4,
     },
     headerText: {
         textAlign: 'center',

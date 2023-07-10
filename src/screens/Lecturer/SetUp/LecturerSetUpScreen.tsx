@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import { View, Text } from 'react-native';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
     FormControl,
@@ -13,10 +13,21 @@ import {
 import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
 import { LecturerSetUpScreenProps } from './props';
 import { styles } from './styles';
+import { AuthContext } from '../../../context/AuthContext';
 
 const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
+    const { userType, email, userID, authorizationKey } =
+        useContext(AuthContext);
+    const [firstName, setFirstName] = useState('');
+    const [middleName, setMiddleName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [indexNumber, setIndexNUmber] = useState('');
+    const [referenceNumber, setReferenceNUmber] = useState('');
+
     //TODO tie this to the backend
-    const handleSetUpPress = () => props.navigation.navigate('LecturerDrawer');
+    const handleSetUpPress = async () => {
+        props.navigation.navigate('LecturerDrawer');
+    };
 
     const [service, setService] = React.useState('');
     const [service2, setService2] = React.useState('');

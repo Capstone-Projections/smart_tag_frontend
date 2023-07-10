@@ -1,4 +1,11 @@
-import { View, Text, ActivityIndicator } from 'react-native';
+import {
+    View,
+    Text,
+    ActivityIndicator,
+    Image,
+    RefreshControl,
+    ScrollView,
+} from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'native-base';
@@ -14,7 +21,6 @@ import { getLectureRoomUidByDayAndTime } from '../../../services/getLectureRoomU
 import { getLessonIdByDayAndTime } from '../../../services/getLessonIdByDay';
 import { LessonContext } from '../../../context/LessonContext';
 import { useQuery } from 'react-query';
-import { Image } from 'react-native';
 
 const Timetable = (props: TimetableProps) => {
     const { authorizationKey } = useContext(AuthContext);
@@ -23,6 +29,7 @@ const Timetable = (props: TimetableProps) => {
     const { setLessonRoomId } = useContext(LessonRoomContext);
     const [isDaysSet, setIsDaysSet] = useState(false);
     const { setIdLesson } = useContext(LessonContext);
+    const [refreshing, setRefreshing] = React.useState(false);
 
     const fetchLessonsForCourse = async () => {
         try {
@@ -42,6 +49,7 @@ const Timetable = (props: TimetableProps) => {
         isLoading: isFetchingLessons,
         isError,
         error,
+        refetch,
     } = useQuery<ReturnProps[]>(['lessons', IDcourse], fetchLessonsForCourse);
 
     const { days, timeRanges } = transformLessonData(lessons);
@@ -63,62 +71,80 @@ const Timetable = (props: TimetableProps) => {
 
     const handleLinkPress = () => props.navigation.navigate('View');
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        refetch()
+            .then(() => {
+                setRefreshing(false);
+            })
+            .catch(() => {
+                setRefreshing(false);
+            });
+    }, []);
+
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 4 }}>
             <View style={style.container}>
                 <View style={style.headerTextContainer}>
                     <Text style={style.headerText}>{courseTitle}</Text>
                 </View>
-                <View>
-                    <Text style={style.subText}>
-                        Class Agendas for the Week
-                    </Text>
-                </View>
-                <View style={style.line}></View>
-                {isFetchingLessons ? (
-                    <View>
-                        <ActivityIndicator size="large" color="#0000ff" />
-                    </View>
-                ) : lessons.length === 0 ? (
-                    <View style={style.emptyContainer}>
-                        <Image
-                            style={style.image}
-                            source={require('../../../../assets/images/people.jpg')}
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
                         />
-                        <Text style={style.emptyText}>
-                            No timetable available.
-                        </Text>
-                    </View>
-                ) : (
-                    <View style={style.direction}>
-                        <View style={style.dayColumn}>
-                            {days.map((day, index) => (
-                                <View key={index} style={style.card}>
-                                    <Text style={style.dayText}>{day}</Text>
-                                </View>
-                            ))}
+                    }
+                >
+                    <View style={style.line}></View>
+                    {isFetchingLessons ? (
+                        <View>
+                            <ActivityIndicator size="large" color="#0000ff" />
                         </View>
-                        <View style={style.timeColumn}>
-                            {timeRanges.map((times, index) => (
-                                <View key={index} style={style.card}>
-                                    <Text style={style.timeText}>{times}</Text>
-                                </View>
-                            ))}
+                    ) : lessons.length === 0 ? (
+                        <View style={style.emptyContainer}>
+                            <Image
+                                style={style.image}
+                                source={require('../../../../assets/images/people.jpg')}
+                            />
+                            <Text style={style.emptyText}>
+                                No timetable available.
+                            </Text>
                         </View>
+                    ) : (
+                        <View style={style.direction}>
+                            <View style={style.dayColumn}>
+                                {days.map((day, index) => (
+                                    <View key={index} style={style.card}>
+                                        <Text style={style.dayText}>{day}</Text>
+                                    </View>
+                                ))}
+                            </View>
+                            <View style={style.timeColumn}>
+                                {timeRanges.map((times, index) => (
+                                    <View key={index} style={style.card}>
+                                        <Text style={style.timeText}>
+                                            {times}
+                                        </Text>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+                    )}
+
+                    <View style={{ padding: 10 }}>
+                        <Link
+                            style={style.link}
+                            isExternal
+                            _text={{
+                                color: 'blue.400',
+                            }}
+                            onPress={handleLinkPress}
+                        >
+                            View Attendance
+                        </Link>
                     </View>
-                )}
-                <View style={{ padding: 10 }}>
-                    <Link
-                        style={style.link}
-                        isExternal
-                        _text={{
-                            color: 'blue.400',
-                        }}
-                        onPress={handleLinkPress}
-                    >
-                        View Attendance
-                    </Link>
-                </View>
+                </ScrollView>
             </View>
         </SafeAreaView>
     );

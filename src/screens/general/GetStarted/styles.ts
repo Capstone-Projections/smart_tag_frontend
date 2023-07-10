@@ -48,4 +48,9 @@ export const style = StyleSheet.create({
         color: 'black',
         fontFamily: 'Poppins',
     },
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginTop: 4,
+    },
 });

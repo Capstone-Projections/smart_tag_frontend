@@ -1,29 +1,20 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; // Import MaterialIcons from expo/vector-icons
-import {
-    appBlue,
-    coursesdBlue,
-    coursesdBlue2,
-    coursesdYellow,
-} from '../../resources/colors/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
-    firstName: string;
-    lastName: string;
+    name: string;
 }
 
-const UserItem: React.FC<Props> = ({ firstName, lastName }) => {
+const UserItem: React.FC<Props> = ({ name }) => {
     return (
         <TouchableOpacity onPress={() => {}} activeOpacity={0.5}>
             <View style={styles.container}>
                 <View style={styles.avatar}>
                     <MaterialIcons name="person" size={40} color="#005DB4" />
                 </View>
-                <Text style={styles.name}>
-                    {firstName} {lastName}
-                </Text>
+                <Text style={styles.name}>{name}</Text>
             </View>
         </TouchableOpacity>
     );

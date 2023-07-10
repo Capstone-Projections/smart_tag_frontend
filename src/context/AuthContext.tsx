@@ -9,9 +9,12 @@ interface AuthContextData {
     setUserID: (userID: string) => void;
     authorizationKey: string;
     setAuthorizationKey: (authorizationKey: string) => void;
-
     getStarted: string;
     setGetStarted: (getStarted: string) => void;
+    firstNameData: string;
+    setFirstNameData: (firstName: string) => void;
+    lastNameData: string;
+    setLastNameData: (lastName: string) => void;
 }
 
 export const AuthContext = createContext<AuthContextData>({
@@ -23,9 +26,12 @@ export const AuthContext = createContext<AuthContextData>({
     setUserID: () => {},
     authorizationKey: '',
     setAuthorizationKey: () => {},
-
     getStarted: '',
     setGetStarted: () => {},
+    firstNameData: '',
+    setFirstNameData: () => {},
+    lastNameData: '',
+    setLastNameData: () => {},
 });
 
 interface AuthProviderProps {
@@ -37,8 +43,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [email, setEmail] = useState('');
     const [userID, setUserID] = useState('');
     const [authorizationKey, setAuthorizationKey] = useState('');
-
+    const [firstNameData, setFirstNameData] = useState('');
     const [getStarted, setGetStarted] = useState('');
+    const [lastNameData, setLastNameData] = useState('');
 
     const handleSetUserType = (userType: string) => {
         setUserType(userType);
@@ -60,6 +67,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setGetStarted(getStarted);
     };
 
+    const handleSetFirstNameData = (firstNameData: string) => {
+        setFirstNameData(firstNameData);
+    };
+
+    const handleSetLastNameData = (lastNameData: string) => {
+        setLastNameData(lastNameData);
+    };
+
     const authContextData: AuthContextData = {
         userType,
         setUserType: handleSetUserType,
@@ -72,6 +87,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         getStarted,
         setGetStarted: handleSetGetStarted,
+        firstNameData,
+        setFirstNameData: handleSetFirstNameData,
+        lastNameData,
+        setLastNameData: handleSetLastNameData,
     };
 
     return (

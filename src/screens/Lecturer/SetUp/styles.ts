@@ -20,14 +20,13 @@ export const styles = StyleSheet.create({
         fontSize: 16,
     },
     header: {
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins-Bold',
         fontSize: 20,
-        fontWeight: '400',
         textAlign: 'center',
     },
     text: {
         fontFamily: 'Poppins',
-        fontSize: 17,
+        fontSize: 14,
         fontWeight: '400',
     },
     button: {

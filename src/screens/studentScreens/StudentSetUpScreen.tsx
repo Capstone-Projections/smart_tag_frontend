@@ -1,38 +1,83 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import React, { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-    FormControl,
-    Input,
-    VStack,
-    Select,
-    Box,
-    CheckIcon,
-    Button,
-} from 'native-base';
+import { FormControl, Input, VStack, Button } from 'native-base';
 import KeyboardAvoidingWrapper from '../../components/general/KeyboardWrapper/KeyboardWrapper';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
+import { z } from 'zod';
+import MessageModal from '../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../components/general/modals/types';
+import { useMessageModal } from '../../hooks/ModalHook';
 
 interface StudentSetUpScreenProps {
     navigation: any;
     route: any;
 }
 
+const validationSchema = z.object({
+    firstName: z.string().max(100),
+    middleName: z.string().max(100),
+    lastName: z.string().max(100),
+    indexNumber: z.string().refine(value => value.length === 7, {
+        message: 'Index Number must be exactly 7 characters.',
+    }),
+    referenceNumber: z.string().refine(value => value.length === 8, {
+        message: 'Reference Number must be exactly 8 characters.',
+    }),
+});
+
 const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
-    const { userType, email, userID, authorizationKey } =
-        useContext(AuthContext);
+    const {
+        userType,
+        email,
+        userID,
+        authorizationKey,
+        setFirstNameData,
+        setLastNameData,
+    } = useContext(AuthContext);
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
     const [indexNumber, setIndexNUmber] = useState('');
     const [referenceNumber, setReferenceNUmber] = useState('');
+    const [verifying, setVerifying] = useState(false);
+
+    const { messageModalState, showMessageModal, hideModal } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
 
     const handleSetUpPress = async () => {
-        const headers = { Authorization: `${authorizationKey}` };
+        try {
+            validationSchema.parse({
+                firstName,
+                middleName,
+                lastName,
+                indexNumber,
+                referenceNumber,
+            });
 
-        await axios
-            .put(
+            if (
+                firstName.trim() === '' ||
+                middleName.trim() === '' ||
+                lastName.trim() === '' ||
+                indexNumber.trim() === '' ||
+                referenceNumber.trim() === ''
+            ) {
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Error',
+                    'Please fill in all fields correctly.',
+                    handleProceed
+                );
+            }
+            setVerifying(true);
+            const headers = { Authorization: `${authorizationKey}` };
+
+            const response = await axios.put(
                 `https://smart-tag.onrender.com/users/${userID}`,
                 {
                     email: email,
@@ -44,21 +89,30 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
                     role: userType.toUpperCase(),
                 },
                 { headers }
-            )
-            .then(response => {
-                console.log(response.data);
-                props.navigation.navigate('Drawer');
-            })
-            .catch(error => {
-                alert('Error, profile could not be added');
-                console.error(error);
-            });
+            );
+
+            const { data } = response;
+            setFirstNameData(data.firstName);
+            setLastNameData(data.lastName);
+
+            props.navigation.navigate('Drawer');
+        } catch (error: any) {
+            showMessageModal(
+                MessageTypes.FAIL,
+                'Error',
+                'Please fill in all fields correctly',
+                handleProceed
+            );
+            // console.error(error);
+        } finally {
+            setVerifying(false);
+        }
     };
 
     return (
-        <View style={style.container}>
-            <SafeAreaView>
-                <View style={{ paddingRight: 50 }}>
+        <KeyboardAvoidingWrapper>
+            <SafeAreaView style={style.container}>
+                <View>
                     <Text style={style.header}>
                         Kindly Setup to get started with Smart Tag
                     </Text>
@@ -122,27 +176,38 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
                             />
                         </FormControl>
                     </View>
-                    <Button
-                        style={style.button}
-                        colorScheme="darkBlue"
-                        onPress={handleSetUpPress}
-                    >
-                        Continue
-                    </Button>
+                    {verifying && (
+                        <ActivityIndicator size="small" color={'blue'} />
+                    )}
+                    {!verifying && (
+                        <Button
+                            colorScheme="darkBlue"
+                            style={style.button}
+                            onPress={handleSetUpPress}
+                        >
+                            Continue
+                        </Button>
+                    )}
                 </VStack>
+                <MessageModal
+                    messageModalVisible={messageModalState.messageModalVisible}
+                    messageType={messageModalState.messageType}
+                    headerText={messageModalState.headerText}
+                    messageText={messageModalState.messageText}
+                    onDismiss={hideModal}
+                    onProceed={messageModalState.onProceed}
+                />
             </SafeAreaView>
-        </View>
+        </KeyboardAvoidingWrapper>
     );
 };
 
 const style = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
         paddingTop: 60,
-        paddingLeft: 50,
-        verticalAlign: 0,
+        justifyContent: 'center',
     },
     formControl: {
         borderColor: 'black',
@@ -156,9 +221,8 @@ const style = StyleSheet.create({
         fontSize: 16,
     },
     header: {
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins-Bold',
         fontSize: 20,
-        fontWeight: 'bold',
         textAlign: 'center',
     },
     text: {

@@ -3,9 +3,9 @@ import {
     View,
     FlatList,
     Text,
-    StyleSheet,
     TouchableOpacity,
     Image,
+    RefreshControl,
 } from 'react-native';
 import UserItem from '../../../components/lecturer/PeopleCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -13,14 +13,58 @@ import { CourseContext } from '../../../context/CourseContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { User, PeopleProps } from './props';
+import { useQuery } from 'react-query';
+import { AuthContext } from '../../../context/AuthContext';
+import axios from 'axios';
 
 const PeopleScreen = (props: PeopleProps) => {
-    const { courseTitle } = React.useContext(CourseContext);
-    const users: User[] = [];
+    const { courseTitle, IDcourse } = React.useContext(CourseContext);
+    const { authorizationKey } = React.useContext(AuthContext);
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const fetchStudents = async () => {
+        try {
+            const headers = { Authorization: `${authorizationKey}` };
+            const response = await axios.get(
+                `https://smart-tag.onrender.com/courses/users/${IDcourse}`,
+                { headers }
+            );
+            return response.data.map((user: User) => ({
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+            }));
+        } catch (error) {
+            throw new Error('Failed to fetch students for this course');
+        }
+    };
+
+    const {
+        data: users = [],
+        isLoading: isFetchingLessons,
+        isError,
+        error,
+        refetch,
+    } = useQuery<User[]>(['students', IDcourse], fetchStudents);
+
+    const handleRetry = () => {
+        refetch();
+    };
 
     const handlePress = () => {
         props.navigation.navigate('Manual');
     };
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        refetch()
+            .then(() => {
+                setRefreshing(false);
+            })
+            .catch(() => {
+                setRefreshing(false);
+            });
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
@@ -36,13 +80,31 @@ const PeopleScreen = (props: PeopleProps) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.line}></View>
-                {users.length > 0 ? (
+                {isError ? (
+                    <View>
+                        <Text>Failed to fetch students for this course.</Text>
+                        <TouchableOpacity onPress={handleRetry}>
+                            <Text>Retry</Text>
+                        </TouchableOpacity>
+                    </View>
+                ) : users.length > 0 ? (
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         style={{ paddingTop: 2 }}
                         data={users}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={({ item }) => <UserItem name={item.name} />}
+                        keyExtractor={(_, index) => index.toString()}
+                        renderItem={({ item }) => (
+                            <UserItem
+                                firstName={item.firstName}
+                                lastName={item.lastName}
+                            />
+                        )}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={onRefresh}
+                            />
+                        }
                     />
                 ) : (
                     <View style={styles.emptyContainer}>

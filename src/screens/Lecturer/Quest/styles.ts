@@ -1,4 +1,9 @@
 import { StyleSheet } from 'react-native';
+import {
+    succesColor,
+    warningColor,
+    whiteColor,
+} from '../../../resources/colors/colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -46,5 +51,23 @@ export const styles = StyleSheet.create({
         width: 150,
         height: 150,
         borderWidth: 0,
+    },
+    leftAction: {
+        // flex: 1,
+        backgroundColor: succesColor,
+        justifyContent: 'center',
+        alignContent: 'center',
+        paddingLeft: 20,
+        alignItems: 'flex-start',
+    },
+    actionText: {
+        color: whiteColor,
+        fontFamily: 'Poppins',
+    },
+    rightAction: {
+        alignItems: 'flex-end',
+        backgroundColor: warningColor,
+        justifyContent: 'center',
+        paddingRight: 20,
     },
 });

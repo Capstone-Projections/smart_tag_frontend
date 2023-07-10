@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, Image, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormControl, Input, Button, VStack, Link } from 'native-base';
 import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
@@ -11,7 +11,6 @@ import { style } from './styles';
 import MessageModal from '../../../components/general/modals/MessageModals';
 import { MessageTypes } from '../../../components/general/modals/types';
 import { useMessageModal } from '../../../hooks/ModalHook';
-import { ActivityIndicator } from 'react-native-paper';
 
 const emailSchema = z.string().email().max(100);
 
@@ -63,16 +62,16 @@ const Login = (props: LoginProps) => {
                     'Check your network and try again',
                     handleProceed
                 );
+            } else {
+                setEmail(email.trim().toLowerCase());
+                props.navigation.navigate('OTP');
             }
-
-            setEmail(email.trim().toLowerCase());
         } catch (error) {
             console.log(error);
         } finally {
             setEmailState('');
             setVerifying(false);
         }
-        props.navigation.navigate('OTP');
     };
 
     const handleEmailChange = (value: string) => {
@@ -118,7 +117,7 @@ const Login = (props: LoginProps) => {
                             )}
                         </FormControl>
                         {verifying && (
-                            <ActivityIndicator size="small" color={'blue'} />
+                            <ActivityIndicator size="large" color={'blue'} />
                         )}
                         {!verifying && (
                             <Button

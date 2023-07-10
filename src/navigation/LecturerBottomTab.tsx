@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CommonActions } from '@react-navigation/native';
 import PeopleScreen from '../screens/Lecturer/People/PeopleScreen';
 import Timetable from '../screens/general/Timetable/TimetableScreen';
+import QuestScreen from '../screens/Lecturer/Quest/QuestScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -80,7 +81,7 @@ export default function LecturerBottomTabBar() {
             />
             <Tab.Screen
                 name="Quest"
-                component={SettingsScreen}
+                component={QuestScreen}
                 options={{
                     tabBarLabel: 'Quest',
                     tabBarIcon: ({ color, size }) => {
@@ -111,14 +112,6 @@ export default function LecturerBottomTabBar() {
                 }}
             />
         </Tab.Navigator>
-    );
-}
-
-function SettingsScreen() {
-    return (
-        <View style={styles.container}>
-            <Text variant="headlineMedium">Settings!</Text>
-        </View>
     );
 }
 
