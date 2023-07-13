@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import NfcManager, { NfcTech } from 'react-native-nfc-manager';
+import { TimetableDaysContext } from '../../../context/TimeTableContext';
+import { LessonContext } from '../../../context/LessonContext';
+import { AuthContext } from '../../../context/AuthContext';
+import { LessonRoomContext } from '../../../context/LectureRoomContext';
+import getCurrentDay from '../../../services/currentDay';
+import axios from 'axios';
 
 // Pre-step, call this before any NFC operations
 NfcManager.start();
 
 function NFCScreen() {
     const [tagData, setTagData] = useState('');
+    const { days } = useContext(TimetableDaysContext);
+    const { idlesson } = useContext(LessonContext);
+    const { userID, authorizationKey } = useContext(AuthContext);
+    const { lessonRoomId } = useContext(LessonRoomContext);
+    const today = getCurrentDay();
 
     async function readNdef() {
         try {
@@ -20,6 +31,33 @@ function NFCScreen() {
                 const text = String.fromCharCode.apply(null, payload.slice(3));
 
                 setTagData(text);
+                // TODO: make this code more modular after you're done with the testing and it's working
+                if (text === lessonRoomId) {
+                    if (days.includes(today)) {
+                        const payload = {
+                            status: true,
+                            lesson_idlesson: idlesson,
+                            user_iduser: userID,
+                        };
+                        const headers = { Authorization: authorizationKey };
+                        const response = await axios
+                            .post(
+                                'https://smart-tag.onrender.com/attendance',
+                                payload,
+                                { headers }
+                            )
+                            .catch(error => {
+                                alert("couldn't add attendance");
+                            })
+                            .finally(() => {
+                                alert('attendance recorded successfully');
+                            });
+                    } else {
+                        alert('You have no class today');
+                    }
+                } else {
+                    alert('wrong class');
+                }
             }
         } catch (ex) {
             console.warn('Oops!', ex);
@@ -32,7 +70,7 @@ function NFCScreen() {
     return (
         <View style={styles.wrapper}>
             <TouchableOpacity onPress={readNdef}>
-                <Text>Scan a Tag</Text>
+                <Text>Click to Scan tag for attendance</Text>
             </TouchableOpacity>
 
             {tagData && (
