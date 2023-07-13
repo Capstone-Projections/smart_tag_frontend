@@ -8,7 +8,6 @@ import { LessonRoomContext } from '../../../context/LectureRoomContext';
 import getCurrentDay from '../../../services/currentDay';
 import axios from 'axios';
 
-// Pre-step, call this before any NFC operations
 NfcManager.start();
 
 function NFCScreen() {
