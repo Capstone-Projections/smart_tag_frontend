@@ -31,6 +31,7 @@ function NFCScreen() {
 
                 setTagData(text);
                 // TODO: make this code more modular after you're done with the testing and it's working
+                //TODO: also this is for Blay to add, you have to add the modals that are used to display things to the user
                 if (text === lessonRoomId) {
                     if (days.includes(today)) {
                         const payload = {
