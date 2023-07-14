@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation } from 'react-native-paper';
 import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import NFCScreen from '../screens/studentScreens/NFCScreen';
+import NFCScreen from '../screens/studentScreens/NFCScreen/NFCScreen';
 import Timetable from '../screens/general/Timetable/TimetableScreen';
 import { QRCodeScreen } from '../screens/studentScreens/QRCodeScreen/QrCodeScreen';
 import { TimetableDaysProvider } from '../context/TimeTableContext';

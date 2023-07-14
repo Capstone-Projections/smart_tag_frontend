@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import TabBar from './BottomTabBar';
 import CoursesList from '../components/general/Courses/Courses';
-import NFCScreen from '../screens/studentScreens/NFCScreen';
+import NFCScreen from '../screens/studentScreens/NFCScreen/NFCScreen';
 import LecturerSetUpScreen from '../screens/Lecturer/SetUp/LecturerSetUpScreen';
 import LecturerBottomTabBar from './LecturerBottomTab';
 import GetStarted from '../screens/general/GetStarted/GetStarted';
