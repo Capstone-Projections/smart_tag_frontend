@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
         fontSize: 20,
     },
     subText: {
-        textAlign: 'left',
+        textAlign: 'center',
         fontFamily: 'Poppins',
         fontWeight: '600',
         fontSize: 16,
@@ -53,19 +53,20 @@ export const styles = StyleSheet.create({
         borderWidth: 0,
     },
     leftAction: {
-        // flex: 1,
+        flex: 1,
         backgroundColor: succesColor,
         justifyContent: 'center',
         alignContent: 'center',
         paddingLeft: 20,
-        alignItems: 'flex-start',
+        alignItems: 'center',
     },
     actionText: {
         color: whiteColor,
         fontFamily: 'Poppins',
     },
     rightAction: {
-        alignItems: 'flex-end',
+        alignItems: 'center',
+        flex: 1,
         backgroundColor: warningColor,
         justifyContent: 'center',
         paddingRight: 20,

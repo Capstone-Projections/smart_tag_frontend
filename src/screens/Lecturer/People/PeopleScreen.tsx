@@ -16,6 +16,7 @@ import { User, PeopleProps } from './props';
 import { useQuery } from 'react-query';
 import { AuthContext } from '../../../context/AuthContext';
 import axios from 'axios';
+import { Button } from 'native-base';
 
 const PeopleScreen = (props: PeopleProps) => {
     const { courseTitle, IDcourse } = React.useContext(CourseContext);
@@ -81,7 +82,7 @@ const PeopleScreen = (props: PeopleProps) => {
                 </View>
                 <View style={styles.line}></View>
                 {isError ? (
-                    <View>
+                    <View style={styles.emptyContainer}>
                         <Text>Failed to fetch students for this course.</Text>
                         <TouchableOpacity onPress={handleRetry}>
                             <Text>Retry</Text>

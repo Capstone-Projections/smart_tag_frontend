@@ -26,7 +26,7 @@ export function QRCodeScreen() {
     };
 
     const handleQRCodeScanned = async (data: string) => {
-        if (data === lessonRoomId) {
+        if (data.trim() === lessonRoomId) {
             if (days.includes(today)) {
                 const payload = {
                     status: true,
@@ -34,32 +34,31 @@ export function QRCodeScreen() {
                     user_iduser: userID,
                 };
                 const headers = { Authorization: authorizationKey };
-                try {
-                    const response = await axios.post(
+                const response = await axios
+                    .post(
                         'https://smart-tag.onrender.com/attendance',
                         payload,
                         { headers }
-                    );
+                    )
+                    .then(response => {
+                        showMessageModal(
+                            MessageTypes.SUCCESS,
+                            'Attendance',
+                            `Attendance taken for ${response.data.user.firstName}`,
+                            handleProceed
+                        );
+                    })
+                    .catch(error => {
+                        console.error('Failed to take attendance:', error);
+                        // Alert error message
 
-                    // Alert success message with the user's name
-
-                    showMessageModal(
-                        MessageTypes.SUCCESS,
-                        'Attendance',
-                        `Attendance taken for ${response.data.user.firstName}`,
-                        handleProceed
-                    );
-                } catch (error) {
-                    console.error('Failed to take attendance:', error);
-                    // Alert error message
-
-                    showMessageModal(
-                        MessageTypes.FAIL,
-                        'Attendance',
-                        'Failed to take attendance',
-                        handleProceed
-                    );
-                }
+                        showMessageModal(
+                            MessageTypes.FAIL,
+                            'Attendance',
+                            'Failed to take attendance',
+                            handleProceed
+                        );
+                    });
             } else {
                 showMessageModal(
                     MessageTypes.FAIL,

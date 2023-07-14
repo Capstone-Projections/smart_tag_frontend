@@ -7,111 +7,118 @@ import { CommonActions } from '@react-navigation/native';
 import PeopleScreen from '../screens/Lecturer/People/PeopleScreen';
 import Timetable from '../screens/general/Timetable/TimetableScreen';
 import QuestScreen from '../screens/Lecturer/Quest/QuestScreen';
+import { LessonProvider } from '../context/LessonContext';
 
 const Tab = createBottomTabNavigator();
 
 export default function LecturerBottomTabBar() {
     return (
-        <Tab.Navigator
-            screenOptions={{
-                headerShown: false,
-                tabBarStyle: styles.tabBar,
-                tabBarActiveTintColor: 'blue',
-            }}
-            tabBar={({ navigation, state, descriptors, insets }) => (
-                <BottomNavigation.Bar
-                    navigationState={state}
-                    safeAreaInsets={insets}
-                    onTabPress={({ route, preventDefault }) => {
-                        const event = navigation.emit({
-                            type: 'tabPress',
-                            target: route.key,
-                            canPreventDefault: true,
-                        });
-
-                        if (event.defaultPrevented) {
-                            preventDefault();
-                        } else {
-                            navigation.dispatch({
-                                ...CommonActions.navigate(
-                                    route.name,
-                                    route.params
-                                ),
-                                target: state.key,
+        <LessonProvider>
+            <Tab.Navigator
+                screenOptions={{
+                    headerShown: false,
+                    tabBarStyle: styles.tabBar,
+                    tabBarActiveTintColor: 'blue',
+                }}
+                tabBar={({ navigation, state, descriptors, insets }) => (
+                    <BottomNavigation.Bar
+                        navigationState={state}
+                        safeAreaInsets={insets}
+                        onTabPress={({ route, preventDefault }) => {
+                            const event = navigation.emit({
+                                type: 'tabPress',
+                                target: route.key,
+                                canPreventDefault: true,
                             });
-                        }
-                    }}
-                    renderIcon={({ route, focused, color }) => {
-                        const { options } = descriptors[route.key];
-                        if (options.tabBarIcon) {
-                            return options.tabBarIcon({
-                                focused,
-                                color,
-                                size: 24,
-                            });
-                        }
 
-                        return null;
-                    }}
-                    getLabelText={({ route }) => {
-                        const { options } = descriptors[route.key];
-                        const label =
-                            options.tabBarLabel !== undefined
-                                ? options.tabBarLabel
-                                : options.title !== undefined
-                                ? options.title
-                                : route.name;
+                            if (event.defaultPrevented) {
+                                preventDefault();
+                            } else {
+                                navigation.dispatch({
+                                    ...CommonActions.navigate(
+                                        route.name,
+                                        route.params
+                                    ),
+                                    target: state.key,
+                                });
+                            }
+                        }}
+                        renderIcon={({ route, focused, color }) => {
+                            const { options } = descriptors[route.key];
+                            if (options.tabBarIcon) {
+                                return options.tabBarIcon({
+                                    focused,
+                                    color,
+                                    size: 24,
+                                });
+                            }
 
-                        return label as string;
+                            return null;
+                        }}
+                        getLabelText={({ route }) => {
+                            const { options } = descriptors[route.key];
+                            const label =
+                                options.tabBarLabel !== undefined
+                                    ? options.tabBarLabel
+                                    : options.title !== undefined
+                                    ? options.title
+                                    : route.name;
+
+                            return label as string;
+                        }}
+                    />
+                )}
+            >
+                <Tab.Screen
+                    name="Timetable"
+                    component={Timetable}
+                    options={{
+                        tabBarLabel: 'Timetable',
+                        tabBarIcon: ({ color, size }) => {
+                            return (
+                                <Icon
+                                    name="timetable"
+                                    size={size}
+                                    color={color}
+                                />
+                            );
+                        },
                     }}
                 />
-            )}
-        >
-            <Tab.Screen
-                name="Timetable"
-                component={Timetable}
-                options={{
-                    tabBarLabel: 'Timetable',
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <Icon name="timetable" size={size} color={color} />
-                        );
-                    },
-                }}
-            />
-            <Tab.Screen
-                name="Quest"
-                component={QuestScreen}
-                options={{
-                    tabBarLabel: 'Quest',
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <Icon
-                                name="account-question"
-                                size={size}
-                                color={color}
-                            />
-                        );
-                    },
-                }}
-            />
-            <Tab.Screen
-                name="People"
-                component={PeopleScreen}
-                options={{
-                    tabBarLabel: 'People',
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <Icon
-                                name="account-group"
-                                size={size}
-                                color={color}
-                            />
-                        );
-                    },
-                }}
-            />
-        </Tab.Navigator>
+                <Tab.Screen
+                    name="Quest"
+                    component={QuestScreen}
+                    options={{
+                        tabBarLabel: 'Quest',
+                        tabBarIcon: ({ color, size }) => {
+                            return (
+                                <Icon
+                                    name="account-question"
+                                    size={size}
+                                    color={color}
+                                />
+                            );
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="People"
+                    component={PeopleScreen}
+                    options={{
+                        tabBarLabel: 'People',
+                        tabBarIcon: ({ color, size }) => {
+                            return (
+                                <Icon
+                                    name="account-group"
+                                    size={size}
+                                    color={color}
+                                />
+                            );
+                        },
+                    }}
+                />
+            </Tab.Navigator>
+        </LessonProvider>
     );
 }
 

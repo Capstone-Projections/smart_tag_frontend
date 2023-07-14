@@ -116,6 +116,7 @@ const MessageModal = ({
                                     <Button
                                         backgroundColor={messageThemeColor}
                                         style={styles.decisionButton}
+                                        onPress={onProceed}
                                     >
                                         Yes
                                     </Button>

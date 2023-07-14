@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
         fontSize: 20,
     },
     subText: {
-        textAlign: 'left',
+        textAlign: 'center',
         fontFamily: 'Poppins',
         fontWeight: '600',
         fontSize: 16,
