@@ -11,7 +11,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { PeopleProps, QuestUsers, User } from '../People/props';
-import UserItem from '../../../components/lecturer/PeopleCard';
+import QuestUserItem from '../../../components/lecturer/PeopleCard';
 import { CourseContext } from '../../../context/CourseContext';
 import { useQuery, useMutation, QueryCache } from 'react-query';
 import axios from 'axios';
@@ -32,14 +32,14 @@ const QuestScreen = (props: PeopleProps) => {
         hideModal();
     };
 
-    const fetchStudents = async () => {
+    const questFetchStudents = async () => {
         try {
             const headers = { Authorization: `${authorizationKey}` };
             const response = await axios.get(
-                `https://smart-tag.onrender.com/attendance/lessons/users/${idlesson}`,
+                `https://smart-tag.onrender.com/attendance/lessons/users/${idlesson}/${IDcourse}`,
                 { headers }
             );
-            console.log(response.data);
+            console.table(response.data);
             return response.data.map((questuser: QuestUsers) => ({
                 iduser: questuser.iduser,
                 firstName: questuser.firstName,
@@ -53,20 +53,21 @@ const QuestScreen = (props: PeopleProps) => {
     };
 
     const { data: users = [] } = useQuery<QuestUsers[]>(
-        ['students', IDcourse],
-        fetchStudents
+        ['questStudents', IDcourse],
+        questFetchStudents
     );
 
-    // const updateStatus = async (userId: number, doubtPoints: number) => {
-    //     try {
-    //         const headers = { Authorization: `${authorizationKey}` };
-    //         const endpoint = `https://smart-tag.onrender.com/users/doubtPoints/${userId}/${false}`;
-    //         const requestData = { doubtPoints: doubtPoints };
-    //         await axios.put(endpoint, requestData, { headers });
-    //     } catch (error) {
-    //         throw new Error('Failed to update user status');
-    //     } //TODO: Add a finally tag over here
-    // };
+    const updateStatus = async (userId: number, doubtPoints: number) => {
+        try {
+            const headers = { Authorization: `${authorizationKey}` };
+            const endpoint = `https://smart-tag.onrender.com/users/doubtPoints/${userId}/${false}`;
+            const requestData = { doubtPoints: doubtPoints };
+            await axios.put(endpoint, requestData, { headers });
+            return console.log('success user doubt point increased');
+        } catch (error) {
+            throw new Error('Failed to update user status');
+        } //TODO: Add a finally tag over here
+    };
 
     // //add to workflow afer things are done
     // const invalidateUserAttendance = async (attendanceid: number) => {
@@ -96,7 +97,7 @@ const QuestScreen = (props: PeopleProps) => {
                 style={styles.rightAction}
                 onPress={() => {
                     // console.log(userId, doubtPoints);
-                    // updateStatus(userId, doubtPoints);
+                    updateStatus(userId, doubtPoints);
                 }}
             >
                 <Animated.Text
@@ -161,7 +162,7 @@ const QuestScreen = (props: PeopleProps) => {
                                         )
                                     }
                                 >
-                                    <UserItem
+                                    <QuestUserItem
                                         firstName={item.firstName}
                                         lastName={item.lastName}
                                     />

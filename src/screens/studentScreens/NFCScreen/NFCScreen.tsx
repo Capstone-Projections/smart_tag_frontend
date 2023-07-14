@@ -6,10 +6,10 @@ import { styles } from './styles';
 const NFCScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <Image
+            {/* <Image
                 source={require('../../../assets/images/chip.png')}
                 style={{ width: 400, height: 400 }}
-            />
+            /> */}
         </SafeAreaView>
     );
 };
