@@ -39,12 +39,14 @@ const QuestScreen = (props: PeopleProps) => {
                 `https://smart-tag.onrender.com/attendance/lessons/users/${idlesson}/${IDcourse}`,
                 { headers }
             );
-            console.table(response.data);
+            // console.log(response.data[0].attendance[0].idattendance);
+            // console.log(response.data);
             return response.data.map((questuser: QuestUsers) => ({
                 iduser: questuser.iduser,
                 firstName: questuser.firstName,
                 lastName: questuser.lastName,
                 doubtPoints: questuser.doubtPoints,
+                attendance: questuser.attendance,
             }));
         } catch (error) {
             console.log('shit');
@@ -70,22 +72,24 @@ const QuestScreen = (props: PeopleProps) => {
     };
 
     // //add to workflow afer things are done
-    // const invalidateUserAttendance = async (attendanceid: number) => {
-    //     try {
-    //         const headers = { Authorization: `${authorizationKey}` };
-    //         const endpoint = `https://smart-tag.onrender.com/attendance/${attendanceid}`;
-    //         const invalidateData = { status: false };
-    //         await axios.put(endpoint, { headers });
-    //     } catch (error) {
-    //         throw new Error('Failed to invalidate user attendance');
-    //     }
-    // };
+    const invalidateUserAttendance = async (attendanceid: number) => {
+        try {
+            const headers = { Authorization: `${authorizationKey}` };
+            const endpoint = `https://smart-tag.onrender.com/attendance/${attendanceid}`;
+            const invalidateData = { status: false };
+            await axios.put(endpoint, invalidateData, { headers });
+            return console.log('success user attendance invalidated');
+        } catch (error) {
+            throw new Error('Failed to invalidate user attendance');
+        }
+    };
 
     const renderRightActions = (
         progress: any,
         dragX: any,
         userId: number,
-        doubtPoints: number
+        doubtPoints: number,
+        idattendance: number
     ) => {
         const scale = dragX.interpolate({
             inputRange: [-100, 0],
@@ -98,6 +102,7 @@ const QuestScreen = (props: PeopleProps) => {
                 onPress={() => {
                     // console.log(userId, doubtPoints);
                     updateStatus(userId, doubtPoints);
+                    invalidateUserAttendance(idattendance);
                 }}
             >
                 <Animated.Text
@@ -151,7 +156,8 @@ const QuestScreen = (props: PeopleProps) => {
                                             progress,
                                             dragX,
                                             item.iduser,
-                                            item.doubtPoints
+                                            item.doubtPoints,
+                                            item.attendance[0].idattendance
                                         )
                                     }
                                     renderLeftActions={(progress, dragX) =>
