@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import { View, ScrollView, RefreshControl, Text } from 'react-native';
 import { AuthContext } from '../../../context/AuthContext';
 import axios from 'axios';
@@ -7,9 +13,20 @@ import { CardProps } from '../CoursesCard/props';
 import { CourseCard } from '../CoursesCard/CourseCard';
 import { useQuery } from 'react-query';
 import { Image } from 'react-native';
+import FloatingButton from '../FloatingButton/FloatingButton';
+import Animated from 'react-native-reanimated';
+import BottomSheet, {
+    BottomSheetView,
+    BottomSheetBackdrop,
+} from '@gorhom/bottom-sheet';
+import FloatingButton2 from '../FloatingButton/Float';
+import BottomSheetComponent from '../FloatingButton/Float';
+import { useNavigation } from '@react-navigation/native';
 
 const CoursesList = () => {
     const { userID, authorizationKey } = useContext(AuthContext);
+
+    const navigation = useNavigation();
 
     const fetchCourses = async () => {
         const headers = { Authorization: `${authorizationKey}` };
@@ -64,6 +81,7 @@ const CoursesList = () => {
                     );
                 })}
             </ScrollView>
+            <BottomSheetComponent navigation={navigation} />
         </View>
     );
 };

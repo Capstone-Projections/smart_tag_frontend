@@ -14,6 +14,9 @@ import {
     coursesdGreen,
     coursesdYellow,
 } from '../../../resources/colors/colors';
+import CustomPopOver from '../PopOverMenu/CustomPopOver';
+import { TouchableWithoutFeedback } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 export const CourseCard: React.FC<CardProps> = ({
     name,
@@ -56,6 +59,9 @@ export const CourseCard: React.FC<CardProps> = ({
                     <Title style={styles.title}>{name}</Title>
                     <Paragraph style={styles.paragraph}>{courseCode}</Paragraph>
                 </Card.Content>
+                <View style={styles.popoverContainer}>
+                    <CustomPopOver />
+                </View>
             </Card>
         </View>
     );

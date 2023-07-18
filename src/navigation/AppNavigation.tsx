@@ -19,6 +19,7 @@ import PeopleScreen from '../screens/Lecturer/People/PeopleScreen';
 import ManualScreen from '../screens/Lecturer/ManualScreen';
 import ProfileScreen from '../screens/general/Profile/ProfileScreen';
 import QuestScreen from '../screens/Lecturer/Quest/QuestScreen';
+import CreateCourse from '../screens/Lecturer/CreateCourse';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -53,6 +54,7 @@ export const AppNavigator = () => {
                 <Screen name="Manual" component={ManualScreen} />
                 <Screen name="Profile" component={ProfileScreen} />
                 <Screen name="Quest" component={QuestScreen} />
+                <Screen name="CreateCourse" component={CreateCourse} />
             </Navigator>
         </NavigationContainer>
     );

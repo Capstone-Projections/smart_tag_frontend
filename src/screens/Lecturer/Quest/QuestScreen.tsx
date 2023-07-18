@@ -50,7 +50,8 @@ const QuestScreen = (props: PeopleProps) => {
             }));
         } catch (error) {
             console.log('shit');
-            throw new Error('Failed to fetch students for this lesson');
+            console.log(error);
+            // throw new Error('Failed to fetch students for this lesson');
         }
     };
 
