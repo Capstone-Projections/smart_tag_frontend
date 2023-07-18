@@ -4,14 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
 
 const NFCScreen = () => {
-    return (
-        <SafeAreaView style={styles.container}>
-            {/* <Image
-                source={require('../../../assets/images/chip.png')}
-                style={{ width: 400, height: 400 }}
-            /> */}
-        </SafeAreaView>
-    );
+    return <SafeAreaView style={styles.container}></SafeAreaView>;
 };
 
 export default NFCScreen;

@@ -43,7 +43,7 @@ const GetStarted = (props: GetStartedProps) => {
         try {
             setVerifying(true);
             const response = await axios.post(
-                'https://smart-tag.onrender.com/login',
+                'https://smart-tag.onrender.com/signup',
                 {
                     email: email.trim().toLowerCase(),
                 }
