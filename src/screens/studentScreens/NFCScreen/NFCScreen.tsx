@@ -7,6 +7,9 @@ import { AuthContext } from '../../../context/AuthContext';
 import { LessonRoomContext } from '../../../context/LectureRoomContext';
 import getCurrentDay from '../../../services/currentDay';
 import axios from 'axios';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
 
 NfcManager.start();
 
@@ -17,6 +20,12 @@ function NFCScreen() {
     const { userID, authorizationKey } = useContext(AuthContext);
     const { lessonRoomId } = useContext(LessonRoomContext);
     const today = getCurrentDay();
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
 
     async function readNdef() {
         try {
@@ -47,13 +56,31 @@ function NFCScreen() {
                                 { headers }
                             )
                             .catch(error => {
-                                alert("couldn't add attendance");
+                                // alert("couldn't add attendance");
+                                showMessageModal(
+                                    MessageTypes.FAIL,
+                                    'Attendance',
+                                    'Failed to take attendance',
+                                    handleProceed
+                                );
                             })
                             .finally(() => {
-                                alert('attendance recorded successfully');
+                                // alert('attendance recorded successfully');
+                                showMessageModal(
+                                    MessageTypes.SUCCESS,
+                                    'Attendance',
+                                    'Attendance recorded successfully',
+                                    handleProceed
+                                );
                             });
                     } else {
-                        alert('You have no class today');
+                        // alert('You have no class today');
+                        showMessageModal(
+                            MessageTypes.FAIL,
+                            'Attendance',
+                            'You have no class today',
+                            handleProceed
+                        );
                     }
                 } else {
                     alert('wrong class');
@@ -81,6 +108,14 @@ function NFCScreen() {
                     </Text>
                 </View>
             )}
+            <MessageModal
+                messageModalVisible={messageModalState.messageModalVisible}
+                messageType={messageModalState.messageType}
+                headerText={messageModalState.headerText}
+                messageText={messageModalState.messageText}
+                onDismiss={hideModal}
+                onProceed={messageModalState.onProceed}
+            />
         </View>
     );
 }
