@@ -8,11 +8,23 @@ import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 import { z } from 'zod';
+import { ActivityIndicator } from 'react-native';
+import MessageModal from '../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../components/general/modals/types';
+import { useMessageModal } from '../../hooks/ModalHook';
 
 const CreateCourse = () => {
     const [course, setCourse] = useState('');
     const [courseCode, setCourseCode] = useState('');
     const { userID, authorizationKey } = useContext(AuthContext);
+    const [verifying, setVerifying] = useState(false);
+
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceedFail = () => {
+        hideModal();
+    };
 
     const handleCancel = () => {
         setCourse('');
@@ -21,6 +33,7 @@ const CreateCourse = () => {
 
     const handleAddPress = async () => {
         try {
+            setVerifying(true);
             const headers = { Authorization: `${authorizationKey}` };
             const response = await axios.post(
                 `https://smart-tag.onrender.com/courses/${userID}`,
@@ -32,8 +45,27 @@ const CreateCourse = () => {
             );
 
             console.log('Course added successfully:', response.data);
+            if (response.status === 200) {
+                showMessageModal(
+                    MessageTypes.SUCCESS,
+                    'Success',
+                    'Course added successfully',
+                    handleProceedFail
+                );
+            } else if (response.status !== 200) {
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Error',
+                    'Failed to add course.Try Again',
+                    handleProceedFail
+                );
+            }
+
+            console.log(response.status);
         } catch (error) {
             console.log(error);
+        } finally {
+            setVerifying(false);
         }
     };
 
@@ -71,15 +103,25 @@ const CreateCourse = () => {
                             </FormControl>
                         </View>
                         <View style={styles.buttonRow}>
-                            <Button
-                                colorScheme="darkBlue"
-                                style={styles.button}
-                                onPress={handleAddPress}
-                            >
-                                <Text style={{ color: 'white', fontSize: 18 }}>
-                                    Add
-                                </Text>
-                            </Button>
+                            {verifying && (
+                                <ActivityIndicator
+                                    size="large"
+                                    color={'blue'}
+                                />
+                            )}
+                            {!verifying && (
+                                <Button
+                                    colorScheme="darkBlue"
+                                    style={styles.button}
+                                    onPress={handleAddPress}
+                                >
+                                    <Text
+                                        style={{ color: 'white', fontSize: 18 }}
+                                    >
+                                        Add
+                                    </Text>
+                                </Button>
+                            )}
 
                             <View style={styles.buttonSpace} />
 
@@ -94,6 +136,14 @@ const CreateCourse = () => {
                         </View>
                     </View>
                 </Animatable.View>
+                <MessageModal
+                    messageModalVisible={messageModalState.messageModalVisible}
+                    messageType={messageModalState.messageType}
+                    headerText={messageModalState.headerText}
+                    messageText={messageModalState.messageText}
+                    onDismiss={hideModal}
+                    onProceed={messageModalState.onProceed}
+                />
             </SafeAreaView>
         </KeyboardAvoidingWrapper>
     );

@@ -123,6 +123,16 @@ const GetStarted = (props: GetStartedProps) => {
                             </Button>
                         )}
                     </VStack>
+                    <MessageModal
+                        messageModalVisible={
+                            messageModalState.messageModalVisible
+                        }
+                        messageType={messageModalState.messageType}
+                        headerText={messageModalState.headerText}
+                        messageText={messageModalState.messageText}
+                        onDismiss={hideModal}
+                        onProceed={messageModalState.onProceed}
+                    />
                 </SafeAreaView>
             </KeyboardAvoidingWrapper>
         </View>

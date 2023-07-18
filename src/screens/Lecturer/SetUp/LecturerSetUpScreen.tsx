@@ -26,7 +26,7 @@ const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
 
     //TODO tie this to the backend
     const handleSetUpPress = async () => {
-        props.navigation.navigate('LecturerDrawer');
+        props.navigation.navigate('Drawer');
     };
 
     const [service, setService] = React.useState('');

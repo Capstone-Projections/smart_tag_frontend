@@ -41,6 +41,7 @@ const PopOver: React.FC<Props> = ({ text, iconName, value }) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    height: 45,
                 },
             }}
         >
