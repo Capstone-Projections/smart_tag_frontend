@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'native-base';
 import { appBlue } from '../../resources/colors/colors';
 import * as Animatable from 'react-native-animatable';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import RNPickerSelect from 'react-native-picker-select';
+import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
+import { useQuery } from 'react-query';
+import { CourseContext } from '../../context/CourseContext';
 
 interface DropdownItem {
     label: string;
@@ -69,55 +73,41 @@ const AddCourse = () => {
     const [selected, setSelected] = useState<string | undefined>(undefined); // Initialize as undefined
     const [selected2, setSelected2] = useState<string | undefined>(undefined); // Initialize as undefined
 
-    const data = [
-        { label: 'Computer Networking', value: 'Computer Networking' },
-        { label: 'Software Engineering', value: 'Software Engineering' },
-        { label: 'Secure Network Systems', value: 'Secure Network Systems' },
-        { label: 'Introduction to VLSI', value: 'Introduction to VLSI' },
-        {
-            label: 'Robotics and Computer Vision',
-            value: 'Robotics and Computer Vision',
-        },
-        {
-            label: 'Fault Diagnosis and Failure Tolerance',
-            value: 'Fault Diagnosis and Failure Tolerance',
-        },
-        {
-            label: 'Management and Entrepreneurship Development',
-            value: 'Management and Entrepreneurship Development',
-        },
-    ];
+    const [data, setData] = useState<DropdownItem[]>([]); // Initialize as empty array
+    const [data2, setData2] = useState<DropdownItem[]>([]); // Initialize as empty array
 
-    const data2 = [
-        {
-            label: 'COE 470',
-            value: 'COE 470',
-        },
-        {
-            label: 'COE 454',
-            value: 'COE 454',
-        },
-        {
-            label: 'COE 456',
-            value: 'COE 456',
-        },
-        {
-            label: 'COE 486',
-            value: 'COE 486',
-        },
-        {
-            label: 'COE 458',
-            value: 'COE 458',
-        },
-        {
-            label: 'COE 480',
-            value: 'COE 480',
-        },
-        {
-            label: 'COE 492',
-            value: 'COE 492',
-        },
-    ];
+    const { userID, authorizationKey } = useContext(AuthContext);
+    const { IDcourse } = useContext(CourseContext);
+
+    const headers = { Authorization: `${authorizationKey}` };
+
+    useEffect(() => {
+        // Fetch data for 'data' array
+        axios
+            .get(
+                `https://smart-tag.onrender.com///courses/user/${IDcourse}/${userID}`,
+                { headers }
+            )
+            .then(response => {
+                setData(response.data); // Assuming the response data is an array of objects with label and value properties
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        // Fetch data for 'data2' array
+        axios
+            .get(
+                `https://smart-tag.onrender.com///courses/user/${IDcourse}/${userID}`,
+                { headers }
+            )
+            .then(response => {
+                setData2(response.data); // Assuming the response data is an array of objects with label and value properties
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [headers]);
 
     const handleCancel = () => {
         setSelected('');

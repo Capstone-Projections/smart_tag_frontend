@@ -18,13 +18,13 @@ interface Props {
 
 const PopOver: React.FC<Props> = ({ text, iconName, value }) => {
     const { IDcourse } = React.useContext(CourseContext);
-    const { authorizationKey } = React.useContext(AuthContext);
+    const { authorizationKey, userID } = React.useContext(AuthContext);
 
     const handleDelete = async () => {
         try {
             const headers = { Authorization: `${authorizationKey}` };
             const response = await axios.delete(
-                `https://smart-tag.onrender.com/courses/${IDcourse}`,
+                `https://smart-tag.onrender.com/courses/${IDcourse}/${userID}`,
                 { headers }
             );
             console.log('Delete response:', response.data);

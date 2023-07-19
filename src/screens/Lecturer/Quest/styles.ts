@@ -8,11 +8,11 @@ import {
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 4,
+        // paddingTop: 4,
     },
     headerTextContainer: {
-        paddingTop: 4,
-        paddingBottom: 4,
+        // paddingTop: 4,
+        // paddingBottom: 4,
     },
     subTextContainer: {
         flexDirection: 'row',

@@ -138,9 +138,7 @@ const QuestScreen = (props: PeopleProps) => {
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>{courseTitle} </Text>
                 </View>
-                <View style={styles.subTextContainer}>
-                    <Text style={styles.subText}>Students:</Text>
-                </View>
+
                 <View style={styles.line}></View>
                 {users.length > 0 ? (
                     <FlatList

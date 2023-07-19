@@ -73,6 +73,8 @@ const PeopleScreen = (props: PeopleProps) => {
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>{courseTitle} </Text>
                 </View>
+
+                <View style={styles.line}></View>
                 <View style={styles.subTextContainer}>
                     <Text style={styles.subText}>Students:</Text>
 
@@ -80,7 +82,6 @@ const PeopleScreen = (props: PeopleProps) => {
                         <MaterialCommunityIcons name="plus-circle" size={30} />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.line}></View>
                 {isError ? (
                     <View style={styles.emptyContainer}>
                         <Text>Failed to fetch students for this course.</Text>

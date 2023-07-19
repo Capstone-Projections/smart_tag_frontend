@@ -45,14 +45,18 @@ const CreateCourse = () => {
             );
 
             console.log('Course added successfully:', response.data);
-            if (response.status === 200) {
-                showMessageModal(
-                    MessageTypes.SUCCESS,
-                    'Success',
-                    'Course added successfully',
-                    handleProceedFail
-                );
-            } else if (response.status !== 200) {
+
+            showMessageModal(
+                MessageTypes.SUCCESS,
+                'Success',
+                'Course added successfully',
+                handleProceedFail
+            );
+
+            console.log(response.status);
+        } catch (error) {
+            console.log(error);
+            if (error) {
                 showMessageModal(
                     MessageTypes.FAIL,
                     'Error',
@@ -60,12 +64,10 @@ const CreateCourse = () => {
                     handleProceedFail
                 );
             }
-
-            console.log(response.status);
-        } catch (error) {
-            console.log(error);
         } finally {
             setVerifying(false);
+            setCourse('');
+            setCourseCode('');
         }
     };
 
@@ -80,6 +82,12 @@ const CreateCourse = () => {
                     </View>
                     <View style={styles.line}></View>
                     <View style={styles.container}>
+                        <View>
+                            <Text style={styles.instructionText}>
+                                Please fill in the following details to add a
+                                new course.
+                            </Text>
+                        </View>
                         <View>
                             <Text style={styles.text}>Course</Text>
                             <FormControl style={styles.formControl}>
@@ -134,6 +142,11 @@ const CreateCourse = () => {
                                 <Text style={styles.buttonText}>Cancel</Text>
                             </Button>
                         </View>
+                    </View>
+                    <View style={styles.noteContainer}>
+                        <Text style={styles.noteText}>
+                            Note: Duplicate courses are not allowed.
+                        </Text>
                     </View>
                 </Animatable.View>
                 <MessageModal
@@ -201,6 +214,22 @@ const styles = StyleSheet.create({
     buttonText: {
         color: appBlue,
         fontSize: 18,
+    },
+    instructionText: {
+        fontFamily: 'Poppins',
+        fontSize: 16,
+        textAlign: 'center',
+        marginVertical: 15,
+    },
+    noteContainer: {
+        alignItems: 'center',
+        paddingVertical: 20,
+    },
+    noteText: {
+        fontFamily: 'Poppins',
+        fontSize: 14,
+        color: 'gray',
+        textAlign: 'center',
     },
 });
 

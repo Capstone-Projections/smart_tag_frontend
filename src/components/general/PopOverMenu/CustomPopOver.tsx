@@ -21,7 +21,7 @@ const CustomPopOver = () => {
                     },
                 }}
             >
-                <Entypo name="dots-three-vertical" size={24} color="black" />
+                <Entypo name="dots-three-vertical" size={24} color="white" />
             </MenuTrigger>
             <MenuOptions
                 customStyles={{

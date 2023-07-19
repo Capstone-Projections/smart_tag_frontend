@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 4,
+        // paddingTop: 4,
     },
     headerTextContainer: {
-        paddingTop: 4,
-        paddingBottom: 4,
+        // paddingTop: 4,
+        // paddingBottom: 4,
     },
     subTextContainer: {
         flexDirection: 'row',
@@ -43,8 +43,8 @@ export const styles = StyleSheet.create({
         fontFamily: 'Poppins',
     },
     image: {
-        width: 150,
-        height: 150,
+        width: 200,
+        height: 200,
         borderWidth: 0,
     },
 });

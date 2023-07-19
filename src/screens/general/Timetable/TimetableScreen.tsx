@@ -83,11 +83,11 @@ const Timetable = (props: TimetableProps) => {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 4 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
+            <View>
+                <Text style={style.headerText}>{courseTitle}</Text>
+            </View>
             <View style={style.container}>
-                <View style={style.headerTextContainer}>
-                    <Text style={style.headerText}>{courseTitle}</Text>
-                </View>
                 <ScrollView
                     refreshControl={
                         <RefreshControl
@@ -105,7 +105,7 @@ const Timetable = (props: TimetableProps) => {
                         <View style={style.emptyContainer}>
                             <Image
                                 style={style.image}
-                                source={require('../../../../assets/images/people.jpg')}
+                                source={require('../../../../assets/images/clock.jpg')}
                             />
                             <Text style={style.emptyText}>
                                 No timetable available.
@@ -131,19 +131,6 @@ const Timetable = (props: TimetableProps) => {
                             </View>
                         </View>
                     )}
-
-                    <View style={{ padding: 10 }}>
-                        <Link
-                            style={style.link}
-                            isExternal
-                            _text={{
-                                color: 'blue.400',
-                            }}
-                            onPress={handleLinkPress}
-                        >
-                            View Attendance
-                        </Link>
-                    </View>
                 </ScrollView>
             </View>
         </SafeAreaView>
