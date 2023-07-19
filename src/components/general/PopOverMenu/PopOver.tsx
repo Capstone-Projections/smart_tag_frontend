@@ -12,7 +12,7 @@ type IconNames = 'emoji-sad';
 
 interface Props {
     text: string;
-    iconName: IconNames; // Use the IconNames union type here
+    iconName: IconNames;
     value: string;
 }
 

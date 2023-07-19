@@ -12,14 +12,6 @@ import { styles } from './styles';
 import { CardProps } from '../CoursesCard/props';
 import { CourseCard } from '../CoursesCard/CourseCard';
 import { useQuery } from 'react-query';
-import { Image } from 'react-native';
-import FloatingButton from '../FloatingButton/FloatingButton';
-import Animated from 'react-native-reanimated';
-import BottomSheet, {
-    BottomSheetView,
-    BottomSheetBackdrop,
-} from '@gorhom/bottom-sheet';
-import FloatingButton2 from '../FloatingButton/Float';
 import BottomSheetComponent from '../FloatingButton/Float';
 import { useNavigation } from '@react-navigation/native';
 

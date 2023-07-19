@@ -34,7 +34,10 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                         label: 'Select an item',
                         value: null,
                     }}
-                    items={items}
+                    items={items.map(item => ({
+                        label: item.label,
+                        value: item.value,
+                    }))}
                     onValueChange={onSelect}
                     style={{
                         inputAndroid: {
@@ -73,41 +76,36 @@ const AddCourse = () => {
     const [selected, setSelected] = useState<string | undefined>(undefined); // Initialize as undefined
     const [selected2, setSelected2] = useState<string | undefined>(undefined); // Initialize as undefined
 
-    const [data, setData] = useState<DropdownItem[]>([]); // Initialize as empty array
-    const [data2, setData2] = useState<DropdownItem[]>([]); // Initialize as empty array
+    // const [data, setData] = useState<DropdownItem[]>([]); // Initialize as empty array
+    // const [data2, setData2] = useState<DropdownItem[]>([]); // Initialize as empty array
+
+    const [coursesList, setCoursesList] = useState<DropdownItem[]>([]);
 
     const { userID, authorizationKey } = useContext(AuthContext);
     const { IDcourse } = useContext(CourseContext);
 
     const headers = { Authorization: `${authorizationKey}` };
 
-    useEffect(() => {
-        // Fetch data for 'data' array
-        axios
-            .get(
-                `https://smart-tag.onrender.com///courses/user/${IDcourse}/${userID}`,
+    const fetchList = async () => {
+        try {
+            const response = await axios.get(
+                `https://smart-tag.onrender.com/courses`,
                 { headers }
-            )
-            .then(response => {
-                setData(response.data); // Assuming the response data is an array of objects with label and value properties
-            })
-            .catch(error => {
-                console.error(error);
-            });
+            );
+            const responseData: DropdownItem[] = response.data;
 
-        // Fetch data for 'data2' array
-        axios
-            .get(
-                `https://smart-tag.onrender.com///courses/user/${IDcourse}/${userID}`,
-                { headers }
-            )
-            .then(response => {
-                setData2(response.data); // Assuming the response data is an array of objects with label and value properties
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, [headers]);
+            console.log(response.data);
+            return responseData;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return [] as DropdownItem[]; // Return an empty array on error
+        }
+    };
+
+    useQuery<DropdownItem[], Error>('list', fetchList, {
+        enabled: !!authorizationKey,
+        onSuccess: data => setCoursesList(data), // Update coursesList on successful API call
+    });
 
     const handleCancel = () => {
         setSelected('');
@@ -125,18 +123,18 @@ const AddCourse = () => {
                     <View>
                         <Text style={styles.text}>Name</Text>
                         <CustomDropdown
-                            items={data}
+                            items={coursesList}
                             selectedValue={selected}
                             onSelect={value => setSelected(value)}
                         />
                     </View>
                     <View>
                         <Text style={styles.text}>Code</Text>
-                        <CustomDropdown
+                        {/* <CustomDropdown
                             items={data2}
                             selectedValue={selected2}
                             onSelect={value => setSelected2(value)}
-                        />
+                        /> */}
                     </View>
 
                     <View style={styles.buttonRow}>
