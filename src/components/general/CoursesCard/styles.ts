@@ -22,11 +22,19 @@ export const styles = StyleSheet.create({
     card: {
         width: 380,
         height: 130,
+        position: 'relative',
+    },
+    popoverContainer: {
+        position: 'absolute', // Make the popover's position absolute
+        top: 10, // Adjust the top position to align the popover
+        right: 10, // Adjust the right position to align the popover
     },
     title: {
         color: 'white',
+        fontFamily: 'Poppins',
     },
     paragraph: {
         color: 'white',
+        fontFamily: 'Poppins',
     },
 });

@@ -116,6 +116,14 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
             console.log(response.status);
         } catch (error) {
             console.log(error);
+            if (error) {
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Error',
+                    'Check your network and try again',
+                    handleProceedFail
+                );
+            }
         } finally {
         }
     };

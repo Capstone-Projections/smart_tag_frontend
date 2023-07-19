@@ -11,7 +11,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { PeopleProps, QuestUsers, User } from '../People/props';
-import UserItem from '../../../components/lecturer/PeopleCard';
+import QuestUserItem from '../../../components/lecturer/PeopleCard';
 import { CourseContext } from '../../../context/CourseContext';
 import { useQuery, useMutation, QueryCache } from 'react-query';
 import axios from 'axios';
@@ -32,59 +32,65 @@ const QuestScreen = (props: PeopleProps) => {
         hideModal();
     };
 
-    const fetchStudents = async () => {
+    const questFetchStudents = async () => {
         try {
             const headers = { Authorization: `${authorizationKey}` };
             const response = await axios.get(
-                `https://smart-tag.onrender.com/attendance/lessons/users/${idlesson}`,
+                `https://smart-tag.onrender.com/attendance/lessons/users/${idlesson}/${IDcourse}`,
                 { headers }
             );
-            console.log(response.data);
+            // console.log(response.data[0].attendance[0].idattendance);
+            // console.log(response.data);
             return response.data.map((questuser: QuestUsers) => ({
                 iduser: questuser.iduser,
                 firstName: questuser.firstName,
                 lastName: questuser.lastName,
                 doubtPoints: questuser.doubtPoints,
+                attendance: questuser.attendance,
             }));
         } catch (error) {
             console.log('shit');
-            throw new Error('Failed to fetch students for this lesson');
+            console.log(error);
+            // throw new Error('Failed to fetch students for this lesson');
         }
     };
 
     const { data: users = [] } = useQuery<QuestUsers[]>(
-        ['students', IDcourse],
-        fetchStudents
+        ['questStudents', IDcourse],
+        questFetchStudents
     );
 
-    // const updateStatus = async (userId: number, doubtPoints: number) => {
-    //     try {
-    //         const headers = { Authorization: `${authorizationKey}` };
-    //         const endpoint = `https://smart-tag.onrender.com/users/doubtPoints/${userId}/${false}`;
-    //         const requestData = { doubtPoints: doubtPoints };
-    //         await axios.put(endpoint, requestData, { headers });
-    //     } catch (error) {
-    //         throw new Error('Failed to update user status');
-    //     } //TODO: Add a finally tag over here
-    // };
+    const updateStatus = async (userId: number, doubtPoints: number) => {
+        try {
+            const headers = { Authorization: `${authorizationKey}` };
+            const endpoint = `https://smart-tag.onrender.com/users/doubtPoints/${userId}/${false}`;
+            const requestData = { doubtPoints: doubtPoints };
+            await axios.put(endpoint, requestData, { headers });
+            return console.log('success user doubt point increased');
+        } catch (error) {
+            throw new Error('Failed to update user status');
+        } //TODO: Add a finally tag over here
+    };
 
     // //add to workflow afer things are done
-    // const invalidateUserAttendance = async (attendanceid: number) => {
-    //     try {
-    //         const headers = { Authorization: `${authorizationKey}` };
-    //         const endpoint = `https://smart-tag.onrender.com/attendance/${attendanceid}`;
-    //         const invalidateData = { status: false };
-    //         await axios.put(endpoint, { headers });
-    //     } catch (error) {
-    //         throw new Error('Failed to invalidate user attendance');
-    //     }
-    // };
+    const invalidateUserAttendance = async (attendanceid: number) => {
+        try {
+            const headers = { Authorization: `${authorizationKey}` };
+            const endpoint = `https://smart-tag.onrender.com/attendance/${attendanceid}`;
+            const invalidateData = { status: false };
+            await axios.put(endpoint, invalidateData, { headers });
+            return console.log('success user attendance invalidated');
+        } catch (error) {
+            throw new Error('Failed to invalidate user attendance');
+        }
+    };
 
     const renderRightActions = (
         progress: any,
         dragX: any,
         userId: number,
-        doubtPoints: number
+        doubtPoints: number,
+        idattendance: number
     ) => {
         const scale = dragX.interpolate({
             inputRange: [-100, 0],
@@ -96,7 +102,8 @@ const QuestScreen = (props: PeopleProps) => {
                 style={styles.rightAction}
                 onPress={() => {
                     // console.log(userId, doubtPoints);
-                    // updateStatus(userId, doubtPoints);
+                    updateStatus(userId, doubtPoints);
+                    invalidateUserAttendance(idattendance);
                 }}
             >
                 <Animated.Text
@@ -131,9 +138,7 @@ const QuestScreen = (props: PeopleProps) => {
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>{courseTitle} </Text>
                 </View>
-                <View style={styles.subTextContainer}>
-                    <Text style={styles.subText}>Students:</Text>
-                </View>
+
                 <View style={styles.line}></View>
                 {users.length > 0 ? (
                     <FlatList
@@ -150,7 +155,8 @@ const QuestScreen = (props: PeopleProps) => {
                                             progress,
                                             dragX,
                                             item.iduser,
-                                            item.doubtPoints
+                                            item.doubtPoints,
+                                            item.attendance[0].idattendance
                                         )
                                     }
                                     renderLeftActions={(progress, dragX) =>
@@ -161,7 +167,7 @@ const QuestScreen = (props: PeopleProps) => {
                                         )
                                     }
                                 >
-                                    <UserItem
+                                    <QuestUserItem
                                         firstName={item.firstName}
                                         lastName={item.lastName}
                                     />

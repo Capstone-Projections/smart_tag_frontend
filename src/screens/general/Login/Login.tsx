@@ -55,23 +55,22 @@ const Login = (props: LoginProps) => {
 
             console.log(response.status);
 
-            if (response.status !== 200) {
+            setEmail(email.trim().toLowerCase());
+        } catch (error) {
+            console.log(error);
+            if (error) {
                 showMessageModal(
                     MessageTypes.FAIL,
-                    'Network Error',
+                    'Error',
                     'Check your network and try again',
                     handleProceed
                 );
-            } else {
-                setEmail(email.trim().toLowerCase());
-                props.navigation.navigate('OTP');
             }
-        } catch (error) {
-            console.log(error);
         } finally {
             setEmailState('');
             setVerifying(false);
         }
+        props.navigation.navigate('OTP');
     };
 
     const handleEmailChange = (value: string) => {

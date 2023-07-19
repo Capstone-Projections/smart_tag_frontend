@@ -43,7 +43,7 @@ const GetStarted = (props: GetStartedProps) => {
         try {
             setVerifying(true);
             const response = await axios.post(
-                'https://smart-tag.onrender.com/login',
+                'https://smart-tag.onrender.com/signup',
                 {
                     email: email.trim().toLowerCase(),
                 }
@@ -54,18 +54,17 @@ const GetStarted = (props: GetStartedProps) => {
 
             console.log(response.status);
 
-            if (response.status !== 200) {
+            setEmail(email.trim().toLowerCase());
+        } catch (error) {
+            console.log(error);
+            if (error) {
                 showMessageModal(
                     MessageTypes.FAIL,
-                    'Network Error',
+                    'Error',
                     'Check your network and try again',
                     handleProceed
                 );
             }
-
-            setEmail(email.trim().toLowerCase());
-        } catch (error) {
-            console.log(error);
         } finally {
             setEmailState('');
             setVerifying(false);
@@ -123,6 +122,16 @@ const GetStarted = (props: GetStartedProps) => {
                             </Button>
                         )}
                     </VStack>
+                    <MessageModal
+                        messageModalVisible={
+                            messageModalState.messageModalVisible
+                        }
+                        messageType={messageModalState.messageType}
+                        headerText={messageModalState.headerText}
+                        messageText={messageModalState.messageText}
+                        onDismiss={hideModal}
+                        onProceed={messageModalState.onProceed}
+                    />
                 </SafeAreaView>
             </KeyboardAvoidingWrapper>
         </View>

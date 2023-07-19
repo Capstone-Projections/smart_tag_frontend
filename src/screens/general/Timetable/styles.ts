@@ -4,11 +4,11 @@ import { appBlue } from '../../../resources/colors/colors';
 export const style = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 4,
+        // paddingTop: 4,
     },
     headerTextContainer: {
-        paddingTop: 4,
-        paddingBottom: 4,
+        // paddingTop: 4,
+        // paddingBottom: 4,
     },
     headerText: {
         textAlign: 'center',
@@ -57,8 +57,8 @@ export const style = StyleSheet.create({
         fontFamily: 'Poppins',
     },
     emptyContainer: {
-        paddingTop: 60,
-        paddingBottom: 60,
+        paddingTop: 150,
+        paddingBottom: 70,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -68,9 +68,8 @@ export const style = StyleSheet.create({
         fontFamily: 'Poppins',
     },
     image: {
-        width: 150,
-        height: 150,
-        borderWidth: 0,
+        width: 200,
+        height: 200,
     },
     line: {
         borderBottomWidth: 1,
