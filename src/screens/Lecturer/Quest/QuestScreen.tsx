@@ -66,10 +66,25 @@ const QuestScreen = (props: PeopleProps) => {
             const endpoint = `https://smart-tag.onrender.com/users/doubtPoints/${userId}/${false}`;
             const requestData = { doubtPoints: doubtPoints };
             await axios.put(endpoint, requestData, { headers });
+            showMessageModal(
+                MessageTypes.SUCCESS,
+                'Success!',
+                'Query Successful',
+                handleProceed
+            );
             return console.log('success user doubt point increased');
         } catch (error) {
+            if (error) {
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Error!',
+                    'Query Failed',
+                    handleProceed
+                );
+            }
             throw new Error('Failed to update user status');
-        } //TODO: Add a finally tag over here
+        } finally {
+        }
     };
 
     // //add to workflow afer things are done
@@ -122,7 +137,17 @@ const QuestScreen = (props: PeopleProps) => {
             extrapolate: 'clamp',
         });
         return (
-            <TouchableOpacity style={styles.leftAction} onPress={() => {}}>
+            <TouchableOpacity
+                style={styles.leftAction}
+                onPress={() => {
+                    showMessageModal(
+                        MessageTypes.SUCCESS,
+                        'Success',
+                        'Query Successful',
+                        handleProceed
+                    );
+                }}
+            >
                 <Animated.Text
                     style={[styles.actionText, { transform: [{ scale }] }]}
                 >

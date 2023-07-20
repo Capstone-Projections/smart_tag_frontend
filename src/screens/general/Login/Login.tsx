@@ -55,7 +55,11 @@ const Login = (props: LoginProps) => {
 
             console.log(response.status);
 
-            setEmail(email.trim().toLowerCase());
+            if (response.status === 200) {
+                setEmail(email.trim().toLowerCase());
+                props.navigation.navigate('OTP'); //
+            } else {
+            }
         } catch (error) {
             console.log(error);
             if (error) {
@@ -70,7 +74,6 @@ const Login = (props: LoginProps) => {
             setEmailState('');
             setVerifying(false);
         }
-        props.navigation.navigate('OTP');
     };
 
     const handleEmailChange = (value: string) => {

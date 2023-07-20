@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AddCourse from '../studentScreens/AddCourseScreen';
+import AddCourse from '../studentScreens/AddCourse/AddCourseScreen';
 import Settings from '../general/Settings/Settings';
 import CoursesList from '../../components/general/Courses/Courses';
 

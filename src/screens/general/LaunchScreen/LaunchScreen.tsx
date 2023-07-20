@@ -12,12 +12,12 @@ const LaunchScreen = (props: LaunchScreenProps) => {
 
     const handleStudentPress = () => {
         setUserType('student');
-        props.navigation.navigate('Login');
+        props.navigation.navigate('LoginScreen');
     };
 
     const handleTeacherPress = () => {
         setUserType('lecturer');
-        props.navigation.navigate('Login');
+        props.navigation.navigate('LoginScreen');
     };
     return (
         <View style={style.container}>

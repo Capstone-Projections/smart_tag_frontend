@@ -9,7 +9,7 @@ import LecturerBottomTabBar from './LecturerBottomTab';
 import GetStarted from '../screens/general/GetStarted/GetStarted';
 import LaunchScreen from '../screens/general/LaunchScreen/LaunchScreen';
 import DrawerNavigation from './DrawerNavigation';
-import AddCourse from '../screens/studentScreens/AddCourseScreen';
+import AddCourse from '../screens/studentScreens/AddCourse/AddCourseScreen';
 import Login from '../screens/general/Login/Login';
 import StudentSetUpScreen from '../screens/studentScreens/StudentSetUpScreen';
 import OTPVerificationScreen from '../screens/general/OTP/OTP';
@@ -19,7 +19,8 @@ import PeopleScreen from '../screens/Lecturer/People/PeopleScreen';
 import ManualScreen from '../screens/Lecturer/ManualScreen';
 import ProfileScreen from '../screens/general/Profile/ProfileScreen';
 import QuestScreen from '../screens/Lecturer/Quest/QuestScreen';
-import CreateCourse from '../screens/Lecturer/CreateCourse';
+import CreateCourse from '../screens/Lecturer/CreateCourse/CreateCourse';
+import LoginScreen from '../screens/general/LoginScreen/LoginScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -55,6 +56,7 @@ export const AppNavigator = () => {
                 <Screen name="Profile" component={ProfileScreen} />
                 <Screen name="Quest" component={QuestScreen} />
                 <Screen name="CreateCourse" component={CreateCourse} />
+                <Screen name="LoginScreen" component={LoginScreen} />
             </Navigator>
         </NavigationContainer>
     );
