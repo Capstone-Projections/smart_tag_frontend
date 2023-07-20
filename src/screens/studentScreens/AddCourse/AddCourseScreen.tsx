@@ -1,18 +1,23 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Button } from 'native-base';
-import { appBlue } from '../../resources/colors/colors';
+import { appBlue } from '../../../resources/colors/colors';
 import * as Animatable from 'react-native-animatable';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 import { useQuery } from 'react-query';
-import { CourseContext } from '../../context/CourseContext';
+import { CourseContext } from '../../../context/CourseContext';
+import { styles } from './style';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
 
 interface DropdownItem {
     label: string;
     value: string;
+    idcourse: number;
 }
 
 interface CustomDropdownProps {
@@ -74,7 +79,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
 
 const AddCourse = () => {
     const [selected, setSelected] = useState<string | undefined>(undefined); // Initialize as undefined
-    const [selected2, setSelected2] = useState<string | undefined>(undefined); // Initialize as undefined
+    // const [selected2, setSelected2] = useState<string | undefined>(undefined); // Initialize as undefined
 
     // const [data, setData] = useState<DropdownItem[]>([]); // Initialize as empty array
     // const [data2, setData2] = useState<DropdownItem[]>([]); // Initialize as empty array
@@ -83,8 +88,17 @@ const AddCourse = () => {
 
     const { userID, authorizationKey } = useContext(AuthContext);
     const { IDcourse } = useContext(CourseContext);
+    const [verifying, setVerifying] = useState(false);
+    const [idcourse, setIDcourse] = useState('');
 
     const headers = { Authorization: `${authorizationKey}` };
+
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
 
     const fetchList = async () => {
         try {
@@ -92,24 +106,73 @@ const AddCourse = () => {
                 `https://smart-tag.onrender.com/courses`,
                 { headers }
             );
-            const responseData: DropdownItem[] = response.data;
+
+            const responseData = response.data.map((item: any) => ({
+                label: item.name,
+                value: item.name,
+                idcourse: item.idcourse,
+            }));
 
             console.log(response.data);
+            // console.log(responseData);
             return responseData;
         } catch (error) {
             console.error('Error fetching data:', error);
-            return [] as DropdownItem[]; // Return an empty array on error
+            return [] as DropdownItem[];
         }
     };
 
     useQuery<DropdownItem[], Error>('list', fetchList, {
         enabled: !!authorizationKey,
-        onSuccess: data => setCoursesList(data), // Update coursesList on successful API call
+        onSuccess: data => setCoursesList(data),
     });
 
     const handleCancel = () => {
-        setSelected('');
-        setSelected2('');
+        setSelected('Select an item');
+        // setSelected2('');
+    };
+
+    const handleAddCourse = async () => {
+        if (selected) {
+            try {
+                setVerifying(true);
+
+                const courseID = coursesList.find(
+                    course => course.label === selected
+                )?.idcourse;
+                // Use the courseID for something entirely different
+                // console.log('Selected Course ID:', courseID);
+
+                const response = await axios.get(
+                    `https://smart-tag.onrender.com/courses/user/${courseID}/${userID}`,
+                    { headers }
+                );
+
+                showMessageModal(
+                    MessageTypes.SUCCESS,
+                    'Success',
+                    'Course added successfully',
+                    handleProceed
+                );
+
+                console.log('Course added successfully:', response.data);
+            } catch (error) {
+                if (error) {
+                    showMessageModal(
+                        MessageTypes.FAIL,
+                        'Error',
+                        'Failed to add course.Try Again',
+                        handleProceed
+                    );
+                }
+                console.error('Error adding course:', error);
+            } finally {
+                setVerifying(false);
+                setSelected('Select an item');
+            }
+        } else {
+            console.log('Please select a course before adding.');
+        }
     };
 
     return (
@@ -121,28 +184,40 @@ const AddCourse = () => {
                 <View style={styles.line}></View>
                 <View style={styles.container}>
                     <View>
-                        <Text style={styles.text}>Name</Text>
+                        <Text style={styles.text}>
+                            Select the name of the course in the dropdown below
+                            to be enrolled
+                        </Text>
                         <CustomDropdown
                             items={coursesList}
                             selectedValue={selected}
                             onSelect={value => setSelected(value)}
                         />
                     </View>
-                    <View>
+                    {/* <View>
                         <Text style={styles.text}>Code</Text>
                         {/* <CustomDropdown
                             items={data2}
                             selectedValue={selected2}
                             onSelect={value => setSelected2(value)}
-                        /> */}
-                    </View>
+                        /> 
+                    </View> */}
 
                     <View style={styles.buttonRow}>
-                        <Button colorScheme="darkBlue" style={styles.button}>
-                            <Text style={{ color: 'white', fontSize: 18 }}>
-                                Add
-                            </Text>
-                        </Button>
+                        {verifying && (
+                            <ActivityIndicator size="large" color={'blue'} />
+                        )}
+                        {!verifying && (
+                            <Button
+                                colorScheme="darkBlue"
+                                style={styles.button}
+                                onPress={handleAddCourse}
+                            >
+                                <Text style={{ color: 'white', fontSize: 18 }}>
+                                    Add
+                                </Text>
+                            </Button>
+                        )}
 
                         <View style={styles.buttonSpace} />
 
@@ -156,64 +231,17 @@ const AddCourse = () => {
                         </Button>
                     </View>
                 </View>
+                <MessageModal
+                    messageModalVisible={messageModalState.messageModalVisible}
+                    messageType={messageModalState.messageType}
+                    headerText={messageModalState.headerText}
+                    messageText={messageModalState.messageText}
+                    onDismiss={hideModal}
+                    onProceed={messageModalState.onProceed}
+                />
             </Animatable.View>
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        alignContent: 'center',
-    },
-    text: {
-        fontFamily: 'Poppins',
-        fontSize: 15,
-    },
-    buttonRow: {
-        paddingTop: 20,
-        flexDirection: 'row',
-        alignContent: 'center',
-        justifyContent: 'center',
-    },
-    button: {
-        width: 140,
-        height: 50,
-        borderRadius: 8,
-    },
-    buttonOutline: {
-        width: 140,
-        height: 50,
-        borderRadius: 8,
-        borderColor: appBlue,
-    },
-    buttonSpace: {
-        width: 15,
-    },
-    buttonText: {
-        color: appBlue,
-        fontSize: 18,
-    },
-    headerText: {
-        fontFamily: 'Poppins',
-        fontSize: 20,
-        fontWeight: '600',
-        textAlign: 'center',
-    },
-    line: {
-        borderBottomWidth: 1,
-        borderBottomColor: 'lightgray',
-        marginVertical: 0,
-    },
-    dropdownContainer: {
-        marginVertical: 8,
-    },
-
-    dropdownBox: {
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 8,
-        overflow: 'hidden', // This will hide any overflowing content
-    },
-});
 
 export default AddCourse;

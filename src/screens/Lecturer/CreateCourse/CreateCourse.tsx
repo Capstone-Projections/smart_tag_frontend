@@ -1,17 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext, useState } from 'react';
-import KeyboardAvoidingWrapper from '../../components/general/KeyboardWrapper/KeyboardWrapper';
+import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, FormControl, Input } from 'native-base';
-import { appBlue } from '../../resources/colors/colors';
+import { appBlue } from '../../../resources/colors/colors';
 import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 import { z } from 'zod';
 import { ActivityIndicator } from 'react-native';
-import MessageModal from '../../components/general/modals/MessageModals';
-import { MessageTypes } from '../../components/general/modals/types';
-import { useMessageModal } from '../../hooks/ModalHook';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
+import { styles } from './style';
 
 const CreateCourse = () => {
     const [course, setCourse] = useState('');
@@ -161,76 +162,5 @@ const CreateCourse = () => {
         </KeyboardAvoidingWrapper>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        // alignItems: 'center',
-    },
-    headerText: {
-        fontFamily: 'Poppins',
-        fontSize: 20,
-
-        textAlign: 'center',
-    },
-    line: {
-        borderBottomWidth: 1,
-        borderBottomColor: 'lightgray',
-        marginVertical: 0,
-    },
-    formControl: {
-        borderColor: 'black',
-        width: '100%',
-    },
-    input: {
-        height: 50,
-        backgroundColor: 'white',
-        borderColor: 'black',
-        paddingHorizontal: 10,
-        fontSize: 16,
-    },
-    text: {
-        fontFamily: 'Poppins',
-        fontSize: 16,
-    },
-    buttonRow: {
-        paddingTop: 20,
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    button: {
-        width: 140,
-        height: 50,
-        borderRadius: 8,
-    },
-    buttonOutline: {
-        width: 140,
-        height: 50,
-        borderRadius: 8,
-        borderColor: appBlue,
-    },
-    buttonSpace: {
-        width: 15,
-    },
-    buttonText: {
-        color: appBlue,
-        fontSize: 18,
-    },
-    instructionText: {
-        fontFamily: 'Poppins',
-        fontSize: 16,
-        textAlign: 'center',
-        marginVertical: 15,
-    },
-    noteContainer: {
-        alignItems: 'center',
-        paddingVertical: 20,
-    },
-    noteText: {
-        fontFamily: 'Poppins',
-        fontSize: 14,
-        color: 'gray',
-        textAlign: 'center',
-    },
-});
 
 export default CreateCourse;
