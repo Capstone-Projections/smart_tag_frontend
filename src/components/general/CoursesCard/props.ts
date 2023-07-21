@@ -1,5 +1,5 @@
 export interface CardProps {
-    idcourse?: string;
+    idcourse: string;
     name: string;
     courseCode: string;
 }

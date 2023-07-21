@@ -8,7 +8,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
 import { AuthContext } from '../../../context/AuthContext';
 import { useQuery } from 'react-query';
-import { CourseContext } from '../../../context/CourseContext';
 import { styles } from './style';
 import MessageModal from '../../../components/general/modals/MessageModals';
 import { MessageTypes } from '../../../components/general/modals/types';
@@ -79,15 +78,11 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
 
 const AddCourse = () => {
     const [selected, setSelected] = useState<string | undefined>(undefined); // Initialize as undefined
-    // const [selected2, setSelected2] = useState<string | undefined>(undefined); // Initialize as undefined
-
-    // const [data, setData] = useState<DropdownItem[]>([]); // Initialize as empty array
-    // const [data2, setData2] = useState<DropdownItem[]>([]); // Initialize as empty array
 
     const [coursesList, setCoursesList] = useState<DropdownItem[]>([]);
 
     const { userID, authorizationKey } = useContext(AuthContext);
-    const { IDcourse } = useContext(CourseContext);
+
     const [verifying, setVerifying] = useState(false);
     const [idcourse, setIDcourse] = useState('');
 
@@ -113,7 +108,7 @@ const AddCourse = () => {
                 idcourse: item.idcourse,
             }));
 
-            console.log(response.data);
+            // console.log(response.data);
             // console.log(responseData);
             return responseData;
         } catch (error) {
@@ -194,14 +189,6 @@ const AddCourse = () => {
                             onSelect={value => setSelected(value)}
                         />
                     </View>
-                    {/* <View>
-                        <Text style={styles.text}>Code</Text>
-                        {/* <CustomDropdown
-                            items={data2}
-                            selectedValue={selected2}
-                            onSelect={value => setSelected2(value)}
-                        /> 
-                    </View> */}
 
                     <View style={styles.buttonRow}>
                         {verifying && (
