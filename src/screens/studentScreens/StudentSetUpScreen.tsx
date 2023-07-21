@@ -177,7 +177,7 @@ const StudentSetUpScreen = (props: StudentSetUpScreenProps) => {
                         </FormControl>
                     </View>
                     {verifying && (
-                        <ActivityIndicator size="small" color={'blue'} />
+                        <ActivityIndicator size="large" color={'blue'} />
                     )}
                     {!verifying && (
                         <Button

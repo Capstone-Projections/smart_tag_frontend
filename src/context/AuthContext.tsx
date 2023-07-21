@@ -15,6 +15,10 @@ interface AuthContextData {
     setFirstNameData: (firstName: string) => void;
     lastNameData: string;
     setLastNameData: (lastName: string) => void;
+    lecturerFirstName: string;
+    setLecturerFirstName: (lecturerFirstName: string) => void;
+    lecturerLastName: string;
+    setLecturerLastName: (lecturerLastName: string) => void;
 }
 
 export const AuthContext = createContext<AuthContextData>({
@@ -32,6 +36,10 @@ export const AuthContext = createContext<AuthContextData>({
     setFirstNameData: () => {},
     lastNameData: '',
     setLastNameData: () => {},
+    lecturerFirstName: '',
+    setLecturerFirstName: () => {},
+    lecturerLastName: '',
+    setLecturerLastName: () => {},
 });
 
 interface AuthProviderProps {
@@ -46,6 +54,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [firstNameData, setFirstNameData] = useState('');
     const [getStarted, setGetStarted] = useState('');
     const [lastNameData, setLastNameData] = useState('');
+    const [lecturerFirstName, setLecturerFirstName] = useState('');
+    const [lecturerLastName, setLecturerLastName] = useState('');
 
     const handleSetUserType = (userType: string) => {
         setUserType(userType);
@@ -75,6 +85,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setLastNameData(lastNameData);
     };
 
+    const handleSetLecturerFirstName = (lecturerFirstName: string) => {
+        setLecturerFirstName(lecturerFirstName);
+    };
+
+    const handleSetLecturerLastName = (lecturerLastName: string) => {
+        setLecturerLastName(lecturerLastName);
+    };
+
     const authContextData: AuthContextData = {
         userType,
         setUserType: handleSetUserType,
@@ -91,6 +109,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setFirstNameData: handleSetFirstNameData,
         lastNameData,
         setLastNameData: handleSetLastNameData,
+        lecturerFirstName,
+        setLecturerFirstName: handleSetLecturerFirstName,
+        lecturerLastName,
+        setLecturerLastName: handleSetLecturerLastName,
     };
 
     return (
