@@ -5,7 +5,13 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { View, ScrollView, RefreshControl, Text } from 'react-native';
+import {
+    View,
+    ScrollView,
+    RefreshControl,
+    Text,
+    ActivityIndicator,
+} from 'react-native';
 import { AuthContext } from '../../../context/AuthContext';
 import axios from 'axios';
 import { styles } from './styles';
@@ -50,6 +56,39 @@ const CoursesList = () => {
             console.error('Failed to fetch courses:', error);
         }
     };
+
+    if (isLoading && courses.length === 0) {
+        // Show loading indicator while fetching courses
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="blue" />
+            </View>
+        );
+    }
+
+    if (courses.length === 0) {
+        // Show a message when there are no courses
+        return (
+            <View style={styles.emptycontainer}>
+                <ScrollView
+                    contentContainerStyle={styles.scrollViewContent}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isLoading}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
+                    <View style={styles.noCoursesContainer}>
+                        <Text style={styles.noCoursesText}>
+                            No courses available
+                        </Text>
+                    </View>
+                    <BottomSheetComponent navigation={navigation} />
+                </ScrollView>
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
