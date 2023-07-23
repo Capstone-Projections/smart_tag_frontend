@@ -94,7 +94,6 @@ function NFCScreen() {
         }
     }
 
-
     return (
         <View style={styles.wrapper}>
             <TouchableOpacity onPress={readNdef}>
@@ -137,6 +136,5 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
 });
-
 
 export default NFCScreen;
