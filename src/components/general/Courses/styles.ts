@@ -78,4 +78,24 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
+    scrollViewContent: {
+        flexGrow: 1,
+        // justifyContent: 'center', // Centers content vertically
+    },
+    noCoursesContainer: {
+        flex: 1,
+        justifyContent: 'center', // Centers content vertically
+        alignItems: 'center', // Centers content horizontally
+        marginTop: 20,
+    },
+    noCoursesText: {
+        fontSize: 18,
+        fontFamily: 'Poppins-Bold',
+        textAlign: 'center',
+    },
+
+    emptycontainer: {
+        flex: 1,
+        backgroundColor: whiteColor,
+    },
 });

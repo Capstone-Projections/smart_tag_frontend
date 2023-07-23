@@ -54,7 +54,11 @@ const GetStarted = (props: GetStartedProps) => {
 
             console.log(response.status);
 
-            setEmail(email.trim().toLowerCase());
+            if (response.status === 200) {
+                setEmail(email.trim().toLowerCase());
+                props.navigation.navigate('OTP'); //
+            } else {
+            }
         } catch (error) {
             console.log(error);
             if (error) {

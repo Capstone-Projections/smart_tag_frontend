@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import React, { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -14,23 +14,106 @@ import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper
 import { LecturerSetUpScreenProps } from './props';
 import { styles } from './styles';
 import { AuthContext } from '../../../context/AuthContext';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
+import axios from 'axios';
+import { z } from 'zod';
+
+const validationSchema = z.object({
+    firstName: z.string().max(100),
+    middleName: z.string().max(100),
+    lastName: z.string().max(100),
+    department: z.string().max(100),
+
+    staffNumber: z.string().refine(value => value.length === 8, {
+        message: 'Reference Number must be exactly 8 characters.',
+    }),
+});
 
 const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
-    const { userType, email, userID, authorizationKey } =
-        useContext(AuthContext);
+    const {
+        userType,
+        email,
+        userID,
+        authorizationKey,
+        setLecturerFirstName,
+        setLecturerLastName,
+    } = useContext(AuthContext);
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [indexNumber, setIndexNUmber] = useState('');
-    const [referenceNumber, setReferenceNUmber] = useState('');
+    const [department, setDepartment] = useState('');
+    const [staffNumber, setStaffNUmber] = useState('');
+    const [verifying, setVerifying] = useState(false);
+
+    const { messageModalState, showMessageModal, hideModal } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
 
     //TODO tie this to the backend
     const handleSetUpPress = async () => {
-        props.navigation.navigate('Drawer');
-    };
+        try {
+            validationSchema.parse({
+                firstName,
+                middleName,
+                lastName,
+                department,
+                staffNumber,
+            });
 
-    const [service, setService] = React.useState('');
-    const [service2, setService2] = React.useState('');
+            if (
+                firstName.trim() === '' ||
+                middleName.trim() === '' ||
+                lastName.trim() === '' ||
+                department.trim() === '' ||
+                staffNumber.trim() === ''
+            ) {
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Error',
+                    'Please fill in all fields correctly.',
+                    handleProceed
+                );
+            }
+            setVerifying(true);
+            const headers = { Authorization: `${authorizationKey}` };
+
+            const response = await axios.put(
+                `https://smart-tag.onrender.com/users/${userID}`,
+                {
+                    email: email,
+                    firstName: firstName,
+                    middleName: middleName,
+                    lastName: lastName,
+                    department: department,
+                    referenceNumber: staffNumber,
+                    role: userType.toUpperCase(),
+                    isAdmin: true,
+                },
+                { headers }
+            );
+
+            const { data } = response;
+            setLecturerFirstName(data.firstName);
+            setLecturerLastName(data.lastName);
+
+            props.navigation.navigate('Drawer');
+        } catch (error: any) {
+            showMessageModal(
+                MessageTypes.FAIL,
+                'Error',
+                'Please fill in all fields correctly',
+                handleProceed
+            );
+            // console.error(error);
+        } finally {
+            setVerifying(false);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -44,11 +127,46 @@ const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
 
                     <VStack space={4} mt="5">
                         <View>
-                            <Text style={styles.text}>Name</Text>
+                            <Text style={styles.text}>First Name</Text>
                             <FormControl style={styles.formControl}>
                                 <Input
                                     style={styles.input}
                                     _focus={{ borderColor: 'black' }}
+                                    value={firstName}
+                                    onChangeText={setFirstName}
+                                />
+                            </FormControl>
+                        </View>
+                        <View>
+                            <Text style={styles.text}>Middle Name</Text>
+                            <FormControl style={styles.formControl}>
+                                <Input
+                                    style={styles.input}
+                                    _focus={{ borderColor: 'black' }}
+                                    value={middleName}
+                                    onChangeText={setMiddleName}
+                                />
+                            </FormControl>
+                        </View>
+                        <View>
+                            <Text style={styles.text}>Last Name</Text>
+                            <FormControl style={styles.formControl}>
+                                <Input
+                                    style={styles.input}
+                                    _focus={{ borderColor: 'black' }}
+                                    value={lastName}
+                                    onChangeText={setLastName}
+                                />
+                            </FormControl>
+                        </View>
+                        <View>
+                            <Text style={styles.text}>Department</Text>
+                            <FormControl style={styles.formControl}>
+                                <Input
+                                    style={styles.input}
+                                    _focus={{ borderColor: 'black' }}
+                                    value={department}
+                                    onChangeText={setDepartment}
                                 />
                             </FormControl>
                         </View>
@@ -59,61 +177,35 @@ const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
                                     style={styles.input}
                                     _focus={{ borderColor: 'black' }}
                                     keyboardType="numeric"
+                                    value={staffNumber}
+                                    onChangeText={setStaffNUmber}
                                 />
                             </FormControl>
                         </View>
-                        <Box maxW="300">
-                            <Text style={styles.text}>Teaching Courses</Text>
-                            <Select
-                                selectedValue={service}
-                                minWidth="200"
-                                accessibilityLabel="Year"
-                                placeholder="Select Option"
-                                _selectedItem={{
-                                    bg: 'teal.600',
-                                    endIcon: <CheckIcon size="5" />,
-                                }}
-                                mt={1}
-                                onValueChange={itemValue =>
-                                    setService(itemValue)
-                                }
+
+                        {verifying && (
+                            <ActivityIndicator size="large" color={'blue'} />
+                        )}
+                        {!verifying && (
+                            <Button
+                                colorScheme="darkBlue"
+                                style={styles.button}
+                                onPress={handleSetUpPress}
                             >
-                                <Select.Item label="1st" value="1st" />
-                                <Select.Item label="2nd" value="2nd" />
-                                <Select.Item label="3rd" value="3rd" />
-                                <Select.Item label="4th" value="4th" />
-                                <Select.Item label="5th" value="5th" />
-                                <Select.Item label="6th" value="6th" />
-                            </Select>
-                        </Box>
-                        <Box maxW="300">
-                            <Text style={styles.text}>Course Code</Text>
-                            <Select
-                                selectedValue={service2}
-                                minWidth="200"
-                                accessibilityLabel="Course Code"
-                                placeholder="Select Option"
-                                _selectedItem={{
-                                    bg: 'teal.600',
-                                    endIcon: <CheckIcon size="5" />,
-                                }}
-                                mt={1}
-                                onValueChange={itemValue =>
-                                    setService2(itemValue)
-                                }
-                            >
-                                <Select.Item label="COE 491" value="COE 491" />
-                                <Select.Item label="COE 490" value="COE 456" />
-                            </Select>
-                        </Box>
-                        <Button
-                            style={styles.button}
-                            colorScheme="darkBlue"
-                            onPress={handleSetUpPress}
-                        >
-                            Continue
-                        </Button>
+                                Continue
+                            </Button>
+                        )}
                     </VStack>
+                    <MessageModal
+                        messageModalVisible={
+                            messageModalState.messageModalVisible
+                        }
+                        messageType={messageModalState.messageType}
+                        headerText={messageModalState.headerText}
+                        messageText={messageModalState.messageText}
+                        onDismiss={hideModal}
+                        onProceed={messageModalState.onProceed}
+                    />
                 </SafeAreaView>
             </KeyboardAvoidingWrapper>
         </View>

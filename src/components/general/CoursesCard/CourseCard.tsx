@@ -60,7 +60,7 @@ export const CourseCard: React.FC<CardProps> = ({
                     <Paragraph style={styles.paragraph}>{courseCode}</Paragraph>
                 </Card.Content>
                 <View style={styles.popoverContainer}>
-                    <CustomPopOver />
+                    <CustomPopOver idcourse={idcourse} />
                 </View>
             </Card>
         </View>

@@ -11,7 +11,11 @@ import PopOver from './PopOver';
 
 const Divider = () => <View style={styles.divider} />;
 
-const CustomPopOver = () => {
+interface CustomPopOverProps {
+    idcourse: string;
+}
+
+const CustomPopOver = ({ idcourse }: CustomPopOverProps) => {
     return (
         <Menu>
             <MenuTrigger
@@ -21,7 +25,7 @@ const CustomPopOver = () => {
                     },
                 }}
             >
-                <Entypo name="dots-three-vertical" size={24} color="white" />
+                <Entypo name="dots-three-vertical" size={26} color="white" />
             </MenuTrigger>
             <MenuOptions
                 customStyles={{
@@ -30,7 +34,12 @@ const CustomPopOver = () => {
                     },
                 }}
             >
-                <PopOver text="Delete" value="Delete" iconName="emoji-sad" />
+                <PopOver
+                    text="Delete"
+                    value="Delete"
+                    iconName="emoji-sad"
+                    idcourse={idcourse}
+                />
             </MenuOptions>
         </Menu>
     );
