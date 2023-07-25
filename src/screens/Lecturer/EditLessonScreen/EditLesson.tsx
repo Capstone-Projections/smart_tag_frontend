@@ -18,6 +18,9 @@ import { Button } from 'native-base';
 import axios from 'axios';
 import { AuthContext } from '../../../context/AuthContext';
 import { useQuery } from 'react-query';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
 
 interface CustomDropdownProps {
     items: string[];
@@ -163,6 +166,13 @@ const EditLesson = () => {
     const [verifying, setVerifying] = useState(false);
     const { userID, authorizationKey } = useContext(AuthContext);
 
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
+
     const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
     const toggleStartTimePicker = () => {
@@ -267,7 +277,7 @@ const EditLesson = () => {
                 : '';
 
             const response = await axios.post(
-                'https://smart-tag.onrender.com/courses',
+                'https://smart-tag.onrender.com/lessons',
                 {
                     day: selectedDay,
                     startTime: startTimeFormatted,
@@ -276,6 +286,13 @@ const EditLesson = () => {
                     idlectureRoom: selectedRoomItem.idlectureRoom,
                 },
                 { headers }
+            );
+
+            showMessageModal(
+                MessageTypes.SUCCESS,
+                'Success',
+                'Lesson added successfully',
+                handleProceed
             );
 
             // Handle success response
@@ -413,6 +430,14 @@ const EditLesson = () => {
                         <Text style={styles.buttonText}>Cancel</Text>
                     </Button>
                 </View>
+                <MessageModal
+                    messageModalVisible={messageModalState.messageModalVisible}
+                    messageType={messageModalState.messageType}
+                    headerText={messageModalState.headerText}
+                    messageText={messageModalState.messageText}
+                    onDismiss={hideModal}
+                    onProceed={messageModalState.onProceed}
+                />
             </View>
         </SafeAreaView>
     );

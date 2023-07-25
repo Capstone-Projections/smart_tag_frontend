@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'gray',
         borderRadius: 4,
-        width: '60%',
+        width: '100%',
         // textAlign: 'center',
     },
     text: {
