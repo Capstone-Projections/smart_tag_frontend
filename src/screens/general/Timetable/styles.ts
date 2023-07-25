@@ -24,10 +24,10 @@ export const style = StyleSheet.create({
     },
     subTextContainer: {
         flexDirection: 'row',
-        paddingTop: 10,
-        // justifyContent: 'space-between',
-        // paddingRight: 6,
-        // paddingLeft: 5,
+        // paddingTop: 10,
+        justifyContent: 'space-between',
+        paddingRight: 10,
+        paddingLeft: 5,
     },
 
     direction: {

@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'gray',
         borderRadius: 4,
-        width: '30%',
+        width: '60%',
         // textAlign: 'center',
     },
     text: {
@@ -71,5 +71,16 @@ export const styles = StyleSheet.create({
     buttonText: {
         color: appBlue,
         fontSize: 18,
+    },
+
+    timePickerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+
+    timePicker: {
+        flex: 1,
+        marginHorizontal: 5,
     },
 });
