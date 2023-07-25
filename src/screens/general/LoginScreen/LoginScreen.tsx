@@ -70,7 +70,7 @@ const LoginScreen = (props: LoginProps) => {
 
             if (response.status === 200) {
                 setEmail(email.trim().toLowerCase());
-                props.navigation.navigate('OTP'); //
+                props.navigation.navigate('OTPScreen'); //
             } else {
             }
         } catch (error) {
@@ -117,7 +117,7 @@ const LoginScreen = (props: LoginProps) => {
                         <Input
                             style={styles.input}
                             _focus={{ borderColor: 'black' }}
-                            placeholder="EMAIL"
+                            placeholder="Email"
                             onChangeText={handleEmailChange}
                             value={email}
                         />

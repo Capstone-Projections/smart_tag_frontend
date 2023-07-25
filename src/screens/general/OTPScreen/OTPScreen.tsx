@@ -1,19 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { BottomHalf, StyledContainer, TopHalf, style } from './styles';
-import { StyleSheet, Text, Image, ActivityIndicator, View } from 'react-native';
-import CodeInputField from '../../../components/general/InputField/CodeInputField';
+import {
+    ActivityIndicator,
+    Image,
+    Text,
+    View,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { appBlue, whiteColor } from '../../../resources/colors/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button, Link } from 'native-base';
-import axios from 'axios';
-import { AuthContext } from '../../../context/AuthContext';
+import { styles } from './style';
+import CodeInputField from '../../../components/general/inputfields2/CodeInputField';
 import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
 import { OTPVerificationProps } from './props';
-import MessageModal from '../../../components/general/modals/MessageModals';
-import { MessageTypes } from '../../../components/general/modals/types';
+import { AuthContext } from '../../../context/AuthContext';
 import { useMessageModal } from '../../../hooks/ModalHook';
+import { MessageTypes } from '../../../components/general/modals/types';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { Button, Link } from 'native-base';
+import axios from 'axios';
 import * as Animatable from 'react-native-animatable';
 
-const OTPVerificationScreen = (props: OTPVerificationProps) => {
+const OTPScreen = (props: OTPVerificationProps) => {
     const {
         userType,
         email,
@@ -130,72 +139,71 @@ const OTPVerificationScreen = (props: OTPVerificationProps) => {
     };
 
     return (
-        <KeyboardAvoidingWrapper>
-            <SafeAreaView>
-                <StyledContainer style={{ alignItems: 'center' }}>
-                    <TopHalf>
-                        <Image
-                            source={require('../../../../assets/images/otpImage.jpg')}
-                            style={style.image}
-                        />
-                    </TopHalf>
-                    <BottomHalf>
-                        <Text style={style.text}>Account Verification</Text>
-                        <Text style={style.infoText}>
-                            Enter the 4-digit code sent to your email
-                        </Text>
-
-                        <CodeInputField
-                            setPinReady={setPinReady}
-                            code={code}
-                            setCode={setCode}
-                            maxlength={MAX_CODE_LENGTH}
-                        />
-
-                        {!verifying && pinReady && (
-                            <Button
-                                colorScheme="darkBlue"
-                                style={style.button}
-                                onPress={handleOTPPress}
-                            >
-                                Submit
-                            </Button>
-                        )}
-
-                        {!verifying && !pinReady && (
-                            <Button size="sm" isDisabled style={style.button}>
-                                Submit
-                            </Button>
-                        )}
-
-                        {verifying && (
-                            <ActivityIndicator size="large" color={'blue'} />
-                        )}
-                        <View style={style.textContainer}>
-                            <Text>Didn't receive the email?</Text>
-                            <Link
-                                isExternal
-                                _text={{
-                                    color: 'blue.400',
-                                }}
-                                onPress={handleLinkPress}
-                            >
-                                Resend
-                            </Link>
-                        </View>
-                    </BottomHalf>
-                </StyledContainer>
-                <MessageModal
-                    messageModalVisible={messageModalState.messageModalVisible}
-                    messageType={messageModalState.messageType}
-                    headerText={messageModalState.headerText}
-                    messageText={messageModalState.messageText}
-                    onDismiss={hideModal}
-                    onProceed={messageModalState.onProceed}
+        <SafeAreaView style={styles.container}>
+            <Animatable.View animation="slideInDown" style={styles.header}>
+                <Image
+                    source={require('../../../../assets/images/Enterotp.png')}
+                    style={styles.image}
+                    resizeMode="contain"
                 />
-            </SafeAreaView>
-        </KeyboardAvoidingWrapper>
+            </Animatable.View>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <Animatable.View animation="slideInUp" style={styles.footer}>
+                    <Text style={styles.text}>Account Verification</Text>
+                    <Text style={styles.infoText}>
+                        Enter the 4-digit code sent to your email
+                    </Text>
+
+                    <CodeInputField
+                        setPinReady={setPinReady}
+                        code={code}
+                        setCode={setCode}
+                        maxlength={MAX_CODE_LENGTH}
+                    />
+
+                    {!verifying && pinReady && (
+                        <Button
+                            colorScheme="darkBlue"
+                            style={styles.button}
+                            onPress={handleOTPPress}
+                        >
+                            Submit
+                        </Button>
+                    )}
+
+                    {!verifying && !pinReady && (
+                        <Button size="sm" isDisabled style={styles.button}>
+                            Submit
+                        </Button>
+                    )}
+
+                    {verifying && (
+                        <ActivityIndicator size="large" color={'blue'} />
+                    )}
+                    <View style={styles.textContainer}>
+                        <Text>Didn't receive the email?</Text>
+                        <Link
+                            isExternal
+                            _text={{
+                                color: 'blue.400',
+                            }}
+                            onPress={handleLinkPress}
+                        >
+                            Resend
+                        </Link>
+                    </View>
+                </Animatable.View>
+            </ScrollView>
+            <MessageModal
+                messageModalVisible={messageModalState.messageModalVisible}
+                messageType={messageModalState.messageType}
+                headerText={messageModalState.headerText}
+                messageText={messageModalState.messageText}
+                onDismiss={hideModal}
+                onProceed={messageModalState.onProceed}
+            />
+        </SafeAreaView>
     );
 };
 
-export default OTPVerificationScreen;
+export default OTPScreen;

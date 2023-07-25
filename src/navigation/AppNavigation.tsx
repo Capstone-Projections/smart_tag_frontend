@@ -7,10 +7,8 @@ import NFCScreen from '../screens/studentScreens/NFCScreen/NFCScreen';
 import LecturerSetUpScreen from '../screens/Lecturer/SetUp/LecturerSetUpScreen';
 import LecturerBottomTabBar from './LecturerBottomTab';
 import GetStarted from '../screens/general/GetStarted/GetStarted';
-import LaunchScreen from '../screens/general/LaunchScreen/LaunchScreen';
 import DrawerNavigation from './DrawerNavigation';
 import AddCourse from '../screens/studentScreens/AddCourse/AddCourseScreen';
-import Login from '../screens/general/Login/Login';
 import StudentSetUpScreen from '../screens/studentScreens/StudentSetUpScreen';
 import OTPVerificationScreen from '../screens/general/OTP/OTP';
 import Timetable from '../screens/general/Timetable/TimetableScreen';
@@ -21,6 +19,9 @@ import ProfileScreen from '../screens/general/Profile/ProfileScreen';
 import QuestScreen from '../screens/Lecturer/Quest/QuestScreen';
 import CreateCourse from '../screens/Lecturer/CreateCourse/CreateCourse';
 import LoginScreen from '../screens/general/LoginScreen/LoginScreen';
+import OTPScreen from '../screens/general/OTPScreen/OTPScreen';
+import Welcome from '../screens/general/WelcomeScreen/Welcome';
+import EditLesson from '../screens/Lecturer/EditLessonScreen/EditLesson';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -30,9 +31,9 @@ export const AppNavigator = () => {
         <NavigationContainer>
             <Navigator
                 screenOptions={{ headerShown: false }}
-                initialRouteName="Launch"
+                initialRouteName="Welcome"
             >
-                <Screen name="Launch" component={LaunchScreen} />
+                <Screen name="Welcome" component={Welcome} />
                 <Screen name="GetStarted" component={GetStarted} />
                 <Screen name="SetUp" component={StudentSetUpScreen} />
                 <Screen name="TabBar" component={TabBar} />
@@ -45,9 +46,7 @@ export const AppNavigator = () => {
                     component={LecturerBottomTabBar}
                 />
                 <Screen name="Drawer" component={DrawerNavigation} />
-                <Screen name="Login" component={Login} />
                 <Screen name="AddCourse" component={AddCourse} />
-
                 <Screen name="OTP" component={OTPVerificationScreen} />
                 <Screen name="Time" component={Timetable} />
                 <Screen name="View" component={ViewAttendance} />
@@ -57,6 +56,8 @@ export const AppNavigator = () => {
                 <Screen name="Quest" component={QuestScreen} />
                 <Screen name="CreateCourse" component={CreateCourse} />
                 <Screen name="LoginScreen" component={LoginScreen} />
+                <Screen name="OTPScreen" component={OTPScreen} />
+                <Screen name="EditLesson" component={EditLesson} />
             </Navigator>
         </NavigationContainer>
     );
