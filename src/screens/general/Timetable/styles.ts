@@ -17,10 +17,17 @@ export const style = StyleSheet.create({
         fontSize: 20,
     },
     subText: {
-        textAlign: 'center',
+        textAlign: 'left',
         fontFamily: 'Poppins',
         fontWeight: '400',
-        fontSize: 16,
+        fontSize: 17,
+    },
+    subTextContainer: {
+        flexDirection: 'row',
+        paddingTop: 10,
+        // justifyContent: 'space-between',
+        // paddingRight: 6,
+        // paddingLeft: 5,
     },
 
     direction: {
@@ -58,7 +65,7 @@ export const style = StyleSheet.create({
     },
     emptyContainer: {
         paddingTop: 150,
-        paddingBottom: 70,
+        paddingBottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
     },

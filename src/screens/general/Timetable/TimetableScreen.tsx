@@ -5,6 +5,7 @@ import {
     Image,
     RefreshControl,
     ScrollView,
+    TouchableOpacity,
 } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,9 +22,10 @@ import { getLectureRoomUidByDayAndTime } from '../../../services/getLectureRoomU
 import { getLessonIdByDayAndTime } from '../../../services/getLessonIdByDay';
 import { LessonContext } from '../../../context/LessonContext';
 import { useQuery } from 'react-query';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Timetable = (props: TimetableProps) => {
-    const { authorizationKey } = useContext(AuthContext);
+    const { authorizationKey, userType } = useContext(AuthContext);
     const { IDcourse, courseTitle } = useContext(CourseContext);
     const { setDays } = useContext(TimetableDaysContext);
     const { setLessonRoomId } = useContext(LessonRoomContext);
@@ -82,6 +84,10 @@ const Timetable = (props: TimetableProps) => {
             });
     }, []);
 
+    const handlePress = () => {
+        props.navigation.navigate('EditLesson');
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
             <View>
@@ -97,6 +103,7 @@ const Timetable = (props: TimetableProps) => {
                     }
                 >
                     <View style={style.line}></View>
+
                     {isFetchingLessons ? (
                         <View>
                             <ActivityIndicator size="large" color="#0000ff" />
@@ -129,6 +136,19 @@ const Timetable = (props: TimetableProps) => {
                                     </View>
                                 ))}
                             </View>
+                        </View>
+                    )}
+                    {userType === 'lecturer' && ( // Show the following component only for lecturers
+                        <View style={style.subTextContainer}>
+                            <Text style={style.subText}>
+                                Tap on this button to edit lesson
+                            </Text>
+                            <TouchableOpacity onPress={handlePress}>
+                                <MaterialCommunityIcons
+                                    name="plus-circle"
+                                    size={26}
+                                />
+                            </TouchableOpacity>
                         </View>
                     )}
                 </ScrollView>

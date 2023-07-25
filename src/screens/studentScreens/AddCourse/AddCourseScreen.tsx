@@ -84,7 +84,6 @@ const AddCourse = () => {
     const { userID, authorizationKey } = useContext(AuthContext);
 
     const [verifying, setVerifying] = useState(false);
-    const [idcourse, setIDcourse] = useState('');
 
     const headers = { Authorization: `${authorizationKey}` };
 

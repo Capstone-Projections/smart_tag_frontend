@@ -20,28 +20,6 @@ export default function App() {
     const [appReady, setAppReady] = useState(false);
     const [storedCredentials, setStoredCredntials] = useState('');
 
-    // const checkLoginCredentials = () => {
-    //     AsyncStorage.getItem('loginCredentials')
-    //         .then(results => {
-    //             if (results !== null) {
-    //                 setStoredCredntials(JSON.parse(results));
-    //             } else {
-    //                 setStoredCredntials('');
-    //             }
-    //         })
-    //         .catch();
-    // };
-
-    // if (!appReady) {
-    //     return (
-    //         <AppLoading
-    //             startAsync={checkLoginCredentials}
-    //             onFinish={() => setAppReady(true)}
-    //             onError={console.warn}
-    //         />
-    //     );
-    // }
-
     useEffect(() => {
         async function prepare() {
             await SplashScreen.preventAutoHideAsync();
