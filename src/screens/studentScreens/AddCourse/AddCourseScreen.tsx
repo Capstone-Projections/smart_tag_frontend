@@ -35,7 +35,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
             <View style={styles.dropdownBox}>
                 <RNPickerSelect
                     placeholder={{
-                        label: 'Select an item',
+                        label: 'Select a course',
                         value: null,
                     }}
                     items={items.map(item => ({
@@ -122,7 +122,7 @@ const AddCourse = () => {
     });
 
     const handleCancel = () => {
-        setSelected('Select an item');
+        setSelected('Select a course');
         // setSelected2('');
     };
 

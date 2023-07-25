@@ -104,6 +104,20 @@ const Timetable = (props: TimetableProps) => {
                 >
                     <View style={style.line}></View>
 
+                    {userType === 'lecturer' && ( // Show the following component only for lecturers
+                        <View style={style.subTextContainer}>
+                            <Text style={style.subText}>
+                                Tap on this button to edit lesson
+                            </Text>
+                            <TouchableOpacity onPress={handlePress}>
+                                <MaterialCommunityIcons
+                                    name="plus-circle"
+                                    size={26}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    )}
+
                     {isFetchingLessons ? (
                         <View>
                             <ActivityIndicator size="large" color="#0000ff" />
@@ -136,19 +150,6 @@ const Timetable = (props: TimetableProps) => {
                                     </View>
                                 ))}
                             </View>
-                        </View>
-                    )}
-                    {userType === 'lecturer' && ( // Show the following component only for lecturers
-                        <View style={style.subTextContainer}>
-                            <Text style={style.subText}>
-                                Tap on this button to edit lesson
-                            </Text>
-                            <TouchableOpacity onPress={handlePress}>
-                                <MaterialCommunityIcons
-                                    name="plus-circle"
-                                    size={26}
-                                />
-                            </TouchableOpacity>
                         </View>
                     )}
                 </ScrollView>

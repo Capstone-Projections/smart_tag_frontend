@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     ActivityIndicator,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import RNPickerSelect from 'react-native-picker-select';
@@ -18,6 +18,9 @@ import { Button } from 'native-base';
 import axios from 'axios';
 import { AuthContext } from '../../../context/AuthContext';
 import { useQuery } from 'react-query';
+import MessageModal from '../../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../../components/general/modals/types';
+import { useMessageModal } from '../../../hooks/ModalHook';
 
 interface CustomDropdownProps {
     items: string[];
@@ -28,7 +31,7 @@ interface CustomDropdownProps {
 interface DropdownItem {
     label: string;
     value: string;
-    idcourse: number;
+    idlectureRoom: number;
 }
 
 interface CustomDropdownProps2 {
@@ -46,10 +49,14 @@ const CustomDropdown2: React.FC<CustomDropdownProps2> = ({
         <View style={styles.dropdownContainer}>
             <View style={styles.dropdownBox}>
                 <RNPickerSelect
-                    placeholder={{ label: 'Select an item', value: null }}
+                    placeholder={{
+                        label: 'Select a lecture room',
+                        value: null,
+                    }}
                     items={items.map(item => ({
                         label: item.label,
                         value: item.value,
+                        idlectureRoom: item.idlectureRoom,
                     }))}
                     onValueChange={onSelect}
                     value={selectedValue}
@@ -94,7 +101,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         <View style={styles.dropdownContainer}>
             <View style={styles.dropdownBox}>
                 <RNPickerSelect
-                    placeholder={{ label: 'Select an item', value: null }}
+                    placeholder={{ label: 'Select a day', value: null }}
                     items={items.map(item => ({
                         label: item,
                         value: item,
@@ -143,6 +150,8 @@ const EditLesson = () => {
 
     const [rooms, setRooms] = useState<DropdownItem[]>([]);
 
+    const [isDropdownPressed, setIsDropdownPressed] = useState(false);
+
     const [selectedDay, setSelectedDay] = useState<string | undefined>(
         undefined
     );
@@ -156,6 +165,13 @@ const EditLesson = () => {
     );
     const [verifying, setVerifying] = useState(false);
     const { userID, authorizationKey } = useContext(AuthContext);
+
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
 
     const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
@@ -186,10 +202,10 @@ const EditLesson = () => {
     };
 
     const handleCancel = () => {
-        setSelectedDay('Select an item');
+        setSelectedDay('Select a day');
         setSelectedStartTime(initialStartTime);
         setSelectedEndTime(initialEndTime);
-        setSelectedRoom('Select an item');
+        setSelectedRoom('Select a lecture room');
     };
 
     const headers = { Authorization: `${authorizationKey}` };
@@ -204,7 +220,7 @@ const EditLesson = () => {
             const responseData = response.data.map((item: any) => ({
                 label: item.name,
                 value: item.name,
-                idcourse: item.idcourse,
+                idlectureRoom: item.idlectureRoom,
             }));
 
             // console.log(response.data);
@@ -216,10 +232,83 @@ const EditLesson = () => {
         }
     };
 
-    useQuery<DropdownItem[], Error>('listRoom', fetchRoom, {
-        enabled: !!authorizationKey,
-        onSuccess: data => setRooms(data),
-    });
+    useEffect(() => {
+        if (!isDropdownPressed) {
+            // Make the API call only when the component mounts for the first time
+            fetchRoom().then(data => setRooms(data));
+            setIsDropdownPressed(true);
+        }
+    }, [isDropdownPressed]);
+
+    const formatTime = (date: Date) => {
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+    };
+
+    const handleEditLesson = async () => {
+        if (
+            !selectedDay ||
+            !selectedStartTime ||
+            !selectedEndTime ||
+            !selectedRoom
+        ) {
+            // Handle case when not all required fields are selected
+            return;
+        }
+
+        setVerifying(true);
+        try {
+            const selectedRoomItem = rooms.find(
+                item => item.value === selectedRoom
+            );
+
+            if (!selectedRoomItem || !selectedRoomItem.idlectureRoom) {
+                // Handle the case when the selected room item or its ID is not found
+                console.error('Selected room or its ID not found.');
+                return;
+            }
+
+            const startTimeFormatted = selectedStartTime
+                ? formatTime(selectedStartTime)
+                : '';
+            const endTimeFormatted = selectedEndTime
+                ? formatTime(selectedEndTime)
+                : '';
+
+            const response = await axios.post(
+                'https://smart-tag.onrender.com/lessons',
+                {
+                    day: selectedDay,
+                    startTime: startTimeFormatted,
+                    endTime: endTimeFormatted,
+                    // room: selectedRoom,
+                    idlectureRoom: selectedRoomItem.idlectureRoom,
+                },
+                { headers }
+            );
+
+            showMessageModal(
+                MessageTypes.SUCCESS,
+                'Success',
+                'Lesson added successfully',
+                handleProceed
+            );
+
+            // Handle success response
+            console.log('Course added successfully:', response.data);
+
+            // Optionally, you can reset the form or navigate to another screen after success
+        } catch (error) {
+            console.error('Error adding course:', error);
+        } finally {
+            setVerifying(false);
+            setSelectedDay('Select a day');
+            setSelectedStartTime(initialStartTime);
+            setSelectedEndTime(initialEndTime);
+            setSelectedRoom('Select a lecture room');
+        }
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
@@ -230,7 +319,7 @@ const EditLesson = () => {
                 <View style={styles.line}></View>
                 <View>
                     <Text style={styles.text}>
-                        Selected the day of the lesson:
+                        Select the day of the lesson:
                     </Text>
                     <CustomDropdown
                         items={daysList}
@@ -246,62 +335,73 @@ const EditLesson = () => {
                         onSelect={value => setSelectedRoom(value)}
                     />
                 </View>
-                <View>
-                    <Text style={styles.text}>Start Time:</Text>
-                    <Pressable onPress={toggleStartTimePicker}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Select time"
-                            editable={false}
-                            value={
-                                selectedStartTime
-                                    ? selectedStartTime.toLocaleTimeString([], {
-                                          hour: '2-digit',
-                                          minute: '2-digit',
-                                          hour12: false,
-                                      })
-                                    : 'Select time' // Display placeholder when no time is selected
-                            }
-                        />
-                    </Pressable>
+                <View style={styles.timePickerContainer}>
+                    {/* Start Time */}
+                    <View style={styles.timePicker}>
+                        <Text style={styles.text}>Start Time:</Text>
+                        <Pressable onPress={toggleStartTimePicker}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Select time"
+                                editable={false}
+                                value={
+                                    selectedStartTime
+                                        ? selectedStartTime.toLocaleTimeString(
+                                              [],
+                                              {
+                                                  hour: '2-digit',
+                                                  minute: '2-digit',
+                                                  hour12: false,
+                                              }
+                                          )
+                                        : 'Select time'
+                                }
+                            />
+                        </Pressable>
+                        {showStartTimePicker && (
+                            <DateTimePicker
+                                mode="time"
+                                display="spinner"
+                                value={selectedStartTime || new Date()}
+                                onChange={onStartTimeChange}
+                                style={styles.datePicker}
+                            />
+                        )}
+                    </View>
+
+                    {/* End Time */}
+                    <View style={styles.timePicker}>
+                        <Text style={styles.text}>End Time:</Text>
+                        <Pressable onPress={toggleEndTimePicker}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Select time"
+                                editable={false}
+                                value={
+                                    selectedEndTime
+                                        ? selectedEndTime.toLocaleTimeString(
+                                              [],
+                                              {
+                                                  hour: '2-digit',
+                                                  minute: '2-digit',
+                                                  hour12: false,
+                                              }
+                                          )
+                                        : 'Select time'
+                                }
+                            />
+                        </Pressable>
+                        {showEndTimePicker && (
+                            <DateTimePicker
+                                mode="time"
+                                display="spinner"
+                                value={selectedEndTime || new Date()}
+                                onChange={onEndTimeChange}
+                                style={styles.datePicker}
+                            />
+                        )}
+                    </View>
                 </View>
-                {showStartTimePicker && (
-                    <DateTimePicker
-                        mode="time"
-                        display="spinner"
-                        value={selectedStartTime || new Date()}
-                        onChange={onStartTimeChange}
-                        style={styles.datePicker}
-                    />
-                )}
-                <View>
-                    <Text style={styles.text}>End Time:</Text>
-                    <Pressable onPress={toggleEndTimePicker}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Select time"
-                            editable={false}
-                            value={
-                                selectedEndTime
-                                    ? selectedEndTime.toLocaleTimeString([], {
-                                          hour: '2-digit',
-                                          minute: '2-digit',
-                                          hour12: false,
-                                      })
-                                    : 'Select time' // Display placeholder when no time is selected
-                            }
-                        />
-                    </Pressable>
-                </View>
-                {showEndTimePicker && (
-                    <DateTimePicker
-                        mode="time"
-                        display="spinner"
-                        value={selectedEndTime || new Date()}
-                        onChange={onEndTimeChange}
-                        style={styles.datePicker}
-                    />
-                )}
 
                 <View style={styles.buttonRow}>
                     {verifying && (
@@ -311,10 +411,10 @@ const EditLesson = () => {
                         <Button
                             colorScheme="darkBlue"
                             style={styles.button}
-                            // onPress={handleAddCourse}
+                            onPress={handleEditLesson}
                         >
                             <Text style={{ color: 'white', fontSize: 18 }}>
-                                Add
+                                Edit
                             </Text>
                         </Button>
                     )}
@@ -330,6 +430,14 @@ const EditLesson = () => {
                         <Text style={styles.buttonText}>Cancel</Text>
                     </Button>
                 </View>
+                <MessageModal
+                    messageModalVisible={messageModalState.messageModalVisible}
+                    messageType={messageModalState.messageType}
+                    headerText={messageModalState.headerText}
+                    messageText={messageModalState.messageText}
+                    onDismiss={hideModal}
+                    onProceed={messageModalState.onProceed}
+                />
             </View>
         </SafeAreaView>
     );
