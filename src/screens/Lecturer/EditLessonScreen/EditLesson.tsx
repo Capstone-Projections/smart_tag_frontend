@@ -12,6 +12,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import RNPickerSelect from 'react-native-picker-select';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import { styles } from './style';
 import { Button } from 'native-base';
@@ -21,6 +22,7 @@ import { useQuery } from 'react-query';
 import MessageModal from '../../../components/general/modals/MessageModals';
 import { MessageTypes } from '../../../components/general/modals/types';
 import { useMessageModal } from '../../../hooks/ModalHook';
+import { CourseContext } from '../../../context/CourseContext';
 
 interface CustomDropdownProps {
     items: string[];
@@ -165,6 +167,8 @@ const EditLesson = () => {
     );
     const [verifying, setVerifying] = useState(false);
     const { userID, authorizationKey } = useContext(AuthContext);
+    const { IDcourse } = useContext(CourseContext);
+    const [idlesson, setIDlesson] = useState('');
 
     const { messageModalState, showMessageModal, hideModal, setIsLoading } =
         useMessageModal();
@@ -246,7 +250,7 @@ const EditLesson = () => {
         return `${hours}:${minutes}`;
     };
 
-    const handleEditLesson = async () => {
+    const handleAddLesson = async () => {
         if (
             !selectedDay ||
             !selectedStartTime ||
@@ -282,7 +286,6 @@ const EditLesson = () => {
                     day: selectedDay,
                     startTime: startTimeFormatted,
                     endTime: endTimeFormatted,
-                    // room: selectedRoom,
                     idlectureRoom: selectedRoomItem.idlectureRoom,
                 },
                 { headers }
@@ -297,6 +300,12 @@ const EditLesson = () => {
 
             // Handle success response
             console.log('Course added successfully:', response.data);
+            console.log(response.data.idlesson);
+            setIDlesson(response.data.idlesson);
+            console.log(idlesson);
+
+            // Link the lesson to the course
+            // await linkLesson();
 
             // Optionally, you can reset the form or navigate to another screen after success
         } catch (error) {
@@ -307,6 +316,21 @@ const EditLesson = () => {
             setSelectedStartTime(initialStartTime);
             setSelectedEndTime(initialEndTime);
             setSelectedRoom('Select a lecture room');
+        }
+    };
+
+    const linkLesson = async () => {
+        try {
+            const headers = { Authorization: `${authorizationKey}` };
+            const response = await axios.get(
+                `https://smart-tag.onrender.com/lesson/course/${idlesson}/${IDcourse}`,
+                { headers }
+            );
+            return response.data;
+        } catch (error) {
+            console.error('Error linking lesson and course:', error);
+            // Handle the error as needed, such as showing an error message to the user.
+            throw error; // Optionally, you can re-throw the error to propagate it to the caller.
         }
     };
 
@@ -411,10 +435,10 @@ const EditLesson = () => {
                         <Button
                             colorScheme="darkBlue"
                             style={styles.button}
-                            onPress={handleEditLesson}
+                            onPress={handleAddLesson}
                         >
                             <Text style={{ color: 'white', fontSize: 18 }}>
-                                Edit
+                                Add
                             </Text>
                         </Button>
                     )}

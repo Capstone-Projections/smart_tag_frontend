@@ -8,6 +8,7 @@ import PeopleScreen from '../screens/Lecturer/People/PeopleScreen';
 import Timetable from '../screens/general/Timetable/TimetableScreen';
 import QuestScreen from '../screens/Lecturer/Quest/QuestScreen';
 import { LessonProvider } from '../context/LessonContext';
+import Analysis from '../screens/Lecturer/Analysis/Analysis';
 
 const Tab = createBottomTabNavigator();
 
@@ -94,6 +95,22 @@ export default function LecturerBottomTabBar() {
                             return (
                                 <Icon
                                     name="account-question"
+                                    size={size}
+                                    color={color}
+                                />
+                            );
+                        },
+                    }}
+                />
+                <Tab.Screen
+                    name="Analysis"
+                    component={Analysis}
+                    options={{
+                        tabBarLabel: 'Analysis',
+                        tabBarIcon: ({ color, size }) => {
+                            return (
+                                <Icon
+                                    name="chart-bar"
                                     size={size}
                                     color={color}
                                 />
