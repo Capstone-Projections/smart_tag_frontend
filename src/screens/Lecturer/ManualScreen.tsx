@@ -24,19 +24,26 @@ const ManualScreen = () => {
                 </View>
                 <View style={styles.line}></View>
                 <View style={styles.container}>
+                    <View style={{ paddingTop: 10, paddingBottom: 15 }}>
+                        <Text style={styles.subText}>
+                            Enter the student's details below to record their
+                            attendance.
+                        </Text>
+                    </View>
                     <View>
-                        <Text style={styles.text}>Name</Text>
+                        <Text style={styles.text}>Student's Name:</Text>
                         <FormControl style={styles.formControl}>
                             <Input
                                 style={styles.input}
                                 _focus={{ borderColor: 'black' }}
                                 value={name}
                                 onChangeText={setName}
+                                placeholder="Enter Name"
                             />
                         </FormControl>
                     </View>
                     <View>
-                        <Text style={styles.text}>Index Number</Text>
+                        <Text style={styles.text}>Index Number:</Text>
                         <FormControl style={styles.formControl}>
                             <Input
                                 style={styles.input}
@@ -44,13 +51,14 @@ const ManualScreen = () => {
                                 keyboardType="numeric"
                                 value={indexNumber}
                                 onChangeText={setIndexNumber}
+                                placeholder="Enter Index Number"
                             />
                         </FormControl>
                     </View>
                     <View style={styles.buttonRow}>
                         <Button colorScheme="darkBlue" style={styles.button}>
                             <Text style={{ color: 'white', fontSize: 18 }}>
-                                Add
+                                Add Student
                             </Text>
                         </Button>
 
@@ -73,13 +81,19 @@ const ManualScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
+        // alignItems: 'center',
     },
     headerText: {
         fontFamily: 'Poppins',
         fontSize: 20,
         fontWeight: '600',
         textAlign: 'center',
+    },
+    subText: {
+        fontFamily: 'Poppins',
+        fontSize: 16,
+        textAlign: 'center',
+        marginVertical: 15,
     },
     line: {
         borderBottomWidth: 1,
@@ -88,7 +102,7 @@ const styles = StyleSheet.create({
     },
     formControl: {
         borderColor: 'black',
-        width: 300,
+        width: '100%',
     },
     input: {
         height: 50,
@@ -99,12 +113,14 @@ const styles = StyleSheet.create({
     },
     text: {
         fontFamily: 'Poppins',
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: '400',
     },
     buttonRow: {
         paddingTop: 20,
         flexDirection: 'row',
+        alignContent: 'center',
+        justifyContent: 'center',
     },
     button: {
         width: 140,

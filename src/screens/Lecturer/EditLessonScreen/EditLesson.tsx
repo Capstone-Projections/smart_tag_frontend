@@ -281,7 +281,7 @@ const EditLesson = () => {
                 : '';
 
             const response = await axios.post(
-                'https://smart-tag.onrender.com/lessons',
+                `https://smart-tag.onrender.com/lesson/course/${IDcourse}`,
                 {
                     day: selectedDay,
                     startTime: startTimeFormatted,

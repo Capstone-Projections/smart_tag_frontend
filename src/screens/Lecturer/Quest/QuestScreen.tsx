@@ -6,6 +6,7 @@ import {
     Image,
     FlatList,
     Animated,
+    RefreshControl,
 } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -166,40 +167,46 @@ const QuestScreen = (props: PeopleProps) => {
 
                 <View style={styles.line}></View>
                 {users.length > 0 ? (
-                    <FlatList
-                        showsVerticalScrollIndicator={false}
-                        style={{ paddingTop: 2 }}
-                        data={users}
-                        keyExtractor={(_, index) => index.toString()}
-                        renderItem={({ item }) => {
-                            // console.log(item);
-                            return (
-                                <Swipeable
-                                    renderRightActions={(progress, dragX) =>
-                                        renderRightActions(
-                                            progress,
-                                            dragX,
-                                            item.iduser,
-                                            item.doubtPoints,
-                                            item.attendance[0].idattendance
-                                        )
-                                    }
-                                    renderLeftActions={(progress, dragX) =>
-                                        renderLeftActions(
-                                            progress,
-                                            dragX,
-                                            item.iduser
-                                        )
-                                    }
-                                >
-                                    <QuestUserItem
-                                        firstName={item.firstName}
-                                        lastName={item.lastName}
-                                    />
-                                </Swipeable>
-                            );
-                        }}
-                    />
+                    <View>
+                        <Text>
+                            Swipe left to mark Present, Swipe right to mark
+                            Absent
+                        </Text>
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            style={{ paddingTop: 2 }}
+                            data={users}
+                            keyExtractor={(_, index) => index.toString()}
+                            renderItem={({ item }) => {
+                                // console.log(item);
+                                return (
+                                    <Swipeable
+                                        renderRightActions={(progress, dragX) =>
+                                            renderRightActions(
+                                                progress,
+                                                dragX,
+                                                item.iduser,
+                                                item.doubtPoints,
+                                                item.attendance[0].idattendance
+                                            )
+                                        }
+                                        renderLeftActions={(progress, dragX) =>
+                                            renderLeftActions(
+                                                progress,
+                                                dragX,
+                                                item.iduser
+                                            )
+                                        }
+                                    >
+                                        <QuestUserItem
+                                            firstName={item.firstName}
+                                            lastName={item.lastName}
+                                        />
+                                    </Swipeable>
+                                );
+                            }}
+                        />
+                    </View>
                 ) : (
                     <View style={styles.emptyContainer}>
                         <Image
