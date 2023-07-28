@@ -12,12 +12,16 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as XLSX from 'xlsx';
 import * as FileSystem from 'expo-file-system';
 
-function extractIndexNumbers(inputList: Item[]): number[] {
-    return inputList.map(item => item['Index Numbers']);
-}
 interface Item {
-    'Index Numbers': number;
+    [key: string]: number;
 }
+
+function extractIndexNumbers(inputList: Item[]): number[] {
+    return inputList.map(item => {
+        return Object.values(item)[0];
+    });
+}
+
 const ExpandableButton = () => {
     const [icon_1] = useState(new Animated.Value(70));
     const [icon_2] = useState(new Animated.Value(-100));
@@ -61,19 +65,28 @@ const ExpandableButton = () => {
                     'application/vnd.google-apps.spreadsheet',
                 ],
             });
+            // console.log('File result:', result);
 
-            if (result.type === 'success' && result.uri) {
-                console.log('File URI:', result.uri);
+            if (result.assets ? result.assets[0].uri : '') {
+                console.log(
+                    'File URI:',
+                    result.assets ? result.assets[0].uri : ''
+                );
 
-                const fileInfo = await FileSystem.getInfoAsync(result.uri);
+                const fileInfo = await FileSystem.getInfoAsync(
+                    result.assets ? result.assets[0].uri : ''
+                );
 
                 if (fileInfo.exists) {
-                    console.log('File exists:', fileInfo);
+                    // console.log('File exists:', fileInfo);
 
                     const fileContent = await FileSystem.readAsStringAsync(
-                        result.uri
+                        result.assets ? result.assets[0].uri : '',
+                        {
+                            encoding: FileSystem.EncodingType.Base64, // Specify the encoding as Base64
+                        }
                     );
-                    console.log('File content:', fileContent);
+                    // console.log('File content:', fileContent);
 
                     setContent(fileContent);
 
@@ -89,7 +102,7 @@ const ExpandableButton = () => {
                     ) as Item[];
                     // console.log('Data from sheet:', dataFromSheet);
                     const indexNumbers = extractIndexNumbers(dataFromSheet);
-                    console.log('Index numbers:', indexNumbers);
+                    // console.log('Index numbers:', indexNumbers);
                     return indexNumbers;
                 } else {
                     console.log('Selected item is not a valid file.');
@@ -142,7 +155,7 @@ const ExpandableButton = () => {
 const styles = StyleSheet.create({
     floatingButton: {
         position: 'absolute',
-        bottom: 70,
+        bottom: 50,
         right: 20,
         width: 60,
         height: 60,
