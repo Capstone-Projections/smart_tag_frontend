@@ -11,6 +11,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import * as XLSX from 'xlsx';
 import * as FileSystem from 'expo-file-system';
+import { NavigationProp } from '@react-navigation/native';
+
+interface Props {
+    navigation: any; // You can use the appropriate type based on your navigation stack
+}
 
 interface Item {
     [key: string]: number;
@@ -22,7 +27,7 @@ function extractIndexNumbers(inputList: Item[]): number[] {
     });
 }
 
-const ExpandableButton = () => {
+const ExpandableButton = (props: Props) => {
     const [icon_1] = useState(new Animated.Value(70));
     const [icon_2] = useState(new Animated.Value(-100));
 
@@ -45,15 +50,19 @@ const ExpandableButton = () => {
     const popOut = () => {
         setPop(false);
         Animated.timing(icon_1, {
-            toValue: 70,
+            toValue: 40,
             duration: 500,
             useNativeDriver: false,
         }).start();
         Animated.timing(icon_2, {
-            toValue: 70,
+            toValue: 40,
             duration: 500,
             useNativeDriver: false,
         }).start();
+    };
+
+    const handleIcon2Press = () => {
+        props.navigation.navigate('Manual');
     };
 
     const [content, setContent] = useState<string | null>(null);
@@ -103,6 +112,7 @@ const ExpandableButton = () => {
                     // console.log('Data from sheet:', dataFromSheet);
                     const indexNumbers = extractIndexNumbers(dataFromSheet);
                     // console.log('Index numbers:', indexNumbers);
+                    //TODO: use the index numbers that are returned over here to make the request that is inside of the notion
                     return indexNumbers;
                 } else {
                     console.log('Selected item is not a valid file.');
@@ -129,10 +139,10 @@ const ExpandableButton = () => {
             <Animated.View
                 style={[
                     styles.floatingButton,
-                    { bottom: icon_2, right: icon_2 },
+                    { right: icon_2, bottom: icon_2 },
                 ]}
             >
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleIcon2Press}>
                     <MaterialCommunityIcons
                         name="check"
                         size={30}
@@ -155,7 +165,19 @@ const ExpandableButton = () => {
 const styles = StyleSheet.create({
     floatingButton: {
         position: 'absolute',
-        bottom: 50,
+        bottom: 40,
+        right: 40,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: appBlue,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // elevation: 5,
+    },
+    floatingButton2: {
+        position: 'absolute',
+        bottom: 70,
         right: 20,
         width: 60,
         height: 60,

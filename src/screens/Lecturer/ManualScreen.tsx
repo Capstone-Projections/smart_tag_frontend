@@ -58,7 +58,7 @@ const ManualScreen = () => {
                     <View style={styles.buttonRow}>
                         <Button colorScheme="darkBlue" style={styles.button}>
                             <Text style={{ color: 'white', fontSize: 18 }}>
-                                Add Student
+                                Add
                             </Text>
                         </Button>
 

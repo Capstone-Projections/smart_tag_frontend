@@ -22,6 +22,7 @@ import LoginScreen from '../screens/general/LoginScreen/LoginScreen';
 import OTPScreen from '../screens/general/OTPScreen/OTPScreen';
 import Welcome from '../screens/general/WelcomeScreen/Welcome';
 import EditLesson from '../screens/Lecturer/EditLessonScreen/EditLesson';
+import ExpandableButton from '../components/general/FloatingButton/ExpandableButton';
 
 const { Navigator, Screen } = createStackNavigator();
 

@@ -78,13 +78,6 @@ const PeopleScreen = (props: PeopleProps) => {
                 </View>
 
                 <View style={styles.line}></View>
-                <View style={styles.subTextContainer}>
-                    <Text style={styles.subText}>Students:</Text>
-
-                    <TouchableOpacity onPress={handlePress}>
-                        <MaterialCommunityIcons name="plus-circle" size={30} />
-                    </TouchableOpacity>
-                </View>
 
                 {isError ? (
                     <View style={styles.emptyContainer}>
@@ -114,7 +107,7 @@ const PeopleScreen = (props: PeopleProps) => {
                             }
                         />
                         <View>
-                            <ExpandableButton />
+                            <ExpandableButton navigation={props.navigation} />
                         </View>
                     </View>
                 ) : (
