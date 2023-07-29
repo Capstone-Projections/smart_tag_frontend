@@ -15,6 +15,8 @@ import { NavigationProp } from '@react-navigation/native';
 import { AuthContext } from '../../../context/AuthContext';
 import axios, { AxiosResponse } from 'axios';
 import { CourseContext } from '../../../context/CourseContext';
+import { useMessageModal } from '../../../hooks/ModalHook';
+import { MessageTypes } from '../modals/types';
 
 interface Props {
     navigation: any; // You can use the appropriate type based on your navigation stack
@@ -43,6 +45,16 @@ const ExpandableButton = (props: Props) => {
     const { IDcourse } = useContext(CourseContext);
     const [icon_1] = useState(new Animated.Value(70));
     const [icon_2] = useState(new Animated.Value(-100));
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
+
+    const handleProceedSuccess = () => {
+        // hideModal();
+    };
 
     const [pop, setPop] = useState(false);
 
@@ -125,20 +137,36 @@ const ExpandableButton = (props: Props) => {
                     // console.log('Data from sheet:', dataFromSheet);
                     const indexNumbers = extractIndexNumbers(dataFromSheet);
                     // console.log('Index numbers:', indexNumbers);
-                    //TODO: use the index numbers that are returned over here to make the request that is inside of the notion
+
                     const response = handleUploadPress(indexNumbers);
                     return response;
                 } else {
-                    //TODO: replace this with a modal
-                    console.log('Selected item is not a valid file.');
+                    // console.log('Selected item is not a valid file.');
+                    showMessageModal(
+                        MessageTypes.FAIL,
+                        'Error',
+                        'Selected item is not a valid file.',
+                        handleProceed
+                    );
                 }
             } else {
-                //TODO: replace this with a modal
-                console.log('File picking was canceled or failed.');
+                // console.log('File picking was canceled or failed.');
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Error',
+                    'File picking was canceled or failed.',
+                    handleProceed
+                );
             }
         } catch (err) {
-            //TODO: replace this with a modal
-            console.log('Error picking file:', err);
+            // console.log('Error picking file:', err);
+            // File picking was canceled or failed.
+            showMessageModal(
+                MessageTypes.FAIL,
+                'Error',
+                'Error picking file',
+                handleProceed
+            );
         }
     };
 
@@ -160,11 +188,34 @@ const ExpandableButton = (props: Props) => {
             );
             // response.data['Invalid Users']
             if (response.status === 200) {
-                console.log(
-                    'message:' + response.data.message,
-                    'Invalid Index Numbers:' + response.data['Invalid Users'],
-                    'Already Added' + response.data['Already Added']
-                );
+                // console.log(
+                //     'message:' + response.data.message,
+                //     'Invalid Index Numbers:' + response.data['Invalid Users'],
+                //     'Already Added' + response.data['Already Added']
+                // );
+                if (response.data['Already Added']) {
+                    showMessageModal(
+                        MessageTypes.INFO,
+                        'Already Added',
+                        response.data['Already Added'].toString(),
+                        handleProceed
+                    );
+                }
+                if (response.data['Invalid Users'].length === 0) {
+                    showMessageModal(
+                        MessageTypes.INFO,
+                        'Invalid Index Numbers',
+                        response.data['Invalid Users'].toString(),
+                        handleProceed
+                    );
+                } else {
+                    showMessageModal(
+                        MessageTypes.SUCCESS,
+                        'Success',
+                        'Students Added',
+                        handleProceed
+                    );
+                }
             }
         } catch (error) {
             console.log('Error:', error);
