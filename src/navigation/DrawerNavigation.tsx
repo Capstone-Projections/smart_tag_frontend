@@ -103,7 +103,7 @@ const DrawerNavigation = () => {
                     }}
                     component={ProfileScreen}
                 />
-                <Drawer.Screen
+                {/* <Drawer.Screen
                     name="Settings"
                     options={{
                         drawerIcon: ({ color, size }) => {
@@ -113,7 +113,7 @@ const DrawerNavigation = () => {
                         },
                     }}
                     component={Settings}
-                />
+                /> */}
             </Drawer.Navigator>
         </MenuProvider>
     );

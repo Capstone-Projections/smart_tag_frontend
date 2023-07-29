@@ -149,8 +149,16 @@ const AddCourse = () => {
                     handleProceed
                 );
 
-                console.log('Course added successfully:', response.data);
-            } catch (error) {
+                if (response.data.code === 'P2002') {
+                    showMessageModal(
+                        MessageTypes.INFO,
+                        'Info',
+                        response.data.message,
+                        handleProceed
+                    );
+                }
+                // console.log('Course added successfully:', response.data);
+            } catch (error: any) {
                 if (error) {
                     showMessageModal(
                         MessageTypes.FAIL,
@@ -165,7 +173,12 @@ const AddCourse = () => {
                 setSelected('Select an item');
             }
         } else {
-            console.log('Please select a course before adding.');
+            showMessageModal(
+                MessageTypes.INFO,
+                'Info',
+                'Select A course First',
+                handleProceed
+            );
         }
     };
 
@@ -182,12 +195,11 @@ const AddCourse = () => {
                             Select the name of the course in the dropdown below
                             to be enrolled
                         </Text>
-                        {/* <CustomDropdown
-                            
+                        <CustomDropdown
                             items={coursesList}
                             selectedValue={selected}
                             onSelect={value => setSelected(value)}
-                        /> */}
+                        />
                     </View>
 
                     <View style={styles.buttonRow}>
