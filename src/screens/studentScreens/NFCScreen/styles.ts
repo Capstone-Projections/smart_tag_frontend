@@ -1,9 +1,18 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    container: {
+    wrapper: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    tagContainer: {
+        marginTop: 20,
+        alignItems: 'center',
+    },
+    tagText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 5,
     },
 });
