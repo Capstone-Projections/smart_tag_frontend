@@ -30,7 +30,7 @@ const ManualScreen = () => {
                             attendance.
                         </Text>
                     </View>
-                    <View>
+                    {/* <View>
                         <Text style={styles.text}>Student's Name:</Text>
                         <FormControl style={styles.formControl}>
                             <Input
@@ -41,9 +41,9 @@ const ManualScreen = () => {
                                 placeholder="Enter Name"
                             />
                         </FormControl>
-                    </View>
+                    </View> */}
                     <View>
-                        <Text style={styles.text}>Index Number:</Text>
+                        <Text style={styles.text}>Index Number</Text>
                         <FormControl style={styles.formControl}>
                             <Input
                                 style={styles.input}

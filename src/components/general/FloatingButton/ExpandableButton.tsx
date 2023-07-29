@@ -17,6 +17,7 @@ import axios, { AxiosResponse } from 'axios';
 import { CourseContext } from '../../../context/CourseContext';
 import { useMessageModal } from '../../../hooks/ModalHook';
 import { MessageTypes } from '../modals/types';
+import MessageModal from '../modals/MessageModals';
 
 interface Props {
     navigation: any; // You can use the appropriate type based on your navigation stack
@@ -197,11 +198,14 @@ const ExpandableButton = (props: Props) => {
                     showMessageModal(
                         MessageTypes.INFO,
                         'Already Added',
-                        response.data['Already Added'].toString(),
+                        `${
+                            response.data['Already Added'].length +
+                            'students were added already'
+                        }`,
                         handleProceed
                     );
                 }
-                if (response.data['Invalid Users'].length === 0) {
+                if (response.data['Invalid Users'].length > 0) {
                     showMessageModal(
                         MessageTypes.INFO,
                         'Invalid Index Numbers',
@@ -255,6 +259,14 @@ const ExpandableButton = (props: Props) => {
             >
                 <MaterialCommunityIcons name="plus" size={30} color="white" />
             </TouchableOpacity>
+            <MessageModal
+                messageModalVisible={messageModalState.messageModalVisible}
+                messageType={messageModalState.messageType}
+                headerText={messageModalState.headerText}
+                messageText={messageModalState.messageText}
+                onDismiss={hideModal}
+                onProceed={messageModalState.onProceed}
+            />
         </View>
     );
 };
