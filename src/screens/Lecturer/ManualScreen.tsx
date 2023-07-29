@@ -1,13 +1,18 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, FormControl, Input } from 'native-base';
 import { appBlue } from '../../resources/colors/colors';
 import KeyboardAvoidingWrapper from '../../components/general/KeyboardWrapper/KeyboardWrapper';
+import { LessonContext } from '../../context/LessonContext';
+// import { LessonContext } from '../../../context/LessonContext';
 
 const ManualScreen = () => {
     const [name, setName] = useState('');
     const [indexNumber, setIndexNumber] = useState('');
+    const { idlesson } = useContext(LessonContext);
+
+    const handleSubmit = () => {};
 
     const handleCancel = () => {
         setName('');
@@ -35,7 +40,7 @@ const ManualScreen = () => {
                         <FormControl style={styles.formControl}>
                             <Input
                                 style={styles.input}
-                                _focus={{ borderColor: 'black' }}
+                                _focus={{ borderColor: 'black' }}`
                                 value={name}
                                 onChangeText={setName}
                                 placeholder="Enter Name"
@@ -56,7 +61,11 @@ const ManualScreen = () => {
                         </FormControl>
                     </View>
                     <View style={styles.buttonRow}>
-                        <Button colorScheme="darkBlue" style={styles.button}>
+                        <Button
+                            colorScheme="darkBlue"
+                            style={styles.button}
+                            onPress={handleSubmit}
+                        >
                             <Text style={{ color: 'white', fontSize: 18 }}>
                                 Add
                             </Text>
