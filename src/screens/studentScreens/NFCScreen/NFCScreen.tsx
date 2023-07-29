@@ -10,6 +10,8 @@ import axios from 'axios';
 import MessageModal from '../../../components/general/modals/MessageModals';
 import { MessageTypes } from '../../../components/general/modals/types';
 import { useMessageModal } from '../../../hooks/ModalHook';
+import { style } from '../../general/Timetable/styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 NfcManager.start();
 
@@ -95,28 +97,38 @@ function NFCScreen() {
     }
 
     return (
-        <View style={styles.wrapper}>
-            <TouchableOpacity onPress={readNdef}>
-                <Image
-                    source={require('../../../../assets/images/NFClogo.png')}
-                    resizeMode="cover"
-                    height={200}
-                    width={400}
-                    // style={{backgroundColor: 'red'}}
-                />
-                <Text style={{ textAlign: 'center', fontSize: 19 }}>
-                    Tap to Scan Tag
-                </Text>
-            </TouchableOpacity>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
+            <View>
+                <Text style={styles.tagText}>Tap to Scan Tag</Text>
+            </View>
+            <View style={style.line}></View>
+            <View
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <TouchableOpacity onPress={readNdef}>
+                    <Image
+                        source={require('../../../../assets/images/NFClogo.png')}
+                        resizeMode="cover"
+                        height={200}
+                        width={400}
+                        // style={{backgroundColor: 'red'}}
+                    />
+                </TouchableOpacity>
+            </View>
 
-            {tagData && (
+            {/* {tagData && (
                 <View style={styles.tagContainer}>
                     <Text style={styles.tagText}>Tag found:</Text>
                     <Text style={styles.tagText}>
                         {JSON.stringify(tagData)}
                     </Text>
                 </View>
-            )}
+            )} */}
             <MessageModal
                 messageModalVisible={messageModalState.messageModalVisible}
                 messageType={messageModalState.messageType}
@@ -125,11 +137,11 @@ function NFCScreen() {
                 onDismiss={hideModal}
                 onProceed={messageModalState.onProceed}
             />
-        </View>
+        </SafeAreaView>
     );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         justifyContent: 'center',
@@ -140,9 +152,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     tagText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 5,
+        textAlign: 'center',
+        fontFamily: 'Poppins',
+        fontWeight: '400',
+        fontSize: 20,
+    },
+    imageWrapperWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerText: {
+        textAlign: 'center',
+        fontFamily: 'Poppins',
+        fontWeight: '600',
+        fontSize: 20,
     },
 });
 

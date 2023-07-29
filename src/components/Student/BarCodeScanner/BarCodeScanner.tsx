@@ -14,10 +14,11 @@ import {
 } from 'expo-barcode-scanner';
 import { styles } from './styles';
 import { BarcodeScannerProps } from './props';
+import { Colors } from '../../../screens/general/OTP/styles';
 
 const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     boxSize,
-    boxPosition,
+    // boxPosition,
     onQRCodeScanned,
 }) => {
     const [hasPermission, setHasPermission] = useState<PermissionStatus | null>(
@@ -54,14 +55,26 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
 
     return (
         <View style={styles.container}>
+            {/* <Text style={{fontSize: 50}}>Hello</Text> */}
             <BarCodeScanner
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={[
-                    StyleSheet.absoluteFillObject,
+                    // StyleSheet.absoluteFillObject,
                     styles.scannerContainer,
-                    boxPosition as StyleProp<ViewStyle>,
+                    // boxPosition as StyleProp<ViewStyle>,
                 ]}
-            />
+            >
+                <View
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        borderColor: `${Colors.primary}`,
+                        borderWidth: 5,
+                    }}
+                >
+                    {/* <Text></Text> */}
+                </View>
+            </BarCodeScanner>
             {scanned && (
                 <Button
                     title={'Tap to Scan Again'}

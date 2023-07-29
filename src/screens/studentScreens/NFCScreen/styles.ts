@@ -5,19 +5,28 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column',
+        gap: 20,
     },
     tagContainer: {
         marginTop: 20,
         alignItems: 'center',
     },
     tagText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 5,
+        textAlign: 'center',
+        fontFamily: 'Poppins',
+        fontWeight: '400',
+        fontSize: 20,
     },
-    imageWrapper: {
+    imageWrapperWrapper: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    headerText: {
+        textAlign: 'center',
+        fontFamily: 'Poppins',
+        fontWeight: '600',
+        fontSize: 20,
     },
 });

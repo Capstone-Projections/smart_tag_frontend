@@ -109,7 +109,7 @@ const LoginScreen = (props: LoginProps) => {
                 />
             </Animatable.View>
             <Animatable.View animation="fadeInUp" style={styles.footer}>
-                <Text style={styles.text}>Get Started with our app</Text>
+                <Text style={styles.text}>Get Started!</Text>
                 <Text style={styles.subText}>Login with your email</Text>
                 <VStack space={5} alignItems="center">
                     <FormControl style={styles.formControl}>
@@ -135,7 +135,7 @@ const LoginScreen = (props: LoginProps) => {
                             style={styles.button}
                             onPress={handleLoginPress}
                         >
-                            Submit for OTP
+                            Submit For OTP
                         </Button>
                     )}
                 </VStack>

@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { styles } from './styles';
 import BarcodeScanner from '../../../components/Student/BarCodeScanner/BarCodeScanner';
 import { LessonContext } from '../../../context/LessonContext';
@@ -11,6 +11,7 @@ import axios from 'axios';
 import MessageModal from '../../../components/general/modals/MessageModals';
 import { MessageTypes } from '../../../components/general/modals/types';
 import { useMessageModal } from '../../../hooks/ModalHook';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export function QRCodeScreen() {
     const { days } = useContext(TimetableDaysContext);
@@ -78,15 +79,19 @@ export function QRCodeScreen() {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Scan QR Code</Text>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
+            <View>
+                <Text style={stylesCopy.tagText}>Tap to Scan QRCode</Text>
+            </View>
+            <View style={stylesCopy.line}></View>
+
             <BarcodeScanner
                 boxSize={200}
-                boxPosition={{
-                    top: '20%',
-                    left: '-32%',
-                    transform: [{ translateX: -50 }, { translateY: -50 }],
-                }}
+                // boxPosition={{
+                //     top: '20%',
+                //     left: '-32%',
+                //     // transform: [{ translateX: -50 }, { translateY: -50 }],
+                // }}
                 onQRCodeScanned={handleQRCodeScanned}
             />
 
@@ -98,6 +103,40 @@ export function QRCodeScreen() {
                 onDismiss={hideModal}
                 onProceed={messageModalState.onProceed}
             />
-        </View>
+        </SafeAreaView>
     );
 }
+
+export const stylesCopy = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    tagContainer: {
+        marginTop: 20,
+        alignItems: 'center',
+    },
+    tagText: {
+        textAlign: 'center',
+        fontFamily: 'Poppins',
+        fontWeight: '400',
+        fontSize: 20,
+    },
+    imageWrapperWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerText: {
+        textAlign: 'center',
+        fontFamily: 'Poppins',
+        fontWeight: '600',
+        fontSize: 20,
+    },
+    line: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgray',
+        marginVertical: 5,
+    },
+});
