@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 import { TimetableDaysContext } from '../../../context/TimeTableContext';
 import { LessonContext } from '../../../context/LessonContext';
@@ -97,7 +97,16 @@ function NFCScreen() {
     return (
         <View style={styles.wrapper}>
             <TouchableOpacity onPress={readNdef}>
-                <Text>Click to Scan tag for attendance</Text>
+                <Image
+                    source={require('../../../../assets/images/NFClogo.png')}
+                    resizeMode="cover"
+                    height={200}
+                    width={400}
+                    // style={{backgroundColor: 'red'}}
+                />
+                <Text style={{ textAlign: 'center', fontSize: 19 }}>
+                    Tap to Scan Tag
+                </Text>
             </TouchableOpacity>
 
             {tagData && (

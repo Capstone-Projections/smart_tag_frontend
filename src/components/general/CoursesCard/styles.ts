@@ -23,11 +23,13 @@ export const styles = StyleSheet.create({
     card: {
         width: '100%',
         height: 130,
+        paddingVertical: 10,
         position: 'relative',
+        borderRadius: 10,
     },
     popoverContainer: {
         position: 'absolute', // Make the popover's position absolute
-        top: 10, // Adjust the top position to align the popover
+        top: 20, // Adjust the top position to align the popover
         right: 10, // Adjust the right position to align the popover
     },
     title: {
@@ -38,6 +40,5 @@ export const styles = StyleSheet.create({
     paragraph: {
         color: 'white',
         fontFamily: 'Poppins',
-        // backgroundColor: 'red'
     },
 });

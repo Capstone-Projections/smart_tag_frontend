@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import { AuthContext } from '../../../context/AuthContext';
 import { styles } from './styles';
@@ -52,19 +52,23 @@ export const CourseCard: React.FC<CardProps> = ({
     };
 
     return (
-        <View style={styles.cardContainer}>
-            <Card
-                style={[styles.card, { backgroundColor: cardColor }]}
+        <View>
+            <TouchableOpacity
+                style={styles.cardContainer}
                 onPress={handleCardPress}
             >
-                <Card.Content>
-                    <Title style={styles.title}>{name}</Title>
-                    <Paragraph style={styles.paragraph}>{courseCode}</Paragraph>
-                </Card.Content>
-                <View style={styles.popoverContainer}>
-                    <CustomPopOver idcourse={idcourse} />
+                <View style={[styles.card, { backgroundColor: cardColor }]}>
+                    <Card.Content>
+                        <Title style={styles.title}>{name}</Title>
+                        <Paragraph style={styles.paragraph}>
+                            {courseCode}
+                        </Paragraph>
+                    </Card.Content>
                 </View>
-            </Card>
+            </TouchableOpacity>
+            <View style={styles.popoverContainer}>
+                <CustomPopOver idcourse={idcourse} />
+            </View>
         </View>
     );
 };

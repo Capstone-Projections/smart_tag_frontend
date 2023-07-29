@@ -15,4 +15,9 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5,
     },
+    imageWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });

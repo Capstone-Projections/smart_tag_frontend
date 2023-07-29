@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
     },
     text: {
         textAlign: 'center',
-        fontSize: 15,
-        fontFamily: 'Poppins-Bold',
+        fontSize: 19,
     },
 });

@@ -79,6 +79,7 @@ export function QRCodeScreen() {
 
     return (
         <View style={styles.container}>
+            <Text style={styles.text}>Scan QR Code</Text>
             <BarcodeScanner
                 boxSize={200}
                 boxPosition={{
@@ -88,9 +89,7 @@ export function QRCodeScreen() {
                 }}
                 onQRCodeScanned={handleQRCodeScanned}
             />
-            <Text style={styles.text}>
-                Scan QR Code to take your Attendance
-            </Text>
+
             <MessageModal
                 messageModalVisible={messageModalState.messageModalVisible}
                 messageType={messageModalState.messageType}
