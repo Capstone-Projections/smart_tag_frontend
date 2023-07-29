@@ -18,6 +18,8 @@ import { CourseContext } from '../../../context/CourseContext';
 import { useMessageModal } from '../../../hooks/ModalHook';
 import { MessageTypes } from '../modals/types';
 import MessageModal from '../modals/MessageModals';
+import { LessonProvider } from '../../../context/LessonContext';
+import { LessonContextForLecturers } from '../../../context/LessonContextForLecturers';
 
 interface Props {
     navigation: any; // You can use the appropriate type based on your navigation stack
@@ -48,6 +50,7 @@ const ExpandableButton = (props: Props) => {
     const [icon_2] = useState(new Animated.Value(40));
     const { messageModalState, showMessageModal, hideModal, setIsLoading } =
         useMessageModal();
+    const { idLessonForLecturers } = useContext(LessonContextForLecturers);
 
     const handleProceed = () => {
         hideModal();
@@ -88,6 +91,7 @@ const ExpandableButton = (props: Props) => {
     };
 
     const handleIcon2Press = () => {
+        // console.log("Paul theory"+idLessonForLecturers);
         props.navigation.navigate('Manual');
     };
 
@@ -227,47 +231,55 @@ const ExpandableButton = (props: Props) => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
-            <Animated.View style={[styles.floatingButton, { bottom: icon_1 }]}>
-                <TouchableOpacity onPress={readFile}>
+        <LessonProvider>
+            <View style={{ flex: 1 }}>
+                <Animated.View
+                    style={[styles.floatingButton, { bottom: icon_1 }]}
+                >
+                    <TouchableOpacity onPress={readFile}>
+                        <MaterialCommunityIcons
+                            name="cloud-upload"
+                            size={30}
+                            color="white"
+                        />
+                    </TouchableOpacity>
+                </Animated.View>
+                <Animated.View
+                    style={[
+                        styles.floatingButton,
+                        { right: icon_2, bottom: icon_2 },
+                    ]}
+                >
+                    <TouchableOpacity onPress={handleIcon2Press}>
+                        <MaterialCommunityIcons
+                            name="check"
+                            size={30}
+                            color="white"
+                        />
+                    </TouchableOpacity>
+                </Animated.View>
+                <TouchableOpacity
+                    onPress={() => {
+                        pop === false ? popIn() : popOut();
+                    }}
+                    style={styles.floatingButton}
+                >
                     <MaterialCommunityIcons
-                        name="cloud-upload"
+                        name="plus"
                         size={30}
                         color="white"
                     />
                 </TouchableOpacity>
-            </Animated.View>
-            <Animated.View
-                style={[
-                    styles.floatingButton,
-                    { right: icon_2, bottom: icon_2 },
-                ]}
-            >
-                <TouchableOpacity onPress={handleIcon2Press}>
-                    <MaterialCommunityIcons
-                        name="check"
-                        size={30}
-                        color="white"
-                    />
-                </TouchableOpacity>
-            </Animated.View>
-            <TouchableOpacity
-                onPress={() => {
-                    pop === false ? popIn() : popOut();
-                }}
-                style={styles.floatingButton}
-            >
-                <MaterialCommunityIcons name="plus" size={30} color="white" />
-            </TouchableOpacity>
-            <MessageModal
-                messageModalVisible={messageModalState.messageModalVisible}
-                messageType={messageModalState.messageType}
-                headerText={messageModalState.headerText}
-                messageText={messageModalState.messageText}
-                onDismiss={hideModal}
-                onProceed={messageModalState.onProceed}
-            />
-        </View>
+                <MessageModal
+                    messageModalVisible={messageModalState.messageModalVisible}
+                    messageType={messageModalState.messageType}
+                    headerText={messageModalState.headerText}
+                    messageText={messageModalState.messageText}
+                    onDismiss={hideModal}
+                    onProceed={messageModalState.onProceed}
+                />
+            </View>
+        </LessonProvider>
     );
 };
 
@@ -283,18 +295,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // elevation: 5,
-    },
-    floatingButton2: {
-        position: 'absolute',
-        bottom: 70,
-        right: 20,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        backgroundColor: appBlue,
-        alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 5,
     },
 });
 

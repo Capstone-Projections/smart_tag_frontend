@@ -177,7 +177,14 @@ const EditLesson = () => {
         hideModal();
     };
 
-    const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    const daysList = [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ];
 
     const toggleStartTimePicker = () => {
         setShowStartTimePicker(!showStartTimePicker);

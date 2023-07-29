@@ -5,14 +5,79 @@ import { Button, FormControl, Input } from 'native-base';
 import { appBlue } from '../../resources/colors/colors';
 import KeyboardAvoidingWrapper from '../../components/general/KeyboardWrapper/KeyboardWrapper';
 import { LessonContext } from '../../context/LessonContext';
+import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
+import {
+    LessonContextForLecturers,
+    LessonProviderForLecturers,
+} from '../../context/LessonContextForLecturers';
+import { ActivityIndicator } from 'react-native';
+import MessageModal from '../../components/general/modals/MessageModals';
+import { MessageTypes } from '../../components/general/modals/types';
+import { useMessageModal } from '../../hooks/ModalHook';
 // import { LessonContext } from '../../../context/LessonContext';
+export interface RouteParams {
+    idLessonForLecturers: string;
+}
 
 const ManualScreen = () => {
     const [name, setName] = useState('');
     const [indexNumber, setIndexNumber] = useState('');
-    const { idlesson } = useContext(LessonContext);
+    // const {idlesson} = useContext(LessonContext);
+    // const { idlesson } = useContext(LessonContext);
+    const { idLessonForLecturers } = useContext(LessonContextForLecturers);
+    const { authorizationKey } = useContext(AuthContext);
+    const [verifying, setVerifying] = useState(false);
+    // console
 
-    const handleSubmit = () => {};
+    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+        useMessageModal();
+
+    const handleProceed = () => {
+        hideModal();
+    };
+
+    const handleSubmit = async () => {
+        // const { hello } = props.route.initialParams;s
+        // console.log("lesson id at manual ", idLessonForLecturers);
+        setVerifying(true);
+        const payload = {
+            indexNumber: indexNumber,
+            lesson_idlesson: idLessonForLecturers,
+            status: true,
+        };
+        const headers = { Authorization: authorizationKey };
+        const response = await axios
+            .post(
+                'https://smart-tag.onrender.com/attendance/lecturer',
+                payload,
+                { headers }
+            )
+            .catch(error => {
+                // alert("couldn't add attendance");
+                if (error) {
+                    showMessageModal(
+                        MessageTypes.FAIL,
+                        'Error',
+                        'Failed to record attendance',
+                        handleProceed
+                    );
+                } else if (
+                    idLessonForLecturers === null ||
+                    idLessonForLecturers === undefined
+                ) {
+                    showMessageModal(
+                        MessageTypes.FAIL,
+                        'Error',
+                        'Please no lesson for today',
+                        handleProceed
+                    );
+                }
+            })
+            .finally(() => {
+                setVerifying(false);
+            });
+    };
 
     const handleCancel = () => {
         setName('');
@@ -61,15 +126,20 @@ const ManualScreen = () => {
                         </FormControl>
                     </View>
                     <View style={styles.buttonRow}>
-                        <Button
-                            colorScheme="darkBlue"
-                            style={styles.button}
-                            onPress={handleSubmit}
-                        >
-                            <Text style={{ color: 'white', fontSize: 18 }}>
-                                Add
-                            </Text>
-                        </Button>
+                        {verifying && (
+                            <ActivityIndicator size="large" color={'blue'} />
+                        )}
+                        {!verifying && (
+                            <Button
+                                colorScheme="darkBlue"
+                                style={styles.button}
+                                onPress={handleSubmit}
+                            >
+                                <Text style={{ color: 'white', fontSize: 18 }}>
+                                    Add
+                                </Text>
+                            </Button>
+                        )}
 
                         <View style={styles.buttonSpace} />
 
@@ -82,6 +152,16 @@ const ManualScreen = () => {
                             <Text style={styles.buttonText}>Cancel</Text>
                         </Button>
                     </View>
+                    <MessageModal
+                        messageModalVisible={
+                            messageModalState.messageModalVisible
+                        }
+                        messageType={messageModalState.messageType}
+                        headerText={messageModalState.headerText}
+                        messageText={messageModalState.messageText}
+                        onDismiss={hideModal}
+                        onProceed={messageModalState.onProceed}
+                    />
                 </View>
             </SafeAreaView>
         </KeyboardAvoidingWrapper>

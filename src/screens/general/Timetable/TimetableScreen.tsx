@@ -23,6 +23,7 @@ import { getLessonIdByDayAndTime } from '../../../services/getLessonIdByDay';
 import { LessonContext } from '../../../context/LessonContext';
 import { useQuery } from 'react-query';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LessonContextForLecturers } from '../../../context/LessonContextForLecturers';
 
 const Timetable = (props: TimetableProps) => {
     const { authorizationKey, userType } = useContext(AuthContext);
@@ -31,6 +32,9 @@ const Timetable = (props: TimetableProps) => {
     const { setLessonRoomId } = useContext(LessonRoomContext);
     const [isDaysSet, setIsDaysSet] = useState(false);
     const { setIdLesson } = useContext(LessonContext);
+    const { setIdLessonForLecturers, idLessonForLecturers } = useContext(
+        LessonContextForLecturers
+    );
     const [refreshing, setRefreshing] = React.useState(false);
 
     const fetchLessonsForCourse = async () => {
@@ -67,8 +71,16 @@ const Timetable = (props: TimetableProps) => {
     useEffect(() => {
         const uid = getLectureRoomUidByDayAndTime(lessons);
         const lessonid = getLessonIdByDayAndTime(lessons);
+        // console.log(lessonid)
         if (uid) setLessonRoomId(uid);
-        if (lessonid) setIdLesson(lessonid);
+        if (lessonid) {
+            // idLessonForLecturers
+            // console.log(lessonid);
+
+            setIdLesson(lessonid);
+            setIdLessonForLecturers(lessonid);
+            // console.log("lesson id for lecturer "+idLessonForLecturers)
+        }
     }, [lessons, setLessonRoomId]);
 
     const handleLinkPress = () => props.navigation.navigate('View');
