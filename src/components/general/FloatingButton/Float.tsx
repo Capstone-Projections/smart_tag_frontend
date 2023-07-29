@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useContext } from 'react';
 import {
     View,
     Text,
@@ -10,12 +10,14 @@ import {
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { appBlue } from '../../../resources/colors/colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AuthContext } from '../../../context/AuthContext';
 
 interface Props {
     navigation: any;
 }
 
 const BottomSheetComponent = (props: Props) => {
+    const { userType } = useContext(AuthContext);
     const bottomSheetRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -35,24 +37,24 @@ const BottomSheetComponent = (props: Props) => {
         // Delay the closing of the bottom sheet by a short timeout
         setTimeout(() => {
             toggleBottomSheet();
-        }, 10);
+        }, 5);
 
         // Trigger the navigation after a short delay
         setTimeout(() => {
             props.navigation.navigate('AddCourse');
-        }, 10);
+        }, 5);
     };
 
     const handleCreateOnPress = () => {
         // Delay the closing of the bottom sheet by a short timeout
         setTimeout(() => {
             toggleBottomSheet();
-        }, 10);
+        }, 5);
 
         // Trigger the navigation after a short delay
         setTimeout(() => {
             props.navigation.navigate('CreateCourse');
-        }, 10);
+        }, 5);
     };
 
     return (
@@ -88,12 +90,14 @@ const BottomSheetComponent = (props: Props) => {
                         >
                             <Text style={styles.text}>Add a Course</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={handleCreateOnPress}
-                        >
-                            <Text style={styles.text}>Create a course</Text>
-                        </TouchableOpacity>
+                        {userType === 'lecturer' && (
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={handleCreateOnPress}
+                            >
+                                <Text style={styles.text}>Create a course</Text>
+                            </TouchableOpacity>
+                        )}
                     </BottomSheetScrollView>
                 </BottomSheet>
             </Modal>

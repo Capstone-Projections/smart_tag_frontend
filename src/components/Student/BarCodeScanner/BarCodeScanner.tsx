@@ -9,6 +9,7 @@ import { styles } from './styles';
 import { BarcodeScannerProps } from './props';
 import { Colors } from '../../../screens/general/OTP/styles';
 import { Button } from 'native-base';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     boxSize,
@@ -41,46 +42,71 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     };
 
     if (hasPermission === null) {
-        return <Text>Requesting for camera permission</Text>;
+        return (
+            <View
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: 1,
+                }}
+            >
+                <Text>Requesting for camera permission</Text>
+            </View>
+        );
     }
     if (hasPermission === 'denied') {
-        return <Text>No access to camera</Text>;
+        return (
+            <View
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: 1,
+                }}
+            >
+                <Text>No Access To Camera</Text>
+            </View>
+        );
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
             {/* <Text style={{fontSize: 50}}>Hello</Text> */}
-            <BarCodeScanner
-                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                style={[
-                    // StyleSheet.absoluteFillObject,
-                    styles.scannerContainer,
-                    // boxPosition as StyleProp<ViewStyle>,
-                ]}
-            >
-                <View
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        borderColor: `${Colors.primary}`,
-                        borderWidth: 5,
-                    }}
-                >
-                    {/* <Text></Text> */}
+            <View style={styles.content}>
+                <View style={styles.barCodeWrappper}>
+                    <BarCodeScanner
+                        onBarCodeScanned={
+                            scanned ? undefined : handleBarCodeScanned
+                        }
+                        style={{ width: '100%', height: '100%' }}
+                    >
+                        <View
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                borderColor: `${Colors.primary}`,
+                                borderWidth: 5,
+                                borderRadius: 15,
+                            }}
+                        >
+                            {/* <Text></Text> */}
+                        </View>
+                    </BarCodeScanner>
                 </View>
-            </BarCodeScanner>
-            {/* {scanned && ( */}
-            <Button
-                colorScheme="darkBlue"
-                style={scanned ? styles.buttonOutline : styles.buttonInactive}
-                disabled={!scanned}
-                variant="contained"
-                onPress={() => setScanned(false)}
-            >
-                <Text style={styles.buttonText}>Scan Again!</Text>
-            </Button>
+                {/* {scanned && ( */}
+                <Button
+                    colorScheme="darkBlue"
+                    style={
+                        scanned ? styles.buttonOutline : styles.buttonInactive
+                    }
+                    disabled={!scanned}
+                    variant="contained"
+                    onPress={() => setScanned(false)}
+                >
+                    <Text style={styles.buttonText}>Scan Again!</Text>
+                </Button>
+            </View>
             {/* )} */}
-        </View>
+        </SafeAreaView>
     );
 };
 

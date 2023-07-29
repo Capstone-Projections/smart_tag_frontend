@@ -81,17 +81,12 @@ export function QRCodeScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
             <View>
-                <Text style={stylesCopy.tagText}>Tap to Scan QRCode</Text>
+                <Text style={stylesCopy.tagText}>Scan QRCode</Text>
             </View>
             <View style={stylesCopy.line}></View>
 
             <BarcodeScanner
                 boxSize={200}
-                // boxPosition={{
-                //     top: '20%',
-                //     left: '-32%',
-                //     // transform: [{ translateX: -50 }, { translateY: -50 }],
-                // }}
                 onQRCodeScanned={handleQRCodeScanned}
             />
 

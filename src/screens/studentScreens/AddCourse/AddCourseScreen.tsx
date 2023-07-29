@@ -116,7 +116,7 @@ const AddCourse = () => {
         }
     };
 
-    useQuery<DropdownItem[], Error>('list', fetchList, {
+    useQuery<DropdownItem[], Error>('courseListDropDown', fetchList, {
         enabled: !!authorizationKey,
         onSuccess: data => setCoursesList(data),
     });
@@ -182,11 +182,12 @@ const AddCourse = () => {
                             Select the name of the course in the dropdown below
                             to be enrolled
                         </Text>
-                        <CustomDropdown
+                        {/* <CustomDropdown
+                            
                             items={coursesList}
                             selectedValue={selected}
                             onSelect={value => setSelected(value)}
-                        />
+                        /> */}
                     </View>
 
                     <View style={styles.buttonRow}>

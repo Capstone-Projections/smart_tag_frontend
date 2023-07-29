@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 import { TimetableDaysContext } from '../../../context/TimeTableContext';
@@ -34,7 +34,7 @@ function NFCScreen() {
             // register for the NFC tag with NDEF in it
             await NfcManager.requestTechnology(NfcTech.Ndef);
             // the resolved tag object will contain `ndefMessage` property
-            const tag = await NfcManager.getTag();
+            const tag = await NfcManager.getTag().then();
 
             if (tag) {
                 const payload = tag.ndefMessage[0].payload;
@@ -42,7 +42,6 @@ function NFCScreen() {
 
                 setTagData(text);
                 // TODO: make this code more modular after you're done with the testing and it's working
-                //TODO: also this is for Blay to add, you have to add the modals that are used to display things to the user
                 if (text === lessonRoomId) {
                     if (days.includes(today)) {
                         const payload = {
@@ -62,7 +61,7 @@ function NFCScreen() {
                                 showMessageModal(
                                     MessageTypes.FAIL,
                                     'Attendance',
-                                    'Failed to take attendance',
+                                    'Could not add attendance',
                                     handleProceed
                                 );
                             })
@@ -85,13 +84,24 @@ function NFCScreen() {
                         );
                     }
                 } else {
-                    alert('wrong class');
+                    showMessageModal(
+                        MessageTypes.FAIL,
+                        'Attendance',
+                        'Wrong Class',
+                        handleProceed
+                    );
                 }
             }
         } catch (ex) {
-            console.warn('Oops!', ex);
+            showMessageModal(
+                MessageTypes.FAIL,
+                'Attendance',
+                'Did not find tag',
+                handleProceed
+            );
         } finally {
             // stop the nfc scanning
+
             NfcManager.cancelTechnologyRequest();
         }
     }
@@ -110,7 +120,11 @@ function NFCScreen() {
                     justifyContent: 'center',
                 }}
             >
-                <TouchableOpacity onPress={readNdef}>
+                <TouchableOpacity
+                    onPress={readNdef}
+                    disabled={false}
+                    activeOpacity={0.5} // This sets the opacity of the TouchableOpacity when pressed
+                >
                     <Image
                         source={require('../../../../assets/images/NFClogo.png')}
                         resizeMode="cover"
@@ -120,15 +134,6 @@ function NFCScreen() {
                     />
                 </TouchableOpacity>
             </View>
-
-            {/* {tagData && (
-                <View style={styles.tagContainer}>
-                    <Text style={styles.tagText}>Tag found:</Text>
-                    <Text style={styles.tagText}>
-                        {JSON.stringify(tagData)}
-                    </Text>
-                </View>
-            )} */}
             <MessageModal
                 messageModalVisible={messageModalState.messageModalVisible}
                 messageType={messageModalState.messageType}

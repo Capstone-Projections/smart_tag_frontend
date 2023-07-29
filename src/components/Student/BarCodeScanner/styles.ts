@@ -2,21 +2,24 @@ import { StyleSheet } from 'react-native';
 import { Colors } from '../../../screens/general/OTP/styles';
 
 export const styles = StyleSheet.create({
-    container: {
+    content: {
         flex: 1,
-        // flexDirection: 'column',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: 'red',
-        // width: '100%',
-        // height: '100%',
     },
-    scannerContainer: {
+    barCodeWrappper: {
+        // flex: 1,
+        // flexDirection: 'column',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // backgroundColor: 'red',
         height: 350,
-        width: 350,
-        borderRadius: 5,
-        overflow: 'hidden',
-        // backgroundColor: 'blue',
+        width: 255,
+        // width: '100%',
+        // width: 350,
+        // height: 250,
+        // overflow: 'hidden',
     },
     buttonOutline: {
         width: 140,
