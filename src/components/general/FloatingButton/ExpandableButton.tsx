@@ -5,13 +5,16 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { appBlue } from '../../../resources/colors/colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import * as XLSX from 'xlsx';
 import * as FileSystem from 'expo-file-system';
 import { NavigationProp } from '@react-navigation/native';
+import { AuthContext } from '../../../context/AuthContext';
+import axios, { AxiosResponse } from 'axios';
+import { CourseContext } from '../../../context/CourseContext';
 
 interface Props {
     navigation: any; // You can use the appropriate type based on your navigation stack
@@ -27,7 +30,17 @@ function extractIndexNumbers(inputList: Item[]): number[] {
     });
 }
 
+type ApiResponse = {
+    message: string;
+    'Invalid Users': number[];
+    'Already Added': number[];
+    // Add other properties if the response has more fields
+};
+
+// const arrayOfIndexNumbersForRequest = readFile();
 const ExpandableButton = (props: Props) => {
+    const { authorizationKey } = useContext(AuthContext);
+    const { IDcourse } = useContext(CourseContext);
     const [icon_1] = useState(new Animated.Value(70));
     const [icon_2] = useState(new Animated.Value(-100));
 
@@ -113,15 +126,48 @@ const ExpandableButton = (props: Props) => {
                     const indexNumbers = extractIndexNumbers(dataFromSheet);
                     // console.log('Index numbers:', indexNumbers);
                     //TODO: use the index numbers that are returned over here to make the request that is inside of the notion
-                    return indexNumbers;
+                    const response = handleUploadPress(indexNumbers);
+                    return response;
                 } else {
+                    //TODO: replace this with a modal
                     console.log('Selected item is not a valid file.');
                 }
             } else {
+                //TODO: replace this with a modal
                 console.log('File picking was canceled or failed.');
             }
         } catch (err) {
+            //TODO: replace this with a modal
             console.log('Error picking file:', err);
+        }
+    };
+
+    //create function that will call the readFile and then use the return content to make the query
+
+    const handleUploadPress = async (
+        arrayOfIndexNumbersForRequest: number[]
+    ) => {
+        console.log('input: ', arrayOfIndexNumbersForRequest);
+        try {
+            const response: AxiosResponse<ApiResponse> = await axios.post(
+                `https://smart-tag.onrender.com/courses/user/${IDcourse}`,
+                {
+                    'Index Numbers': arrayOfIndexNumbersForRequest,
+                },
+                {
+                    headers: { Authorization: authorizationKey },
+                }
+            );
+            // response.data['Invalid Users']
+            if (response.status === 200) {
+                console.log(
+                    'message:' + response.data.message,
+                    'Invalid Index Numbers:' + response.data['Invalid Users'],
+                    'Already Added' + response.data['Already Added']
+                );
+            }
+        } catch (error) {
+            console.log('Error:', error);
         }
     };
 
