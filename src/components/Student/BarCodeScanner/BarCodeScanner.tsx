@@ -7,7 +7,7 @@ import {
 } from 'expo-barcode-scanner';
 import { styles } from './styles';
 import { BarcodeScannerProps } from './props';
-import { Colors } from '../../../screens/general/OTP/styles';
+import { Colors } from '../../general/inputfield/style';
 import { Button } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

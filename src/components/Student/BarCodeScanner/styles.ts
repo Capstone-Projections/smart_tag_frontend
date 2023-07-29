@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '../../../screens/general/OTP/styles';
+import { Colors } from '../../general/inputfield/style';
 
 export const styles = StyleSheet.create({
     content: {

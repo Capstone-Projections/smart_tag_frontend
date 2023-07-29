@@ -10,7 +10,7 @@ import GetStarted from '../screens/general/GetStarted/GetStarted';
 import DrawerNavigation from './DrawerNavigation';
 import AddCourse from '../screens/studentScreens/AddCourse/AddCourseScreen';
 import StudentSetUpScreen from '../screens/studentScreens/StudentSetUpScreen';
-import OTPVerificationScreen from '../screens/general/OTP/OTP';
+
 import Timetable from '../screens/general/Timetable/TimetableScreen';
 import ViewAttendance from '../screens/general/Attendance/ViewAttendance';
 import PeopleScreen from '../screens/Lecturer/People/PeopleScreen';
@@ -48,7 +48,7 @@ export const AppNavigator = () => {
                 />
                 <Screen name="Drawer" component={DrawerNavigation} />
                 <Screen name="AddCourse" component={AddCourse} />
-                <Screen name="OTP" component={OTPVerificationScreen} />
+
                 <Screen name="Time" component={Timetable} />
                 <Screen name="View" component={ViewAttendance} />
                 <Screen name="People" component={PeopleScreen} />

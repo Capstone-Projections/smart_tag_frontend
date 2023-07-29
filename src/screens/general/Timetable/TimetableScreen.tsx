@@ -24,6 +24,7 @@ import { LessonContext } from '../../../context/LessonContext';
 import { useQuery } from 'react-query';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LessonContextForLecturers } from '../../../context/LessonContextForLecturers';
+import FloatingButton from '../../../components/general/FloatingButton/FloatingButton';
 
 const Timetable = (props: TimetableProps) => {
     const { authorizationKey, userType } = useContext(AuthContext);
@@ -83,8 +84,6 @@ const Timetable = (props: TimetableProps) => {
         }
     }, [lessons, setLessonRoomId]);
 
-    const handleLinkPress = () => props.navigation.navigate('View');
-
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         refetch()
@@ -115,20 +114,6 @@ const Timetable = (props: TimetableProps) => {
                     }
                 >
                     <View style={style.line}></View>
-
-                    {userType === 'lecturer' && ( // Show the following component only for lecturers
-                        <View style={style.subTextContainer}>
-                            <Text style={style.subText}>
-                                Tap on this button to edit lesson
-                            </Text>
-                            <TouchableOpacity onPress={handlePress}>
-                                <MaterialCommunityIcons
-                                    name="plus-circle"
-                                    size={26}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    )}
 
                     {isFetchingLessons ? (
                         <View>
@@ -165,6 +150,10 @@ const Timetable = (props: TimetableProps) => {
                         </View>
                     )}
                 </ScrollView>
+
+                {userType === 'lecturer' && ( // Show the following component only for lecturers
+                    <FloatingButton navigation={props.navigation} />
+                )}
             </View>
         </SafeAreaView>
     );

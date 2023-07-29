@@ -47,7 +47,7 @@ const ExpandableButton = (props: Props) => {
     const { authorizationKey } = useContext(AuthContext);
     const { IDcourse } = useContext(CourseContext);
     const [icon_1] = useState(new Animated.Value(40));
-    const [icon_2] = useState(new Animated.Value(40));
+    const [icon_2] = useState(new Animated.Value(20));
     const { messageModalState, showMessageModal, hideModal, setIsLoading } =
         useMessageModal();
     const { idLessonForLecturers } = useContext(LessonContextForLecturers);
@@ -65,12 +65,12 @@ const ExpandableButton = (props: Props) => {
     const popIn = () => {
         setPop(true);
         Animated.timing(icon_1, {
-            toValue: 140,
+            toValue: 110,
             duration: 300,
             useNativeDriver: false,
         }).start();
         Animated.timing(icon_2, {
-            toValue: 100,
+            toValue: 110,
             duration: 300,
             useNativeDriver: false,
         }).start();
@@ -84,14 +84,13 @@ const ExpandableButton = (props: Props) => {
             useNativeDriver: false,
         }).start();
         Animated.timing(icon_2, {
-            toValue: 40,
+            toValue: 20,
             duration: 300,
             useNativeDriver: false,
         }).start();
     };
 
     const handleIcon2Press = () => {
-        // console.log("Paul theory"+idLessonForLecturers);
         props.navigation.navigate('Manual');
     };
 
@@ -232,7 +231,7 @@ const ExpandableButton = (props: Props) => {
 
     return (
         <LessonProvider>
-            <View style={{ flex: 1 }}>
+            <View>
                 <Animated.View
                     style={[styles.floatingButton, { bottom: icon_1 }]}
                 >
@@ -245,10 +244,7 @@ const ExpandableButton = (props: Props) => {
                     </TouchableOpacity>
                 </Animated.View>
                 <Animated.View
-                    style={[
-                        styles.floatingButton,
-                        { right: icon_2, bottom: icon_2 },
-                    ]}
+                    style={[styles.floatingButton, { right: icon_2 }]}
                 >
                     <TouchableOpacity onPress={handleIcon2Press}>
                         <MaterialCommunityIcons
@@ -287,7 +283,7 @@ const styles = StyleSheet.create({
     floatingButton: {
         position: 'absolute',
         bottom: 40,
-        right: 40,
+        right: 20,
         width: 60,
         height: 60,
         borderRadius: 30,

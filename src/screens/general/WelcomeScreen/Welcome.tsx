@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         paddingHorizontal: 40,
         paddingVertical: 10,
+        justifyContent: 'center',
     },
     image: {
         width: '100%',

@@ -6,9 +6,11 @@ import {
     CodeInput,
     CodeInputText,
     CodeInputFocused,
-} from '../../../screens/general/OTP/styles';
+} from './style';
 import { TextInput } from 'react-native-gesture-handler';
 import { InputFieldProps } from './props';
+import KeyboardAvoidingWrapper from '../KeyboardWrapper/KeyboardWrapper';
+import { KeyboardAvoidingView } from 'react-native';
 
 const CodeInputField: React.FC<InputFieldProps> = ({
     setPinReady,
@@ -62,13 +64,12 @@ const CodeInputField: React.FC<InputFieldProps> = ({
             </StyledCodeInput>
         );
     };
-    //TODO: this might have caused an error so check it out later
+
     return (
         <OTPInputContainer>
             <CodeInputsContainer onPress={handleOnPress}>
                 {codeDigitsArray.map(toCodeDigitInput)}
             </CodeInputsContainer>
-
             <TextInputHidden
                 //@ts-ignore
                 ref={textInputRef}

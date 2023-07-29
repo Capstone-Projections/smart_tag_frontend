@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         paddingHorizontal: 30,
         paddingVertical: 50,
+        justifyContent: 'center',
     },
     image: {
         width: 150,

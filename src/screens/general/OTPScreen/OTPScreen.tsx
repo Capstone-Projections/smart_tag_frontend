@@ -11,7 +11,7 @@ import React, { useContext, useState } from 'react';
 import { appBlue, whiteColor } from '../../../resources/colors/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './style';
-import CodeInputField from '../../../components/general/inputfields2/CodeInputField';
+import CodeInputField from '../../../components/general/inputfield/CodeInputField';
 import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
 import { OTPVerificationProps } from './props';
 import { AuthContext } from '../../../context/AuthContext';
