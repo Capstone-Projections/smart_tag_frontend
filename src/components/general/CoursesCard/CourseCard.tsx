@@ -17,6 +17,7 @@ import {
 import CustomPopOver from '../PopOverMenu/CustomPopOver';
 import { TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const CourseCard: React.FC<CardProps> = ({
     name,
@@ -33,6 +34,7 @@ export const CourseCard: React.FC<CardProps> = ({
     const [cardColor, setCardColor] = useState(getRandomColor(colors));
     const navigation = useNavigation() as any;
     const { userType } = useContext(AuthContext);
+    const [isLoading, setIsLoading] = useState(false);
     const { setIdCourse, IDcourse, setCourseTitle } = useContext(CourseContext);
 
     const handleCardPress = () => {

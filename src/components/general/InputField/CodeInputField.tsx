@@ -62,13 +62,15 @@ const CodeInputField: React.FC<InputFieldProps> = ({
             </StyledCodeInput>
         );
     };
-
+    //TODO: this might have caused an error so check it out later
     return (
         <OTPInputContainer>
             <CodeInputsContainer onPress={handleOnPress}>
                 {codeDigitsArray.map(toCodeDigitInput)}
             </CodeInputsContainer>
+
             <TextInputHidden
+                //@ts-ignore
                 ref={textInputRef}
                 value={code}
                 onChangeText={setCode}

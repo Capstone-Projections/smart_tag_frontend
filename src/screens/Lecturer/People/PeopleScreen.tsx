@@ -16,6 +16,7 @@ import { User, PeopleProps } from './props';
 import { useQuery } from 'react-query';
 import { AuthContext } from '../../../context/AuthContext';
 import axios from 'axios';
+import ExpandableButton from '../../../components/general/FloatingButton/ExpandableButton';
 import { Button } from 'native-base';
 
 const PeopleScreen = (props: PeopleProps) => {
@@ -68,20 +69,16 @@ const PeopleScreen = (props: PeopleProps) => {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
+        <SafeAreaView
+            style={{ flex: 1, backgroundColor: 'white', paddingTop: 5 }}
+        >
             <View style={styles.container}>
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>{courseTitle} </Text>
                 </View>
 
                 <View style={styles.line}></View>
-                <View style={styles.subTextContainer}>
-                    <Text style={styles.subText}>Students:</Text>
 
-                    <TouchableOpacity onPress={handlePress}>
-                        <MaterialCommunityIcons name="plus-circle" size={30} />
-                    </TouchableOpacity>
-                </View>
                 {isError ? (
                     <View style={styles.emptyContainer}>
                         <Text>Failed to fetch students for this course.</Text>
@@ -90,24 +87,29 @@ const PeopleScreen = (props: PeopleProps) => {
                         </TouchableOpacity>
                     </View>
                 ) : users.length > 0 ? (
-                    <FlatList
-                        showsVerticalScrollIndicator={false}
-                        style={{ paddingTop: 2 }}
-                        data={users}
-                        keyExtractor={(_, index) => index.toString()}
-                        renderItem={({ item }) => (
-                            <UserItem
-                                firstName={item.firstName}
-                                lastName={item.lastName}
-                            />
-                        )}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={onRefresh}
-                            />
-                        }
-                    />
+                    <View>
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            style={{ paddingTop: 2 }}
+                            data={users}
+                            keyExtractor={(_, index) => index.toString()}
+                            renderItem={({ item }) => (
+                                <UserItem
+                                    firstName={item.firstName}
+                                    lastName={item.lastName}
+                                />
+                            )}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                        />
+                        <View>
+                            <ExpandableButton navigation={props.navigation} />
+                        </View>
+                    </View>
                 ) : (
                     <View style={styles.emptyContainer}>
                         <Image

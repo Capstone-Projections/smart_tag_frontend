@@ -17,10 +17,11 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     cardContainer: {
+        width: '100%',
         marginBottom: 8,
     },
     card: {
-        width: 380,
+        width: '100%',
         height: 130,
         position: 'relative',
     },
@@ -32,9 +33,11 @@ export const styles = StyleSheet.create({
     title: {
         color: 'white',
         fontFamily: 'Poppins',
+        // backgroundColor: 'red'
     },
     paragraph: {
         color: 'white',
         fontFamily: 'Poppins',
+        // backgroundColor: 'red'
     },
 });

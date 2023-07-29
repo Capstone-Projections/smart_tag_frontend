@@ -71,6 +71,7 @@ const CodeInputField: React.FC<InputFieldProps> = ({
                 {codeDigitsArray.map(toCodeDigitInput)}
             </CodeInputsContainer>
             <TextInputHidden
+                //@ts-ignore
                 ref={textInputRef}
                 value={code}
                 onChangeText={setCode}

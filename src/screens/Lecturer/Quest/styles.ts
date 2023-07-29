@@ -71,4 +71,18 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingRight: 20,
     },
+    cardContainer: {
+        // Add styles for the card container
+        backgroundColor: '#f0f0f0',
+        borderRadius: 8,
+        padding: 20,
+        marginVertical: 10,
+        alignItems: 'center',
+    },
+    cardText: {
+        // Add styles for the card text
+        fontSize: 18,
+        color: '#333',
+        fontWeight: 'bold',
+    },
 });

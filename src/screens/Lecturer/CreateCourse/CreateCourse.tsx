@@ -14,6 +14,9 @@ import { MessageTypes } from '../../../components/general/modals/types';
 import { useMessageModal } from '../../../hooks/ModalHook';
 import { styles } from './style';
 
+const courseSchema = z.string().min(1).max(100);
+const courseCodeSchema = z.string().min(1).max(8);
+
 const CreateCourse = () => {
     const [course, setCourse] = useState('');
     const [courseCode, setCourseCode] = useState('');
@@ -34,6 +37,9 @@ const CreateCourse = () => {
 
     const handleAddPress = async () => {
         try {
+            const courseValidation = courseSchema.safeParse(course);
+            const courseCodeValidation = courseCodeSchema.safeParse(courseCode);
+
             setVerifying(true);
             const headers = { Authorization: `${authorizationKey}` };
             const response = await axios.post(
@@ -97,6 +103,7 @@ const CreateCourse = () => {
                                     _focus={{ borderColor: 'black' }}
                                     value={course}
                                     onChangeText={setCourse}
+                                    placeholder="Enter course name"
                                 />
                             </FormControl>
                         </View>
@@ -108,6 +115,7 @@ const CreateCourse = () => {
                                     _focus={{ borderColor: 'black' }}
                                     value={courseCode}
                                     onChangeText={setCourseCode}
+                                    placeholder="Enter course code"
                                 />
                             </FormControl>
                         </View>

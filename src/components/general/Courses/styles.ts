@@ -4,11 +4,9 @@ import { whiteColor } from '../../../resources/colors/colors';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // padding: 16,
-        // justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 16,
         backgroundColor: 'white',
-        paddingTop: 2,
+        paddingTop: 8,
     },
     headerText: {
         fontSize: 24,
