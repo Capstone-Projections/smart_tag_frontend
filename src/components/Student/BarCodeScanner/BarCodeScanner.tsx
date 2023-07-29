@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Text,
-    View,
-    StyleSheet,
-    Button,
-    ViewStyle,
-    StyleProp,
-} from 'react-native';
+import { Text, View, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import {
     BarCodeScanner,
     PermissionStatus,
@@ -15,6 +8,7 @@ import {
 import { styles } from './styles';
 import { BarcodeScannerProps } from './props';
 import { Colors } from '../../../screens/general/OTP/styles';
+import { Button } from 'native-base';
 
 const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     boxSize,
@@ -24,7 +18,7 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     const [hasPermission, setHasPermission] = useState<PermissionStatus | null>(
         null
     );
-    const [scanned, setScanned] = useState(false);
+    const [scanned, setScanned] = useState<boolean>(false);
     //get the permission status
     useEffect(() => {
         const getBarCodeScannerPermissions = async () => {
@@ -75,12 +69,17 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
                     {/* <Text></Text> */}
                 </View>
             </BarCodeScanner>
-            {scanned && (
-                <Button
-                    title={'Tap to Scan Again'}
-                    onPress={() => setScanned(false)}
-                />
-            )}
+            {/* {scanned && ( */}
+            <Button
+                colorScheme="darkBlue"
+                style={scanned ? styles.buttonOutline : styles.buttonInactive}
+                disabled={!scanned}
+                variant="contained"
+                onPress={() => setScanned(false)}
+            >
+                <Text style={styles.buttonText}>Scan Again!</Text>
+            </Button>
+            {/* )} */}
         </View>
     );
 };

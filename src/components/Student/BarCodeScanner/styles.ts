@@ -18,4 +18,23 @@ export const styles = StyleSheet.create({
         overflow: 'hidden',
         // backgroundColor: 'blue',
     },
+    buttonOutline: {
+        width: 140,
+        height: 50,
+        borderRadius: 4,
+        // borderColor: `${Colors.primary}`,
+        backgroundColor: `${Colors.primary}`,
+        marginTop: 20,
+    },
+    buttonInactive: {
+        width: 140,
+        height: 50,
+        borderRadius: 4,
+
+        marginTop: 20,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 18,
+    },
 });
