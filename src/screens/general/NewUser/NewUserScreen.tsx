@@ -6,7 +6,6 @@ import {
     View,
 } from 'react-native';
 import React, { useContext, useState } from 'react';
-import { appBlue, whiteColor } from '../../../resources/colors/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -17,12 +16,13 @@ import { AuthContext } from '../../../context/AuthContext';
 import MessageModal from '../../../components/general/modals/MessageModals';
 import { MessageTypes } from '../../../components/general/modals/types';
 import { useMessageModal } from '../../../hooks/ModalHook';
-import { LoginProps } from './props';
-import { styles } from './styles';
+import { appBlue, whiteColor } from '../../../resources/colors/colors';
+import { styles } from './style';
+import { NewUserProps } from './props';
 
 const emailSchema = z.string().email().max(100);
 
-const LoginScreen = (props: LoginProps) => {
+const NewUserScreen = (props: NewUserProps) => {
     const { setEmail, setUserID, userType, setGetStarted } =
         useContext(AuthContext);
     const [email, setEmailState] = useState('');
@@ -94,11 +94,6 @@ const LoginScreen = (props: LoginProps) => {
         setEmailError('');
     };
 
-    const handleLinkPress = () => {
-        setGetStarted('getStarted');
-        props.navigation.navigate('NewUser');
-    };
-
     return (
         <SafeAreaView style={styles.container}>
             <Animatable.View animation="fadeInDown" style={styles.header}>
@@ -109,8 +104,8 @@ const LoginScreen = (props: LoginProps) => {
                 />
             </Animatable.View>
             <Animatable.View animation="fadeInUp" style={styles.footer}>
-                <Text style={styles.text}>Get Started!</Text>
-                <Text style={styles.subText}>Login with your email</Text>
+                <Text style={styles.text}>Sign Up as a new user.</Text>
+                <Text style={styles.subText}>Sign Up with your email</Text>
                 <VStack space={5} alignItems="center">
                     <FormControl style={styles.formControl}>
                         <FormControl.Label></FormControl.Label>
@@ -139,18 +134,7 @@ const LoginScreen = (props: LoginProps) => {
                         </Button>
                     )}
                 </VStack>
-                <View style={{ paddingTop: 15 }}>
-                    <Link
-                        style={styles.link}
-                        isExternal
-                        _text={{
-                            color: 'blue.400',
-                        }}
-                        onPress={handleLinkPress}
-                    >
-                        New User?
-                    </Link>
-                </View>
+
                 <MessageModal
                     messageModalVisible={messageModalState.messageModalVisible}
                     messageType={messageModalState.messageType}
@@ -163,7 +147,5 @@ const LoginScreen = (props: LoginProps) => {
         </SafeAreaView>
     );
 };
-const { height } = Dimensions.get('screen');
-const height_logo = height * 0.28;
 
-export default LoginScreen;
+export default NewUserScreen;

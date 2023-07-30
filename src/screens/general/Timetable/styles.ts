@@ -64,7 +64,7 @@ export const style = StyleSheet.create({
         fontFamily: 'Poppins',
     },
     emptyContainer: {
-        paddingTop: 150,
+        paddingTop: 200,
         paddingBottom: 0,
         alignItems: 'center',
         justifyContent: 'center',

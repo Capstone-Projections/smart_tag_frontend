@@ -85,4 +85,9 @@ export const styles = StyleSheet.create({
         color: '#333',
         fontWeight: 'bold',
     },
+    button: {
+        width: '80%',
+        height: 58,
+        borderRadius: 8,
+    },
 });

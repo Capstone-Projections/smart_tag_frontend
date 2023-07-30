@@ -5,13 +5,13 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { appBlue } from '../../../resources/colors/colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import * as XLSX from 'xlsx';
 import * as FileSystem from 'expo-file-system';
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, useIsFocused } from '@react-navigation/native';
 import { AuthContext } from '../../../context/AuthContext';
 import axios, { AxiosResponse } from 'axios';
 import { CourseContext } from '../../../context/CourseContext';
@@ -50,7 +50,7 @@ const ExpandableButton = (props: Props) => {
     const [icon_2] = useState(new Animated.Value(20));
     const { messageModalState, showMessageModal, hideModal, setIsLoading } =
         useMessageModal();
-    const { idLessonForLecturers } = useContext(LessonContextForLecturers);
+    const isFocused = useIsFocused();
 
     const handleProceed = () => {
         hideModal();
@@ -89,6 +89,12 @@ const ExpandableButton = (props: Props) => {
             useNativeDriver: false,
         }).start();
     };
+
+    useEffect(() => {
+        if (!isFocused) {
+            popOut();
+        }
+    }, [isFocused]);
 
     const handleIcon2Press = () => {
         props.navigation.navigate('Manual');

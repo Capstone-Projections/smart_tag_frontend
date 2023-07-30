@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -7,6 +7,7 @@ import {
     FlatList,
     Animated,
     RefreshControl,
+    Alert,
 } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,6 +22,7 @@ import { LessonContext } from '../../../context/LessonContext';
 import MessageModal from '../../../components/general/modals/MessageModals';
 import { useMessageModal } from '../../../hooks/ModalHook';
 import { MessageTypes } from '../../../components/general/modals/types';
+import { Button } from 'native-base';
 
 const QuestScreen = (props: PeopleProps) => {
     const { courseTitle, IDcourse } = React.useContext(CourseContext);
@@ -58,7 +60,8 @@ const QuestScreen = (props: PeopleProps) => {
 
     const { data: users = [] } = useQuery<QuestUsers[]>(
         ['questStudents', IDcourse],
-        questFetchStudents
+        questFetchStudents,
+        { initialData: [] } // Provide initialData option here
     );
 
     const updateStatus = async (userId: number, doubtPoints: number) => {
@@ -158,14 +161,61 @@ const QuestScreen = (props: PeopleProps) => {
         );
     };
 
+    const [showButton, setShowButton] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+    const handleFetchUsers = async () => {
+        try {
+            setIsRefreshing(true);
+            const usersData = await questFetchStudents();
+            // Check if usersData is not empty
+            if (usersData.length > 0) {
+                setShowButton(false); // Hide the button if there are users
+            } else {
+                setShowButton(true);
+                Alert.alert('No Users', 'There are no users to display.', [
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ]);
+            }
+            setIsRefreshing(false);
+        } catch (error) {
+            console.log('Failed to fetch users', error);
+            setIsRefreshing(false);
+        }
+    };
+
+    useEffect(() => {
+        handleFetchUsers();
+    }, []);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
             <View style={styles.container}>
                 <View style={styles.headerTextContainer}>
-                    <Text style={styles.headerText}>{courseTitle} </Text>
+                    <Text style={styles.headerText}>
+                        Impersonation Detection
+                    </Text>
                 </View>
 
                 <View style={styles.line}></View>
+                {showButton && (
+                    <View
+                        style={{
+                            paddingTop: 20,
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <Button
+                            colorScheme="darkBlue"
+                            style={styles.button}
+                            onPress={handleFetchUsers}
+                        >
+                            Quest
+                        </Button>
+                    </View>
+                )}
                 {users.length > 0 ? (
                     <View>
                         <Text>
@@ -178,7 +228,6 @@ const QuestScreen = (props: PeopleProps) => {
                             data={users}
                             keyExtractor={(_, index) => index.toString()}
                             renderItem={({ item }) => {
-                                // console.log(item);
                                 return (
                                     <Swipeable
                                         renderRightActions={(progress, dragX) =>
@@ -207,17 +256,7 @@ const QuestScreen = (props: PeopleProps) => {
                             }}
                         />
                     </View>
-                ) : (
-                    <View style={styles.emptyContainer}>
-                        <Image
-                            style={styles.image}
-                            source={require('../../../../assets/images/people.jpg')}
-                        />
-                        <Text style={styles.emptyText}>
-                            No students' attendance recorded yet.
-                        </Text>
-                    </View>
-                )}
+                ) : null}
             </View>
             <MessageModal
                 messageModalVisible={messageModalState.messageModalVisible}

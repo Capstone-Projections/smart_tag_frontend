@@ -23,6 +23,7 @@ import OTPScreen from '../screens/general/OTPScreen/OTPScreen';
 import Welcome from '../screens/general/WelcomeScreen/Welcome';
 import EditLesson from '../screens/Lecturer/EditLessonScreen/EditLesson';
 import ExpandableButton from '../components/general/FloatingButton/ExpandableButton';
+import NewUserScreen from '../screens/general/NewUser/NewUserScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -59,6 +60,7 @@ export const AppNavigator = () => {
                 <Screen name="LoginScreen" component={LoginScreen} />
                 <Screen name="OTPScreen" component={OTPScreen} />
                 <Screen name="EditLesson" component={EditLesson} />
+                <Screen name="NewUser" component={NewUserScreen} />
             </Navigator>
         </NavigationContainer>
     );

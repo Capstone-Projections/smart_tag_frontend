@@ -8,6 +8,8 @@ import {
     Pressable,
     Platform,
     TouchableOpacity,
+    ScrollView,
+    RefreshControl,
 } from 'react-native';
 import React, { useContext, useState } from 'react';
 import { PieChart } from 'react-native-chart-kit';
@@ -40,6 +42,7 @@ const Analysis = () => {
     const [date, setDate] = useState(new Date());
     const [dateOfLesson, setDateOfLesson] = useState('');
     const [analysisData, setAnalysisData] = useState({ Present: 0, Absent: 0 });
+    const [refreshing, setRefreshing] = useState(false);
 
     const fetchAnalysis = async () => {
         try {
@@ -96,6 +99,18 @@ const Analysis = () => {
             console.error('Error opening link:', error);
         } finally {
             setLoading(false); // Set loading back to false when the fetch is complete (either success or error)
+        }
+    };
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        try {
+            // Fetch the analysis data again when the user pulls down to refresh
+            await fetchAnalysis();
+        } catch (error) {
+            console.error('Error fetching analysis:', error);
+        } finally {
+            setRefreshing(false);
         }
     };
 
@@ -179,97 +194,115 @@ const Analysis = () => {
             }}
         >
             <View style={styles.headerTextContainer}>
-                <Text style={styles.headerText}>{courseTitle} </Text>
+                <Text style={styles.headerText}>Analytics</Text>
             </View>
 
             <View style={styles.line}></View>
-
-            <View style={styles.datePickerContainer}>
-                <Text style={styles.dateText}>Select a day</Text>
-
-                {showPicker && (
-                    <DateTimePicker
-                        mode="date"
-                        display="spinner"
-                        value={date}
-                        onChange={onChange}
-                        style={styles.datePicker}
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
                     />
-                )}
+                }
+            >
+                <View style={styles.datePickerContainer}>
+                    <Text style={styles.dateText}>Select a day</Text>
 
-                {showPicker && Platform.OS === 'ios' && (
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={[styles.button, styles.pickerButton]}
-                            onPress={toggleDatePicker}
-                        >
-                            <Text
-                                style={[
-                                    styles.buttonText,
-                                    { color: '#075985' },
-                                ]}
-                            >
-                                Cancel
-                            </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[styles.button, styles.pickerButton]}
-                            onPress={confirmIOSDate}
-                        >
-                            <Text>Confirm</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
-
-                {!showPicker && (
-                    <Pressable onPress={toggleDatePicker}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Select a day"
-                            value={dateOfLesson}
-                            onChangeText={setDateOfLesson}
-                            editable={false}
-                            onPressIn={toggleDatePicker}
+                    {showPicker && (
+                        <DateTimePicker
+                            mode="date"
+                            display="spinner"
+                            value={date}
+                            onChange={onChange}
+                            style={styles.datePicker}
                         />
-                    </Pressable>
-                )}
-            </View>
-            <View style={styles.container}>
-                <PieChart
-                    data={content}
-                    width={390}
-                    height={210}
-                    chartConfig={chartConfig}
-                    accessor={'population'}
-                    backgroundColor={'#f8f0fb'}
-                    paddingLeft={'0'}
-                    center={[0, 0]}
-                    absolute
-                    style={{
-                        borderRadius: 16,
-                    }}
-                />
+                    )}
 
-                <View style={{ alignItems: 'center', paddingTop: 25 }}>
-                    <Link
-                        isExternal
-                        _text={{
-                            color: 'blue.400',
-                        }}
-                        onPress={handleLinkPress}
-                    >
-                        {loading
-                            ? 'Loading...'
-                            : 'Download Attendance Information'}
-                    </Link>
+                    {showPicker && Platform.OS === 'ios' && (
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-around',
+                            }}
+                        >
+                            <TouchableOpacity
+                                style={[styles.button, styles.pickerButton]}
+                                onPress={toggleDatePicker}
+                            >
+                                <Text
+                                    style={[
+                                        styles.buttonText,
+                                        { color: '#075985' },
+                                    ]}
+                                >
+                                    Cancel
+                                </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={[styles.button, styles.pickerButton]}
+                                onPress={confirmIOSDate}
+                            >
+                                <Text>Confirm</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+
+                    {!showPicker && (
+                        <Pressable onPress={toggleDatePicker}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Select a day"
+                                value={dateOfLesson}
+                                onChangeText={setDateOfLesson}
+                                editable={false}
+                                onPressIn={toggleDatePicker}
+                            />
+                        </Pressable>
+                    )}
                 </View>
-            </View>
+                <View style={styles.container}>
+                    {/* Check if there is data for the pie chart */}
+                    {analysisData.Present !== 0 || analysisData.Absent !== 0 ? (
+                        // Display the pie chart
+                        <PieChart
+                            data={content}
+                            width={390}
+                            height={210}
+                            chartConfig={chartConfig}
+                            accessor={'population'}
+                            backgroundColor={'#f8f0fb'}
+                            paddingLeft={'0'}
+                            center={[0, 0]}
+                            absolute
+                            style={{
+                                borderRadius: 16,
+                            }}
+                        />
+                    ) : (
+                        // Show a message when there is no data for the pie chart
+                        <Text style={styles.text}>
+                            No data available for the selected day.
+                        </Text>
+                    )}
+
+                    <View style={{ alignItems: 'center', paddingTop: 25 }}>
+                        <Link
+                            isExternal
+                            _text={{
+                                color: 'blue.400',
+                            }}
+                            onPress={handleLinkPress}
+                        >
+                            {loading
+                                ? 'Loading...'
+                                : 'Download Attendance Information'}
+                        </Link>
+                    </View>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 };
@@ -344,7 +377,6 @@ const styles = StyleSheet.create({
     datePickerContainer: {
         flexDirection: 'column',
         alignItems: 'flex-start',
-        marginBottom: 20,
     },
     chartContainer: {
         flex: 1,
