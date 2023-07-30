@@ -16,7 +16,7 @@
         "expo-barcode-scanner": "^12.3.2",
         "expo-document-picker": "^11.5.4",
         "expo-font": "~11.4.0",
-        "expo-splash-screen": "~0.20.5",
+        "expo-splash-screen": "0.20.4",
         "expo-status-bar": "^1.4.4",
         "husky-init": "^8.0.0",
         "jss": "^10.10.0",
