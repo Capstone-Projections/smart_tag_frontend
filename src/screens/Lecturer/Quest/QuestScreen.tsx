@@ -212,7 +212,7 @@ const QuestScreen = (props: PeopleProps) => {
                             style={styles.button}
                             onPress={handleFetchUsers}
                         >
-                            Quest
+                            Find Impersonaters
                         </Button>
                     </View>
                 )}
