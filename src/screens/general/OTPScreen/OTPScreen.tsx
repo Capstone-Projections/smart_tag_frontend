@@ -167,25 +167,20 @@ const OTPScreen = (props: OTPVerificationProps) => {
                         maxlength={MAX_CODE_LENGTH}
                     />
 
-                    {!verifying && pinReady && (
-                        <Button
-                            colorScheme="darkBlue"
-                            style={styles.button}
-                            onPress={handleOTPPress}
-                        >
-                            Submit
-                        </Button>
-                    )}
-
-                    {!verifying && !pinReady && (
-                        <Button size="sm" isDisabled style={styles.button}>
-                            Submit
-                        </Button>
-                    )}
-
-                    {verifying && (
-                        <ActivityIndicator size="large" color={'blue'} />
-                    )}
+                    <Button
+                        colorScheme="darkBlue"
+                        style={styles.button}
+                        onPress={handleOTPPress}
+                        disabled={!pinReady}
+                    >
+                        {verifying ? (
+                            <ActivityIndicator size="large" color="white" />
+                        ) : (
+                            <Text style={{ color: 'white', fontSize: 15 }}>
+                                Submit for OTP
+                            </Text>
+                        )}
+                    </Button>
                     <View style={styles.textContainer}>
                         <Text>Didn't receive the email?</Text>
                         <Link

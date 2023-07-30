@@ -120,25 +120,24 @@ const CreateCourse = () => {
                             </FormControl>
                         </View>
                         <View style={styles.buttonRow}>
-                            {verifying && (
-                                <ActivityIndicator
-                                    size="large"
-                                    color={'blue'}
-                                />
-                            )}
-                            {!verifying && (
-                                <Button
-                                    colorScheme="darkBlue"
-                                    style={styles.button}
-                                    onPress={handleAddPress}
-                                >
+                            <Button
+                                colorScheme="darkBlue"
+                                style={styles.button}
+                                onPress={handleAddPress}
+                            >
+                                {verifying ? (
+                                    <ActivityIndicator
+                                        size="large"
+                                        color="white"
+                                    />
+                                ) : (
                                     <Text
                                         style={{ color: 'white', fontSize: 18 }}
                                     >
                                         Add
                                     </Text>
-                                </Button>
-                            )}
+                                )}
+                            </Button>
 
                             <View style={styles.buttonSpace} />
 

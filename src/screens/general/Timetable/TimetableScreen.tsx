@@ -100,7 +100,7 @@ const Timetable = (props: TimetableProps) => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 0 }}>
             <View>
                 <Text style={style.headerText}>{courseTitle}</Text>
             </View>
@@ -150,11 +150,10 @@ const Timetable = (props: TimetableProps) => {
                         </View>
                     )}
                 </ScrollView>
-
-                {userType === 'lecturer' && ( // Show the following component only for lecturers
-                    <FloatingButton navigation={props.navigation} />
-                )}
             </View>
+            {userType === 'lecturer' && ( // Show the following component only for lecturers
+                <FloatingButton navigation={props.navigation} />
+            )}
         </SafeAreaView>
     );
 };

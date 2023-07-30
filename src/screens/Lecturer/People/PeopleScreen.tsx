@@ -70,7 +70,12 @@ const PeopleScreen = (props: PeopleProps) => {
 
     return (
         <SafeAreaView
-            style={{ flex: 1, backgroundColor: 'white', paddingTop: 5 }}
+            style={{
+                flex: 1,
+                backgroundColor: 'white',
+                paddingTop: 0,
+                paddingBottom: 1,
+            }}
         >
             <View style={styles.container}>
                 <View style={styles.headerTextContainer}>

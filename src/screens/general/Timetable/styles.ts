@@ -4,7 +4,7 @@ import { appBlue } from '../../../resources/colors/colors';
 export const style = StyleSheet.create({
     container: {
         flex: 1,
-        // paddingTop: 4,
+        padding: 4,
     },
     headerTextContainer: {
         // paddingTop: 4,

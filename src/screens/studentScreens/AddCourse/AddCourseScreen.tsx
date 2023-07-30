@@ -203,20 +203,19 @@ const AddCourse = () => {
                     </View>
 
                     <View style={styles.buttonRow}>
-                        {verifying && (
-                            <ActivityIndicator size="large" color={'blue'} />
-                        )}
-                        {!verifying && (
-                            <Button
-                                colorScheme="darkBlue"
-                                style={styles.button}
-                                onPress={handleAddCourse}
-                            >
+                        <Button
+                            colorScheme="darkBlue"
+                            style={styles.button}
+                            onPress={handleAddCourse}
+                        >
+                            {verifying ? (
+                                <ActivityIndicator size="large" color="white" />
+                            ) : (
                                 <Text style={{ color: 'white', fontSize: 18 }}>
                                     Add
                                 </Text>
-                            </Button>
-                        )}
+                            )}
+                        </Button>
 
                         <View style={styles.buttonSpace} />
 

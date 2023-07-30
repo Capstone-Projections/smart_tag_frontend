@@ -121,18 +121,19 @@ const NewUserScreen = (props: NewUserProps) => {
                         )}
                     </FormControl>
 
-                    {verifying && (
-                        <ActivityIndicator size="large" color={'blue'} />
-                    )}
-                    {!verifying && (
-                        <Button
-                            colorScheme="darkBlue"
-                            style={styles.button}
-                            onPress={handleLoginPress}
-                        >
-                            Submit For OTP
-                        </Button>
-                    )}
+                    <Button
+                        colorScheme="darkBlue"
+                        style={styles.button}
+                        onPress={handleLoginPress}
+                    >
+                        {verifying ? (
+                            <ActivityIndicator size="large" color="white" />
+                        ) : (
+                            <Text style={{ color: 'white', fontSize: 15 }}>
+                                Submit for OTP
+                            </Text>
+                        )}
+                    </Button>
                 </VStack>
 
                 <MessageModal

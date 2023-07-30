@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LessonProviderForLecturers } from '../context/LessonContextForLecturers';
+import { LessonProvider } from '../context/LessonContext';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -39,11 +40,13 @@ export default function App() {
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
                 <CourseProvider>
-                    <LessonProviderForLecturers>
-                        <NativeBaseProvider theme={customTheme}>
-                            <AppNavigator />
-                        </NativeBaseProvider>
-                    </LessonProviderForLecturers>
+                    <LessonProvider>
+                        <LessonProviderForLecturers>
+                            <NativeBaseProvider theme={customTheme}>
+                                <AppNavigator />
+                            </NativeBaseProvider>
+                        </LessonProviderForLecturers>
+                    </LessonProvider>
                 </CourseProvider>
             </AuthProvider>
         </QueryClientProvider>

@@ -183,18 +183,19 @@ const LecturerSetUpScreen = (props: LecturerSetUpScreenProps) => {
                             </FormControl>
                         </View>
 
-                        {verifying && (
-                            <ActivityIndicator size="large" color={'blue'} />
-                        )}
-                        {!verifying && (
-                            <Button
-                                colorScheme="darkBlue"
-                                style={styles.button}
-                                onPress={handleSetUpPress}
-                            >
-                                Continue
-                            </Button>
-                        )}
+                        <Button
+                            colorScheme="darkBlue"
+                            style={styles.button}
+                            onPress={handleSetUpPress}
+                        >
+                            {verifying ? (
+                                <ActivityIndicator size="large" color="white" />
+                            ) : (
+                                <Text style={{ color: 'white', fontSize: 15 }}>
+                                    Continue
+                                </Text>
+                            )}
+                        </Button>
                     </VStack>
                     <MessageModal
                         messageModalVisible={

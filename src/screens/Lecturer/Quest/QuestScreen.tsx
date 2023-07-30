@@ -23,12 +23,15 @@ import MessageModal from '../../../components/general/modals/MessageModals';
 import { useMessageModal } from '../../../hooks/ModalHook';
 import { MessageTypes } from '../../../components/general/modals/types';
 import { Button } from 'native-base';
+import { ActivityIndicator } from 'react-native';
 
 const QuestScreen = (props: PeopleProps) => {
     const { courseTitle, IDcourse } = React.useContext(CourseContext);
     const { authorizationKey } = React.useContext(AuthContext);
     const { idlesson } = React.useContext(LessonContext);
-    const { messageModalState, showMessageModal, hideModal, setIsLoading } =
+    const [isLoading, setIsLoading] = useState(false);
+    const [isDataFetched, setIsDataFetched] = useState(false);
+    const { messageModalState, showMessageModal, hideModal } =
         useMessageModal();
 
     const handleProceed = () => {
@@ -167,29 +170,41 @@ const QuestScreen = (props: PeopleProps) => {
     const handleFetchUsers = async () => {
         try {
             setIsRefreshing(true);
+            setIsLoading(true);
             const usersData = await questFetchStudents();
             // Check if usersData is not empty
             if (usersData.length > 0) {
                 setShowButton(false); // Hide the button if there are users
             } else {
+                showMessageModal(
+                    MessageTypes.INFO,
+                    'Info',
+                    'No students found',
+                    handleProceed
+                );
                 setShowButton(true);
-                Alert.alert('No Users', 'There are no users to display.', [
-                    { text: 'OK', onPress: () => console.log('OK Pressed') },
-                ]);
             }
+            setIsLoading(false);
             setIsRefreshing(false);
+            setIsDataFetched(true);
         } catch (error) {
             console.log('Failed to fetch users', error);
             setIsRefreshing(false);
+            setIsLoading(false);
+            setIsDataFetched(true);
         }
     };
 
     useEffect(() => {
-        handleFetchUsers();
-    }, []);
+        if (!showButton && !isDataFetched) {
+            handleFetchUsers();
+        }
+    }, [showButton, isDataFetched]);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
+        <SafeAreaView
+            style={{ flex: 1, backgroundColor: 'white', paddingBottom: 1 }}
+        >
             <View style={styles.container}>
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>
@@ -212,16 +227,19 @@ const QuestScreen = (props: PeopleProps) => {
                             style={styles.button}
                             onPress={handleFetchUsers}
                         >
-                            Find Impersonaters
+                            {isLoading ? (
+                                <ActivityIndicator size="large" color="white" />
+                            ) : (
+                                <Text style={{ color: 'white', fontSize: 15 }}>
+                                    Find Impersonaters
+                                </Text>
+                            )}
                         </Button>
                     </View>
                 )}
-                {users.length > 0 ? (
+
+                {!showButton && users.length > 0 && (
                     <View>
-                        <Text>
-                            Swipe left to mark Present, Swipe right to mark
-                            Absent
-                        </Text>
                         <FlatList
                             showsVerticalScrollIndicator={false}
                             style={{ paddingTop: 2 }}
@@ -256,7 +274,7 @@ const QuestScreen = (props: PeopleProps) => {
                             }}
                         />
                     </View>
-                ) : null}
+                )}
             </View>
             <MessageModal
                 messageModalVisible={messageModalState.messageModalVisible}

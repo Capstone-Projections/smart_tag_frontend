@@ -64,31 +64,10 @@ const ManualScreen = () => {
                     payload,
                     { headers }
                 )
-                .catch(error => {
-                    // alert("couldn't add attendance");
-                    // if (error) {
-                    showMessageModal(
-                        MessageTypes.FAIL,
-                        'Error',
-                        'Failed to record attendance',
-                        handleProceed
-                    );
-                    // } else if (
-                    //     idLessonForLecturers === null ||
-                    //     idLessonForLecturers === undefined
-                    // ) {
-                    //     showMessageModal(
-                    //         MessageTypes.FAIL,
-                    //         'Error',
-                    //         'Please no lesson for today',
-                    //         handleProceed
-                    //     );
-                    // }
-                })
-                .finally(() => {
+                .then(res => {
                     if (
-                        response.data.message &&
-                        response.data.message === 'User Not Found'
+                        res.data.message &&
+                        res.data.message === 'User Not Found'
                     ) {
                         showMessageModal(
                             MessageTypes.INFO,
@@ -97,8 +76,8 @@ const ManualScreen = () => {
                             handleProceed
                         );
                     } else if (
-                        response.data.message &&
-                        response.data.message ===
+                        res.data.message &&
+                        res.data.message ===
                             'Attendance already taken for class'
                     ) {
                         showMessageModal(
@@ -115,6 +94,28 @@ const ManualScreen = () => {
                             handleProceed
                         );
                     }
+                })
+                .catch(error => {
+                    // alert("couldn't add attendance");
+                    if (
+                        error.response.data.message.trim() === 'User Not Found'
+                    ) {
+                        showMessageModal(
+                            MessageTypes.INFO,
+                            'Error',
+                            'Student Not Found',
+                            handleProceed
+                        );
+                    } else {
+                        showMessageModal(
+                            MessageTypes.FAIL,
+                            'Error',
+                            'Failed to record attendance',
+                            handleProceed
+                        );
+                    }
+                })
+                .finally(() => {
                     setVerifying(false);
                 });
         }
@@ -167,20 +168,19 @@ const ManualScreen = () => {
                         </FormControl>
                     </View>
                     <View style={styles.buttonRow}>
-                        {verifying && (
-                            <ActivityIndicator size="large" color={'blue'} />
-                        )}
-                        {!verifying && (
-                            <Button
-                                colorScheme="darkBlue"
-                                style={styles.button}
-                                onPress={handleSubmit}
-                            >
-                                <Text style={{ color: 'white', fontSize: 18 }}>
+                        <Button
+                            colorScheme="darkBlue"
+                            style={styles.button}
+                            onPress={handleSubmit}
+                        >
+                            {verifying ? (
+                                <ActivityIndicator size="large" color="white" />
+                            ) : (
+                                <Text style={{ color: 'white', fontSize: 15 }}>
                                     Add
                                 </Text>
-                            </Button>
-                        )}
+                            )}
+                        </Button>
 
                         <View style={styles.buttonSpace} />
 

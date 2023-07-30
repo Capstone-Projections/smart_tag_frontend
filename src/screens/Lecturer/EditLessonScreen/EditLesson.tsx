@@ -184,6 +184,7 @@ const EditLesson = () => {
         'Thursday',
         'Friday',
         'Saturday',
+        'Sunday',
     ];
 
     const toggleStartTimePicker = () => {
@@ -435,20 +436,19 @@ const EditLesson = () => {
                 </View>
 
                 <View style={styles.buttonRow}>
-                    {verifying && (
-                        <ActivityIndicator size="large" color={'blue'} />
-                    )}
-                    {!verifying && (
-                        <Button
-                            colorScheme="darkBlue"
-                            style={styles.button}
-                            onPress={handleAddLesson}
-                        >
+                    <Button
+                        colorScheme="darkBlue"
+                        style={styles.button}
+                        onPress={handleAddLesson}
+                    >
+                        {verifying ? (
+                            <ActivityIndicator size="large" color="white" />
+                        ) : (
                             <Text style={{ color: 'white', fontSize: 18 }}>
                                 Add
                             </Text>
-                        </Button>
-                    )}
+                        )}
+                    </Button>
 
                     <View style={styles.buttonSpace} />
 
