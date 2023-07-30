@@ -46,7 +46,7 @@ type ApiResponse = {
 const ExpandableButton = (props: Props) => {
     const { authorizationKey } = useContext(AuthContext);
     const { IDcourse } = useContext(CourseContext);
-    const [icon_1] = useState(new Animated.Value(40));
+    const [icon_1] = useState(new Animated.Value(0));
     const [icon_2] = useState(new Animated.Value(20));
     const { messageModalState, showMessageModal, hideModal, setIsLoading } =
         useMessageModal();
@@ -79,7 +79,7 @@ const ExpandableButton = (props: Props) => {
     const popOut = () => {
         setPop(false);
         Animated.timing(icon_1, {
-            toValue: 40,
+            toValue: 0,
             duration: 300,
             useNativeDriver: false,
         }).start();
@@ -288,7 +288,7 @@ const ExpandableButton = (props: Props) => {
 const styles = StyleSheet.create({
     floatingButton: {
         position: 'absolute',
-        bottom: 40,
+        bottom: 0,
         right: 20,
         width: 60,
         height: 60,

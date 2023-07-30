@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import TabBar from './BottomTabBar';
@@ -22,18 +22,47 @@ import LoginScreen from '../screens/general/LoginScreen/LoginScreen';
 import OTPScreen from '../screens/general/OTPScreen/OTPScreen';
 import Welcome from '../screens/general/WelcomeScreen/Welcome';
 import EditLesson from '../screens/Lecturer/EditLessonScreen/EditLesson';
-import ExpandableButton from '../components/general/FloatingButton/ExpandableButton';
+
 import NewUserScreen from '../screens/general/NewUser/NewUserScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { Navigator, Screen } = createStackNavigator();
 
+const useAuthorization = () => {
+    const [isAuthorized, setIsAuthorized] = useState(false);
+
+    useEffect(() => {
+        const checkAuthorization = async () => {
+            try {
+                // Fetch the authorization key from local storage
+                const authorizationKey = await AsyncStorage.getItem(
+                    'authorizationKey'
+                );
+
+                // If the authorization key exists, the user is authorized
+                setIsAuthorized(!!authorizationKey);
+                console.log(authorizationKey);
+            } catch (error) {
+                // Handle error
+                console.error('Error fetching authorization key:', error);
+            }
+        };
+
+        checkAuthorization();
+    }, []);
+
+    return isAuthorized;
+};
+
 //TODO: make sure to use some form of protected routes
 export const AppNavigator = () => {
+    const isAuthorized = useAuthorization();
+
     return (
         <NavigationContainer>
             <Navigator
                 screenOptions={{ headerShown: false }}
-                initialRouteName="Welcome"
+                initialRouteName={isAuthorized ? 'Drawer' : 'Welcome'}
             >
                 <Screen name="Welcome" component={Welcome} />
                 <Screen name="GetStarted" component={GetStarted} />

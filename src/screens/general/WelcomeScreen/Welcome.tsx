@@ -12,7 +12,7 @@ const Welcome = (props: WelcomeScreenProps) => {
 
     const handleStudentPress = () => {
         setUserType('student');
-        props.navigation.navigate('LoginScreen');
+        props.navigation.replace('LoginScreen');
     };
 
     const handleTeacherPress = () => {

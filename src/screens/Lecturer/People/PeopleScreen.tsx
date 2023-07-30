@@ -118,10 +118,9 @@ const PeopleScreen = (props: PeopleProps) => {
                         </Text>
                     </View>
                 )}
-                <View>
-                    <ExpandableButton navigation={props.navigation} />
-                </View>
             </View>
+
+            <ExpandableButton navigation={props.navigation} />
         </SafeAreaView>
     );
 };

@@ -21,6 +21,7 @@ import MessageModal from '../../../components/general/modals/MessageModals';
 import { Button, Link } from 'native-base';
 import axios from 'axios';
 import * as Animatable from 'react-native-animatable';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OTPScreen = (props: OTPVerificationProps) => {
     const {
@@ -59,6 +60,10 @@ const OTPScreen = (props: OTPVerificationProps) => {
                 }
             );
             setAuthorizationKey(response.headers['authorization']);
+            const authorizationKey = response.headers['authorization'];
+
+            // Store the authorization key locally for persistent login
+            await AsyncStorage.setItem('authorizationKey', authorizationKey);
             if (response.status !== 200) {
                 showMessageModal(
                     MessageTypes.FAIL,
@@ -71,7 +76,7 @@ const OTPScreen = (props: OTPVerificationProps) => {
                     if (getStarted === 'getStarted') {
                         props.navigation.navigate('SetUp');
                     } else {
-                        props.navigation.navigate('Drawer');
+                        props.navigation.replace('Drawer');
                     }
                 } else if (userType === 'lecturer') {
                     if (getStarted === 'getStarted') {
