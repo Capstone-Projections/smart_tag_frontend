@@ -77,7 +77,7 @@ const OTPScreen = (props: OTPVerificationProps) => {
                     if (getStarted === 'getStarted') {
                         props.navigation.navigate('LecturerSetUp');
                     } else {
-                        props.navigation.navigate('Drawer');
+                        props.navigation.replace('Drawer');
                     }
                 }
             } //TODO: remove the any from the type of error and then try and get the correct type for it

@@ -17,7 +17,7 @@ const Welcome = (props: WelcomeScreenProps) => {
 
     const handleTeacherPress = () => {
         setUserType('lecturer');
-        props.navigation.navigate('LoginScreen');
+        props.navigation.replace('LoginScreen');
     };
     return (
         <SafeAreaView style={styles.container}>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins',
     },
     button: {
-        width: 300,
+        width: '100%',
         height: 58,
         borderRadius: 8,
     },

@@ -70,7 +70,7 @@ const LoginScreen = (props: LoginProps) => {
 
             if (response.status === 200) {
                 setEmail(email.trim().toLowerCase());
-                props.navigation.navigate('OTPScreen'); //
+                props.navigation.replace('OTPScreen'); //
             } else {
             }
         } catch (error) {
