@@ -7,9 +7,10 @@ import {
 } from 'expo-barcode-scanner';
 import { styles } from './styles';
 import { BarcodeScannerProps } from './props';
-import { Colors } from '../../general/inputfield/style';
+
 import { Button } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
+// import { Colors } from '../../general/Inputfield/style';
 
 const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     boxSize,
@@ -83,7 +84,7 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
                             style={{
                                 width: '100%',
                                 height: '100%',
-                                borderColor: `${Colors.primary}`,
+                                borderColor: '#196B9A',
                                 borderWidth: 5,
                                 borderRadius: 15,
                             }}

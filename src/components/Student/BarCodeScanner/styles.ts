@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '../../general/inputfield/style';
+// import { Colors } from '../../general/inputfield/style';
 
 export const styles = StyleSheet.create({
     content: {
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
         height: 50,
         borderRadius: 4,
         // borderColor: `${Colors.primary}`,
-        backgroundColor: `${Colors.primary}`,
+        backgroundColor: '#196B9A',
         marginTop: 20,
     },
     buttonInactive: {
