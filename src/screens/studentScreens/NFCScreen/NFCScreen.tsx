@@ -50,7 +50,7 @@ function NFCScreen() {
                             user_iduser: userID,
                         };
                         const headers = { Authorization: authorizationKey };
-                        const response = await axios
+                        const response: any = await axios
                             .post(
                                 'https://smart-tag.onrender.com/attendance',
                                 payload,
@@ -67,15 +67,26 @@ function NFCScreen() {
                             })
                             .finally(() => {
                                 // alert('attendance recorded successfully');
-                                showMessageModal(
-                                    MessageTypes.SUCCESS,
-                                    'Attendance',
-                                    'Attendance recorded successfully',
-                                    handleProceed
-                                );
+                                if (
+                                    response.data.message ===
+                                    'Attendance already taken for class'
+                                ) {
+                                    showMessageModal(
+                                        MessageTypes.INFO,
+                                        'Attendance',
+                                        'Attendance was already recorded',
+                                        handleProceed
+                                    );
+                                } else {
+                                    showMessageModal(
+                                        MessageTypes.SUCCESS,
+                                        'Attendance',
+                                        `Attendance recorded for ${response.data.user.firstName}`,
+                                        handleProceed
+                                    );
+                                }
                             });
                     } else {
-                        // alert('You have no class today');
                         showMessageModal(
                             MessageTypes.FAIL,
                             'Attendance',
@@ -83,11 +94,18 @@ function NFCScreen() {
                             handleProceed
                         );
                     }
-                } else {
+                } else if (text !== lessonRoomId) {
                     showMessageModal(
                         MessageTypes.FAIL,
                         'Attendance',
-                        'Wrong Class',
+                        'Wrong class',
+                        handleProceed
+                    );
+                } else if (!lessonRoomId) {
+                    showMessageModal(
+                        MessageTypes.FAIL,
+                        'Attendance',
+                        'No class',
                         handleProceed
                     );
                 }
@@ -100,8 +118,6 @@ function NFCScreen() {
                 handleProceed
             );
         } finally {
-            // stop the nfc scanning
-
             NfcManager.cancelTechnologyRequest();
         }
     }

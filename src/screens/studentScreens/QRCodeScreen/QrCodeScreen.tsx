@@ -42,15 +42,33 @@ export function QRCodeScreen() {
                         { headers }
                     )
                     .then(response => {
-                        showMessageModal(
-                            MessageTypes.SUCCESS,
-                            'Attendance',
-                            `Attendance taken for ${response.data.user.firstName}`,
-                            handleProceed
-                        );
+                        // showMessageModal(
+                        //     MessageTypes.SUCCESS,
+                        //     'Attendance',
+                        //     `Attendance taken for ${response.data.user.firstName}`,
+                        //     handleProceed
+                        // );
+                        if (
+                            response.data.message ===
+                            'Attendance already taken for class'
+                        ) {
+                            showMessageModal(
+                                MessageTypes.INFO,
+                                'Attendance',
+                                'Attendance was already recorded',
+                                handleProceed
+                            );
+                        } else {
+                            showMessageModal(
+                                MessageTypes.SUCCESS,
+                                'Attendance',
+                                `Attendance recorded for ${response.data.user.firstName}`,
+                                handleProceed
+                            );
+                        }
                     })
                     .catch(error => {
-                        console.error('Failed to take attendance:', error);
+                        // console.error('Failed to take attendance:', error);
                         // Alert error message
 
                         showMessageModal(
@@ -68,11 +86,18 @@ export function QRCodeScreen() {
                     handleProceed
                 );
             }
-        } else {
+        } else if (data.trim() !== lessonRoomId) {
             showMessageModal(
                 MessageTypes.FAIL,
                 'Attendance',
-                "You're at the wrong class",
+                'Wrong Class',
+                handleProceed
+            );
+        } else if (!lessonRoomId) {
+            showMessageModal(
+                MessageTypes.FAIL,
+                'Attendance',
+                'No class',
                 handleProceed
             );
         }

@@ -40,43 +40,84 @@ const ManualScreen = () => {
     const handleSubmit = async () => {
         // const { hello } = props.route.initialParams;s
         // console.log("lesson id at manual ", idLessonForLecturers);
-        setVerifying(true);
-        const payload = {
-            indexNumber: indexNumber,
-            lesson_idlesson: idLessonForLecturers,
-            status: true,
-        };
-        const headers = { Authorization: authorizationKey };
-        const response = await axios
-            .post(
-                'https://smart-tag.onrender.com/attendance/lecturer',
-                payload,
-                { headers }
-            )
-            .catch(error => {
-                // alert("couldn't add attendance");
-                if (error) {
+
+        if (!idLessonForLecturers) {
+            // setVerifying(true
+            showMessageModal(
+                MessageTypes.INFO,
+                'Oops',
+                'Please no lesson for today',
+                handleProceed
+            );
+            // setVerifying(false);
+        } else {
+            setVerifying(true);
+            const payload = {
+                indexNumber: indexNumber,
+                lesson_idlesson: idLessonForLecturers,
+                status: true,
+            };
+            const headers = { Authorization: authorizationKey };
+            const response: any = await axios
+                .post(
+                    'https://smart-tag.onrender.com/attendance/lecturer',
+                    payload,
+                    { headers }
+                )
+                .catch(error => {
+                    // alert("couldn't add attendance");
+                    // if (error) {
                     showMessageModal(
                         MessageTypes.FAIL,
                         'Error',
                         'Failed to record attendance',
                         handleProceed
                     );
-                } else if (
-                    idLessonForLecturers === null ||
-                    idLessonForLecturers === undefined
-                ) {
-                    showMessageModal(
-                        MessageTypes.FAIL,
-                        'Error',
-                        'Please no lesson for today',
-                        handleProceed
-                    );
-                }
-            })
-            .finally(() => {
-                setVerifying(false);
-            });
+                    // } else if (
+                    //     idLessonForLecturers === null ||
+                    //     idLessonForLecturers === undefined
+                    // ) {
+                    //     showMessageModal(
+                    //         MessageTypes.FAIL,
+                    //         'Error',
+                    //         'Please no lesson for today',
+                    //         handleProceed
+                    //     );
+                    // }
+                })
+                .finally(() => {
+                    if (
+                        response.data.message &&
+                        response.data.message === 'User Not Found'
+                    ) {
+                        showMessageModal(
+                            MessageTypes.INFO,
+                            'Error',
+                            'Student Not Found',
+                            handleProceed
+                        );
+                    } else if (
+                        response.data.message &&
+                        response.data.message ===
+                            'Attendance already taken for class'
+                    ) {
+                        showMessageModal(
+                            MessageTypes.INFO,
+                            'Info',
+                            'Attendance already taken for student',
+                            handleProceed
+                        );
+                    } else {
+                        showMessageModal(
+                            MessageTypes.SUCCESS,
+                            'Success',
+                            'Attendance taken for student',
+                            handleProceed
+                        );
+                    }
+                    setVerifying(false);
+                });
+        }
     };
 
     const handleCancel = () => {

@@ -11,7 +11,7 @@ import React, { useContext, useState } from 'react';
 import { appBlue, whiteColor } from '../../../resources/colors/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './style';
-import CodeInputField from '../../../components/general/inputfield/CodeInputField';
+
 import KeyboardAvoidingWrapper from '../../../components/general/KeyboardWrapper/KeyboardWrapper';
 import { OTPVerificationProps } from './props';
 import { AuthContext } from '../../../context/AuthContext';
@@ -21,6 +21,7 @@ import MessageModal from '../../../components/general/modals/MessageModals';
 import { Button, Link } from 'native-base';
 import axios from 'axios';
 import * as Animatable from 'react-native-animatable';
+import CodeInputField from '../../../components/general/InputField/CodeInputField';
 
 const OTPScreen = (props: OTPVerificationProps) => {
     const {
