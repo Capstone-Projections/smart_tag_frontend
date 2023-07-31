@@ -15,10 +15,15 @@ import { CourseContext } from '../../../context/CourseContext';
 
 const Divider = () => <View style={styles.divider} />;
 
-const CustomTimeTablePopOver = () => {
+interface CustomPopOverForTimeTableProps {
+    idlesson: string;
+}
+const CustomTimeTablePopOver = ({
+    idlesson,
+}: CustomPopOverForTimeTableProps) => {
     const { IDcourse } = React.useContext(CourseContext);
 
-    const { idlesson } = React.useContext(LessonContext);
+    // const { idlesson } = React.useContext(LessonContext);{}
 
     const { idLessonForLecturers } = React.useContext(
         LessonContextForLecturers
@@ -48,7 +53,7 @@ const CustomTimeTablePopOver = () => {
                     iconName="emoji-sad"
                     IDcourse={IDcourse}
                     idlesson={idlesson}
-                    idLessonForLecturer={idLessonForLecturers}
+                    // idLessonForLecturer={idLessonForLecturers}
                 />
             </MenuOptions>
         </Menu>

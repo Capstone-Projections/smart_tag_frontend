@@ -18,18 +18,19 @@ interface Props {
     value: string;
     IDcourse: string;
     idlesson: string;
-    idLessonForLecturer: string;
+    // idLessonForLecturer: string;
 }
 
 const TimeTablePopOver: React.FC<Props> = ({
     text,
     iconName,
     IDcourse,
-    idLessonForLecturer,
+    idlesson,
+    // idLessonForLecturer,
 }) => {
     // const { IDcourse } = React.useContext(CourseContext);
-    const { authorizationKey, userID } = React.useContext(AuthContext);
-    const { idlesson } = React.useContext(LessonContext);
+    const { authorizationKey } = React.useContext(AuthContext);
+    // const { idlesson } = React.useContext(LessonContext);
 
     // const { idLessonForLecturers } = React.useContext(
     //     LessonContextForLecturers
@@ -39,10 +40,10 @@ const TimeTablePopOver: React.FC<Props> = ({
         try {
             const headers = { Authorization: `${authorizationKey}` };
             const response = await axios.delete(
-                `https://smart-tag.onrender.com/lesson/course/${IDcourse}/${idLessonForLecturer}`,
+                `https://smart-tag.onrender.com/lesson/course/${IDcourse}/${idlesson}`,
                 { headers }
             );
-            console.log('Delete response:', response.data);
+            // console.log('Delete response:', response.data);
         } catch (error) {
             console.error('Error deleting data:', error);
         }

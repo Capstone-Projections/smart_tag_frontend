@@ -129,14 +129,33 @@ const Timetable = (props: TimetableProps) => {
                         </View>
                     ) : (
                         <View style={style.direction}>
-                            <View style={style.dayColumn}>
-                                {days.map((day, index) => (
-                                    <View key={index} style={style.card}>
-                                        <Text style={style.dayText}>{day}</Text>
+                            <View style={style.card}>
+                                {lessons.map((lesson, index) => (
+                                    <View key={index} style={style.cardWrapper}>
+                                        <View style={style.day}>
+                                            <Text style={style.dayText}>
+                                                {lesson.day}
+                                            </Text>
+                                        </View>
+                                        <View style={style.time}>
+                                            <Text style={style.dayText}>
+                                                {lesson.startTime} -{' '}
+                                                {lesson.endTime}
+                                            </Text>
+                                            {userType === 'lecturer' && (
+                                                <View>
+                                                    <CustomTimeTablePopOver
+                                                        idlesson={
+                                                            lesson.idlesson
+                                                        }
+                                                    />
+                                                </View>
+                                            )}
+                                        </View>
                                     </View>
                                 ))}
                             </View>
-                            <View style={style.timeColumn}>
+                            {/* <View style={style.timeColumn}>
                                 {timeRanges.map((times, index) => (
                                     <View key={index} style={style.card}>
                                         <Text style={style.timeText}>
@@ -149,7 +168,7 @@ const Timetable = (props: TimetableProps) => {
                                         )}
                                     </View>
                                 ))}
-                            </View>
+                            </View> */}
                         </View>
                     )}
                 </ScrollView>
