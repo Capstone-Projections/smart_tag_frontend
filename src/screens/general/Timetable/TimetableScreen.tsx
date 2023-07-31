@@ -25,6 +25,8 @@ import { useQuery } from 'react-query';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LessonContextForLecturers } from '../../../context/LessonContextForLecturers';
 import FloatingButton from '../../../components/general/FloatingButton/FloatingButton';
+import TimeTablePopOver from '../../../components/general/PopOverMenu/TimeTablePopOver';
+import CustomTimeTablePopOver from '../../../components/general/PopOverMenu/CustomTimetablePopOver';
 
 const Timetable = (props: TimetableProps) => {
     const { authorizationKey, userType } = useContext(AuthContext);
@@ -32,7 +34,7 @@ const Timetable = (props: TimetableProps) => {
     const { setDays } = useContext(TimetableDaysContext);
     const { setLessonRoomId } = useContext(LessonRoomContext);
     const [isDaysSet, setIsDaysSet] = useState(false);
-    const { setIdLesson } = useContext(LessonContext);
+    const { setIdLesson, idlesson } = useContext(LessonContext);
     const { setIdLessonForLecturers, idLessonForLecturers } = useContext(
         LessonContextForLecturers
     );
@@ -95,10 +97,6 @@ const Timetable = (props: TimetableProps) => {
             });
     }, []);
 
-    const handlePress = () => {
-        props.navigation.navigate('EditLesson');
-    };
-
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 0 }}>
             <View>
@@ -144,6 +142,11 @@ const Timetable = (props: TimetableProps) => {
                                         <Text style={style.timeText}>
                                             {times}
                                         </Text>
+                                        {userType === 'lecturer' && (
+                                            <View>
+                                                <CustomTimeTablePopOver />
+                                            </View>
+                                        )}
                                     </View>
                                 ))}
                             </View>
@@ -151,7 +154,7 @@ const Timetable = (props: TimetableProps) => {
                     )}
                 </ScrollView>
             </View>
-            {userType === 'lecturer' && ( // Show the following component only for lecturers
+            {userType === 'lecturer' && (
                 <FloatingButton navigation={props.navigation} />
             )}
         </SafeAreaView>

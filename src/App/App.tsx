@@ -13,6 +13,7 @@ import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LessonProviderForLecturers } from '../context/LessonContextForLecturers';
 import { LessonProvider } from '../context/LessonContext';
+import { MenuProvider } from 'react-native-popup-menu';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -42,9 +43,11 @@ export default function App() {
                 <CourseProvider>
                     <LessonProvider>
                         <LessonProviderForLecturers>
-                            <NativeBaseProvider theme={customTheme}>
-                                <AppNavigator />
-                            </NativeBaseProvider>
+                            <MenuProvider>
+                                <NativeBaseProvider theme={customTheme}>
+                                    <AppNavigator />
+                                </NativeBaseProvider>
+                            </MenuProvider>
                         </LessonProviderForLecturers>
                     </LessonProvider>
                 </CourseProvider>

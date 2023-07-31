@@ -10,6 +10,7 @@ import QuestScreen from '../screens/Lecturer/Quest/QuestScreen';
 import { LessonProvider } from '../context/LessonContext';
 import Analysis from '../screens/Lecturer/Analysis/Analysis';
 import { LessonProviderForLecturers } from '../context/LessonContextForLecturers';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const Tab = createBottomTabNavigator();
 

@@ -346,7 +346,7 @@ const EditLesson = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 5 }}>
             <View>
                 <View>
-                    <Text style={styles.headerText}>Edit Lesson</Text>
+                    <Text style={styles.headerText}>Add Lesson</Text>
                 </View>
                 <View style={styles.line}></View>
                 <View>

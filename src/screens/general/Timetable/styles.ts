@@ -38,6 +38,8 @@ export const style = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 10,
         padding: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     dayColumn: {
         flex: 1,
@@ -54,6 +56,7 @@ export const style = StyleSheet.create({
         fontFamily: 'Poppins',
     },
     timeText: {
+        flex: 1,
         fontSize: 16,
         textAlign: 'center',
         color: 'white',

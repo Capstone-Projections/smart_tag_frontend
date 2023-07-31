@@ -7,6 +7,8 @@ import { EvilIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { CourseContext } from '../../../context/CourseContext';
 import { AuthContext } from '../../../context/AuthContext';
+import { LessonContext } from '../../../context/LessonContext';
+import { LessonContextForLecturers } from '../../../context/LessonContextForLecturers';
 
 type IconNames = 'emoji-sad';
 
@@ -14,19 +16,30 @@ interface Props {
     text: string;
     iconName: IconNames;
     value: string;
-    idcourse: string;
+    IDcourse: string;
+    idlesson: string;
+    idLessonForLecturer: string;
 }
 
-const PopOver: React.FC<Props> = ({ text, iconName, idcourse }) => {
-    const { IDcourse } = React.useContext(CourseContext);
+const TimeTablePopOver: React.FC<Props> = ({
+    text,
+    iconName,
+    IDcourse,
+    idLessonForLecturer,
+}) => {
+    // const { IDcourse } = React.useContext(CourseContext);
     const { authorizationKey, userID } = React.useContext(AuthContext);
-    console.log('sdsdsdssds' + authorizationKey);
+    const { idlesson } = React.useContext(LessonContext);
+
+    // const { idLessonForLecturers } = React.useContext(
+    //     LessonContextForLecturers
+    // );
 
     const handleDelete = async () => {
         try {
             const headers = { Authorization: `${authorizationKey}` };
             const response = await axios.delete(
-                `https://smart-tag.onrender.com/courses/${idcourse}/${userID}`,
+                `https://smart-tag.onrender.com/lesson/course/${IDcourse}/${idLessonForLecturer}`,
                 { headers }
             );
             console.log('Delete response:', response.data);
@@ -55,4 +68,4 @@ const PopOver: React.FC<Props> = ({ text, iconName, idcourse }) => {
 
 const styles = StyleSheet.create({});
 
-export default PopOver;
+export default TimeTablePopOver;

@@ -21,7 +21,7 @@ import CreateCourse from '../screens/Lecturer/CreateCourse/CreateCourse';
 import LoginScreen from '../screens/general/LoginScreen/LoginScreen';
 import OTPScreen from '../screens/general/OTPScreen/OTPScreen';
 import Welcome from '../screens/general/WelcomeScreen/Welcome';
-import EditLesson from '../screens/Lecturer/EditLessonScreen/EditLesson';
+import EditLesson from '../screens/Lecturer/EditLessonScreen/AddLesson';
 
 import NewUserScreen from '../screens/general/NewUser/NewUserScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
