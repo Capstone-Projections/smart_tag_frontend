@@ -47,13 +47,46 @@ export const styles = StyleSheet.create({
         marginVertical: 0,
     },
     dropdownContainer: {
-        marginVertical: 8,
+        marginVertical: 10,
+        alignSelf: 'stretch',
     },
-
     dropdownBox: {
-        borderWidth: 1,
-        borderColor: 'gray',
+        width: '100%',
+        height: 50,
+        backgroundColor: '#FFF',
         borderRadius: 8,
-        overflow: 'hidden', // This will hide any overflowing content
+        borderWidth: 1,
+        borderColor: '#444',
     },
+    dropdownButton: {
+        fontSize: 18,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        color: 'black',
+    },
+    dropdownStyle: {
+        backgroundColor: '#EFEFEF',
+    },
+    dropdownIcon: {
+        alignItems: 'flex-end',
+    },
+    dropdownIconText: {
+        fontSize: 18,
+        color: 'black',
+    },
+    dropdown1BtnStyle: {
+        width: '100%',
+        height: 50,
+        backgroundColor: '#FFF',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#444',
+    },
+    dropdown1BtnTxtStyle: { color: '#444', textAlign: 'left' },
+    dropdown1DropdownStyle: { backgroundColor: '#EFEFEF' },
+    dropdown1RowStyle: {
+        backgroundColor: '#EFEFEF',
+        borderBottomColor: '#C5C5C5',
+    },
+    dropdown1RowTxtStyle: { color: '#444', textAlign: 'left' },
 });

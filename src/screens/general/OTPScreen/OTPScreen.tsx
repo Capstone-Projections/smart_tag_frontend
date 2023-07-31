@@ -177,7 +177,7 @@ const OTPScreen = (props: OTPVerificationProps) => {
                             <ActivityIndicator size="large" color="white" />
                         ) : (
                             <Text style={{ color: 'white', fontSize: 15 }}>
-                                Submit for OTP
+                                Submit
                             </Text>
                         )}
                     </Button>

@@ -15,65 +15,62 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigation = () => {
     return (
-        <MenuProvider>
-            <Drawer.Navigator
-                drawerContent={props => {
-                    return (
-                        <SafeAreaView>
-                            <View
+        <Drawer.Navigator
+            drawerContent={props => {
+                return (
+                    <SafeAreaView>
+                        <View
+                            style={{
+                                height: 50,
+                                marginLeft: 15,
+                                justifyContent: 'center',
+                                alignContent: 'center',
+                                borderBottomWidth: 1,
+                                borderBottomColor: 'grey',
+                                marginBottom: 15,
+                            }}
+                        >
+                            <Text
                                 style={{
-                                    height: 50,
-                                    marginLeft: 15,
-                                    justifyContent: 'center',
-                                    alignContent: 'center',
-                                    borderBottomWidth: 1,
-                                    borderBottomColor: 'grey',
-                                    marginBottom: 15,
+                                    fontFamily: 'Poppins',
+                                    fontSize: 24,
+                                    textAlign: 'left',
+                                    marginVertical: 6,
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        fontFamily: 'Poppins',
-                                        fontSize: 24,
-                                        textAlign: 'left',
-                                        marginVertical: 6,
-                                    }}
-                                >
-                                    Smart Tag
-                                </Text>
-                            </View>
-                            <DrawerItemList {...props} />
-                        </SafeAreaView>
-                    );
-                }}
-                screenOptions={{
-                    headerTitleAlign: 'center',
-                    swipeEnabled: true,
-                    headerTitleStyle: { fontFamily: 'Poppins' },
-                    headerStyle: {
-                        borderBottomWidth: 0.5,
-                        borderBottomColor: 'grey',
+                                Smart Tag
+                            </Text>
+                        </View>
+                        <DrawerItemList {...props} />
+                    </SafeAreaView>
+                );
+            }}
+            screenOptions={{
+                headerTitleAlign: 'center',
+                swipeEnabled: true,
+                headerTitleStyle: { fontFamily: 'Poppins' },
+                headerStyle: {
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: 'grey',
+                },
+                drawerActiveTintColor: '#196B9A',
+                drawerLabelStyle: {
+                    color: 'black',
+                },
+                drawerContentContainerStyle: {},
+            }}
+            initialRouteName="Courses"
+        >
+            <Drawer.Screen
+                name="Courses"
+                options={{
+                    drawerIcon: ({ color, size }) => {
+                        return <Icon name="school" size={size} color={color} />;
                     },
-                    drawerActiveTintColor: '#196B9A',
-                    drawerLabelStyle: {
-                        color: 'black',
-                    },
-                    drawerContentContainerStyle: {},
                 }}
-                initialRouteName="Courses"
-            >
-                <Drawer.Screen
-                    name="Courses"
-                    options={{
-                        drawerIcon: ({ color, size }) => {
-                            return (
-                                <Icon name="school" size={size} color={color} />
-                            );
-                        },
-                    }}
-                    component={CoursesList}
-                />
-                {/* <Drawer.Screen
+                component={CoursesList}
+            />
+            {/* <Drawer.Screen
                 name="Add Course"
                 options={{
                     drawerIcon: ({ color, size }) => {
@@ -88,22 +85,22 @@ const DrawerNavigation = () => {
                 }}
                 component={AddCourse}
             /> */}
-                <Drawer.Screen
-                    name="Profile"
-                    options={{
-                        drawerIcon: ({ color, size }) => {
-                            return (
-                                <Icon
-                                    name="plus-circle"
-                                    size={size}
-                                    color={color}
-                                />
-                            );
-                        },
-                    }}
-                    component={ProfileScreen}
-                />
-                {/* <Drawer.Screen
+            <Drawer.Screen
+                name="Profile"
+                options={{
+                    drawerIcon: ({ color, size }) => {
+                        return (
+                            <Icon
+                                name="plus-circle"
+                                size={size}
+                                color={color}
+                            />
+                        );
+                    },
+                }}
+                component={ProfileScreen}
+            />
+            {/* <Drawer.Screen
                     name="Settings"
                     options={{
                         drawerIcon: ({ color, size }) => {
@@ -114,8 +111,7 @@ const DrawerNavigation = () => {
                     }}
                     component={Settings}
                 /> */}
-            </Drawer.Navigator>
-        </MenuProvider>
+        </Drawer.Navigator>
     );
 };
 

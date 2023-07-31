@@ -83,4 +83,29 @@ export const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 5,
     },
+    dropdownStyle: {
+        backgroundColor: '#EFEFEF',
+    },
+    dropdownIcon: {
+        alignItems: 'flex-end',
+    },
+    dropdownIconText: {
+        fontSize: 18,
+        color: 'black',
+    },
+    dropdown1BtnStyle: {
+        width: '100%',
+        height: 50,
+        backgroundColor: '#FFF',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#444',
+    },
+    dropdown1BtnTxtStyle: { color: '#444', textAlign: 'left' },
+    dropdown1DropdownStyle: { backgroundColor: '#EFEFEF' },
+    dropdown1RowStyle: {
+        backgroundColor: '#EFEFEF',
+        borderBottomColor: '#C5C5C5',
+    },
+    dropdown1RowTxtStyle: { color: '#444', textAlign: 'left' },
 });

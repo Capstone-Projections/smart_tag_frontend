@@ -73,9 +73,16 @@ const LoginScreen = (props: LoginProps) => {
                 props.navigation.replace('OTPScreen'); //
             } else {
             }
-        } catch (error) {
-            console.log(error);
-            if (error) {
+        } catch (error: any) {
+            // console.log(error);
+            if (error.response.data.message === 'User already exists.') {
+                showMessageModal(
+                    MessageTypes.INFO,
+                    'Oops!',
+                    'Please create and account first',
+                    handleProceed
+                );
+            } else {
                 showMessageModal(
                     MessageTypes.FAIL,
                     'Error',

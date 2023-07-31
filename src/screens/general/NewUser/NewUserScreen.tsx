@@ -57,7 +57,7 @@ const NewUserScreen = (props: NewUserProps) => {
             });
 
             const response = await axios.post(
-                'https://smart-tag.onrender.com/login',
+                'https://smart-tag.onrender.com/signup',
                 {
                     email: email.trim().toLowerCase(),
                 }
@@ -72,10 +72,29 @@ const NewUserScreen = (props: NewUserProps) => {
                 setEmail(email.trim().toLowerCase());
                 props.navigation.navigate('OTPScreen'); //
             } else {
+                showMessageModal(
+                    MessageTypes.FAIL,
+                    'Error',
+                    'Check your network and try again',
+                    handleProceed
+                );
             }
-        } catch (error) {
-            console.log(error);
-            if (error) {
+        } catch (error: any) {
+            // console.log(error);
+            // console.log('====================================');
+            // console.log(
+            //     'Error:',
+            //     JSON.stringify(error.response.data.message, null, 4)
+            // );
+            // console.log('====================================');
+            if (error.response.data.message === 'User already exists.') {
+                showMessageModal(
+                    MessageTypes.INFO,
+                    'Oops!',
+                    'You already have an account',
+                    handleProceed
+                );
+            } else {
                 showMessageModal(
                     MessageTypes.FAIL,
                     'Error',
