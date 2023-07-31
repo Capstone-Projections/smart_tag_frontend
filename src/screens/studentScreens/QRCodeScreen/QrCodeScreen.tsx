@@ -42,12 +42,6 @@ export function QRCodeScreen() {
                         { headers }
                     )
                     .then(response => {
-                        // showMessageModal(
-                        //     MessageTypes.SUCCESS,
-                        //     'Attendance',
-                        //     `Attendance taken for ${response.data.user.firstName}`,
-                        //     handleProceed
-                        // );
                         if (
                             response.data.message ===
                             'Attendance already taken for class'
@@ -68,9 +62,6 @@ export function QRCodeScreen() {
                         }
                     })
                     .catch(error => {
-                        // console.error('Failed to take attendance:', error);
-                        // Alert error message
-
                         showMessageModal(
                             MessageTypes.FAIL,
                             'Attendance',
@@ -80,7 +71,7 @@ export function QRCodeScreen() {
                     });
             } else {
                 showMessageModal(
-                    MessageTypes.FAIL,
+                    MessageTypes.INFO,
                     'Attendance',
                     'You have no class at this time',
                     handleProceed
@@ -88,9 +79,9 @@ export function QRCodeScreen() {
             }
         } else if (data.trim() !== lessonRoomId) {
             showMessageModal(
-                MessageTypes.FAIL,
+                MessageTypes.INFO,
                 'Attendance',
-                'Wrong Class',
+                'Oops,Wrong Class',
                 handleProceed
             );
         } else if (!lessonRoomId) {

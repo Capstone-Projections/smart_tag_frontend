@@ -34,12 +34,10 @@ function NFCScreen() {
             // register for the NFC tag with NDEF in it
             await NfcManager.requestTechnology(NfcTech.Ndef);
             // the resolved tag object will contain `ndefMessage` property
-            const tag = await NfcManager.getTag().then();
-
+            const tag = await NfcManager.getTag();
             if (tag) {
                 const payload = tag.ndefMessage[0].payload;
                 const text = String.fromCharCode.apply(null, payload.slice(3));
-
                 setTagData(text);
                 // TODO: make this code more modular after you're done with the testing and it's working
                 if (text === lessonRoomId) {
@@ -50,23 +48,13 @@ function NFCScreen() {
                             user_iduser: userID,
                         };
                         const headers = { Authorization: authorizationKey };
-                        const response: any = await axios
+                        const response = await axios
                             .post(
                                 'https://smart-tag.onrender.com/attendance',
                                 payload,
                                 { headers }
                             )
-                            .catch(error => {
-                                // alert("couldn't add attendance");
-                                showMessageModal(
-                                    MessageTypes.FAIL,
-                                    'Attendance',
-                                    'Could not add attendance',
-                                    handleProceed
-                                );
-                            })
-                            .finally(() => {
-                                // alert('attendance recorded successfully');
+                            .then(response => {
                                 if (
                                     response.data.message ===
                                     'Attendance already taken for class'
@@ -85,39 +73,50 @@ function NFCScreen() {
                                         handleProceed
                                     );
                                 }
+                            })
+                            .catch(error => {
+                                showMessageModal(
+                                    MessageTypes.FAIL,
+                                    'Attendance',
+                                    'Failed to take attendance',
+                                    handleProceed
+                                );
                             });
                     } else {
                         showMessageModal(
-                            MessageTypes.FAIL,
+                            MessageTypes.INFO,
                             'Attendance',
-                            'You have no class today',
+                            'You have no class at this time',
                             handleProceed
                         );
                     }
                 } else if (text !== lessonRoomId) {
                     showMessageModal(
-                        MessageTypes.FAIL,
+                        MessageTypes.INFO,
                         'Attendance',
-                        'Wrong class',
+                        'Oops,Wrong Class',
                         handleProceed
                     );
                 } else if (!lessonRoomId) {
                     showMessageModal(
-                        MessageTypes.FAIL,
+                        MessageTypes.INFO,
                         'Attendance',
                         'No class',
+                        handleProceed
+                    );
+                } else {
+                    showMessageModal(
+                        MessageTypes.FAIL,
+                        'Attendance',
+                        'An error occured',
                         handleProceed
                     );
                 }
             }
         } catch (ex) {
-            showMessageModal(
-                MessageTypes.FAIL,
-                'Attendance',
-                'Did not find tag',
-                handleProceed
-            );
+            console.warn('Oops!', ex);
         } finally {
+            // stop the nfc scanning
             NfcManager.cancelTechnologyRequest();
         }
     }
