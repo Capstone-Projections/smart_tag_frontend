@@ -24,11 +24,6 @@
             },
             "permissions": ["android.permission.CAMERA"],
             "package": "com.kdobengyeboah.smarttag"
-        },
-        "extra": {
-            "eas": {
-                "projectId": "0deab292-8733-4546-8c40-b3760613ca0e"
-            }
         }
     }
 }

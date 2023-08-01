@@ -47,6 +47,7 @@ const Timetable = (props: TimetableProps) => {
                 `https://smart-tag.onrender.com/lessons/course/${IDcourse}`,
                 { headers }
             );
+            console.log(response.data);
             return response.data;
         } catch (error) {
             throw new Error('Failed to fetch timetable for this course');

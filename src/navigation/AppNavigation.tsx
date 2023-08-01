@@ -25,7 +25,6 @@ import EditLesson from '../screens/Lecturer/EditLessonScreen/AddLesson';
 
 import NewUserScreen from '../screens/general/NewUser/NewUserScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import RowWithFlex from '../screens/general/Example';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -91,7 +90,6 @@ export const AppNavigator = () => {
                 <Screen name="OTPScreen" component={OTPScreen} />
                 <Screen name="EditLesson" component={EditLesson} />
                 <Screen name="NewUser" component={NewUserScreen} />
-                {/* <Screen name="Example" component={RowWithFlex} /> */}
             </Navigator>
         </NavigationContainer>
     );

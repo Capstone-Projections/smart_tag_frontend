@@ -31,6 +31,8 @@ const QuestScreen = (props: PeopleProps) => {
     const { idlesson } = React.useContext(LessonContext);
     const [isLoading, setIsLoading] = useState(false);
     const [isDataFetched, setIsDataFetched] = useState(false);
+    const [updatedUsers, setUpdatedUsers] = useState<QuestUsers[]>([]);
+
     const { messageModalState, showMessageModal, hideModal } =
         useMessageModal();
 
@@ -45,8 +47,11 @@ const QuestScreen = (props: PeopleProps) => {
                 `https://smart-tag.onrender.com/attendance/lessons/users/${idlesson}/${IDcourse}`,
                 { headers }
             );
+
             // console.log(response.data[0].attendance[0].idattendance);
-            // console.log(response.data);
+            console.log('course id:', IDcourse);
+            console.log('lesson id:', idlesson);
+            console.log(response.data);
             return response.data.map((questuser: QuestUsers) => ({
                 iduser: questuser.iduser,
                 firstName: questuser.firstName,
@@ -105,6 +110,12 @@ const QuestScreen = (props: PeopleProps) => {
         } catch (error) {
             throw new Error('Failed to invalidate user attendance');
         }
+    };
+
+    const handleSwipe = (userId: number) => {
+        setUpdatedUsers(prevUsers =>
+            prevUsers.filter(user => user.iduser !== userId)
+        );
     };
 
     const renderRightActions = (
@@ -263,6 +274,12 @@ const QuestScreen = (props: PeopleProps) => {
                                                 dragX,
                                                 item.iduser
                                             )
+                                        }
+                                        onSwipeableRightOpen={() =>
+                                            handleSwipe(item.iduser)
+                                        }
+                                        onSwipeableLeftOpen={() =>
+                                            handleSwipe(item.iduser)
                                         }
                                     >
                                         <QuestUserItem
