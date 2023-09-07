@@ -30,3 +30,5 @@ Inside the `root` directory, run the command,`yarn install` and then `npx expo s
 ### Issues 🥵
 
 All issues should be reported [here](https://www.notion.so/458d2b299eb2414c86b70ac77fa4fb2c?v=cf990cad1e2241c2ac7be53e2aa43834)
+
+##Click [here](https://drive.google.com/file/d/1HPKHIb4zaa8NgOTDNkesDOOLULR7-OA8/view?usp=drive_link) to view the application working.
