@@ -3,7 +3,7 @@
 Smart Tag is a simple and effective solution to the problem of class attendance.
 
 Smart Tag uses NFC Tags assigned to specific classes to ensure that students can sign up to classrooms on time and also contains an impersonation detection algorithm that prevents students from gaming the system.
-Project Management : [Notion Page](https://www.notion.so/Teamspace-Home-fba74a5d54be44d49325709de4ed9b68)
+View the backend repository over here: [Smart Tag Backend](https://github.com/kwabenadarkwa/smart_tag_backend)
 
 ## Project Management:blush:
 
